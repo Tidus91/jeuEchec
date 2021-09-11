@@ -67,7 +67,6 @@ int main () {
     afficherGrille(grille);
     if(testPositionInitial(&roiBlanc,userCoord,grille) != 1)
         printf("Erreur ! , aucune pièce ne se trouve à l'endroit d'origine !\n");
-    
 */
     return 0;
 }
