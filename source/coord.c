@@ -28,6 +28,8 @@ int verifCoord(char *userCoord){
             printf("Vous avez fait %d erreurs de chiffre \n",erreurChiffre);
         printf("Veuillez saisir des coordonnees correcte : \n");
         fgets(userCoord,5,stdin);
+        erreur = 0;
         erreur = verifCoord(userCoord);
     }
+    return 1;
 }

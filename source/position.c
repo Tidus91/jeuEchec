@@ -353,11 +353,11 @@ int isRectiligne(Piece* piece, int solveur,int solveur2, char* grille){
                     if(piece->couleur == 'b'){
                         if(grille[solveur2+i] >= 'A' && grille[solveur2+i] <= 'Z'){
                             // Si je veux me déplacer PLUS LOIN que l'obstacle
-                            if(i < solveur2-solveur ){
+                            if(i < (solveur2 - solveur) ){
                                 printf("déplacement non autorisé, il y a une pièce de même couleur sur cette case ! \n");
                             }
                             // Si je veux me déplacer MOINS LOIN ou EGAL de l'obstacle alors j'autorise le déplacement
-                            else if(i >= solveur2-solveur){
+                            else if(i >= (solveur2 - solveur)){
                                 printf("déplacement autorisé ! \n");
                             }
                         }
