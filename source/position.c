@@ -1,9 +1,14 @@
 void deplacementPiece(Piece *piece,char *coord, char *grille) {
 
     int solveur = 0;
-    if(testPositionInitial(piece,coord,grille) == 1){
-        solveur = testPositionFinal(piece,coord,grille);
-        //grille[solveur] = piece.nom
+    int solveur2 = 0;
+    int solveur3 = 0;
+    solveur = testPositionInitial(piece,coord,grille);
+    solveur2 = testPositionFinal(piece,coord,grille);
+    solveur3 = isPossible(piece,solveur,solveur2,grille);
+    if(solveur3 != 0){
+        grille[solveur2] = piece->typep.roi.nom;
+        grille[solveur] = '.';
     }
 }
 
@@ -11,7 +16,7 @@ int testPositionInitial(Piece* piece,char *coord, char* grille) {
 
     // j'utilise solveur pour calculer l'index total pour aller chercher la correspondance dans ma grille
     int solveur = 0;
-    
+ 
     if(coord[0] == 'a')
         solveur = solveur + 1;
     else if(coord[0] == 'b')
@@ -44,13 +49,21 @@ int testPositionInitial(Piece* piece,char *coord, char* grille) {
         solveur = solveur + 70;
     else if(coord[1] == '1')
         solveur = solveur + 80;
-
-    printf("\n si j'ai bien coder vous voulez vous déplacer en : %c%c qui correspont à : %d  \n",coord[0],coord[1],solveur);
-
+/*
+    printf("\n si j'ai bien coder êtes actuellement en : %c%c qui correspont à : %d  \n",coord[0],coord[1],solveur);
+    printf("\n vous etes la piece : %c \n",piece->typep.roi.nom);
+    printf("\n grille solveur : %c \n",grille[solveur]);
+*/
     if(grille[solveur] == piece->typep.roi.nom){
         printf("La pièce est bien en %c%c dans la grille \n",coord[0],coord[1]);
-        return 1;
+        return solveur;
     }
+    else
+    {
+        printf("La piece %c n'est pas à la coordonnée que vous avez rentre ! \n",piece->typep.roi.nom);
+        return 0;
+    }
+    
 }
 
 int testPositionFinal(Piece* piece, char *coord, char* grille){
@@ -90,6 +103,50 @@ int testPositionFinal(Piece* piece, char *coord, char* grille){
     else if(coord[3] == '1')
         solveur = solveur + 80;
 
-    printf("Je souhaite donc arriver à la case %d",solveur);
+/*
+    printf("Je souhaite donc arriver à la case %d \n",solveur);
+    printf("je suis une piece : %c et mon deplacement est : %s \n",piece->typep.roi.nom,piece->typep.roi.deplacement);
+*/
     return solveur;
+}
+
+int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
+    int testPos = 0;
+    if(piece->typep.roi.deplacement == "adjacent"){
+        printf("cette piece se déplace de maniere adjacente ! \n");
+        // je ne peux me déplacer dans mon index seulement de +-1 ou +-1+-10 ou +-10
+        if(solveur2 == solveur+1 || solveur2 == solveur-1 || solveur2 == solveur+10 || solveur2 == solveur-10 || solveur2 == solveur+11 || solveur2 == solveur-11){
+            printf("Position pre-autoriser, recherche d'une eventuelle piece allie à cette position \n");
+            if(piece->couleur == 'b'){
+                // si la lettre est minuscule alors la couleur est noire
+                if(!(grille[solveur2] >= 'A' && grille[solveur2] <= 'Z')){
+                    printf("alors le déplacement est autorisé \n");
+                    testPos = 1;
+                    return testPos;
+                }
+            }
+            else if(piece->couleur == 'n'){
+                // si la lettre est majuscule alors la couleur est blanche
+                if(!(grille[solveur2] >= 'a' && grille[solveur2] <= 'z')){
+                    printf("alors le déplacement est autorisé \n");
+                    testPos = 1;
+                    return testPos;
+                }
+            }
+        }
+    }
+    else if(piece->typep.roi.deplacement == "rectiligne"){
+        printf("cette piece se déplace de maniere rectiligne ! \n");
+        // je ne peux me déplacer dans mon index seulement si .....
+        int calcul = 0 ;
+        calcul = solveur2%8;
+
+    }
+    else if(piece->typep.roi.deplacement == "rectiligneDiagonale"){
+        printf("cette piece se déplace de maniere rectiligne et diagonale ! \n");
+    }
+    else{
+        printf("Erreur !! \n");
+        return 0;
+    }
 }
