@@ -36,7 +36,7 @@ typedef struct Piece Piece;
 #include "../header/creationInit.h"
 #include "../header/position.h"
 
-char* getPiece(char*, char*);
+//char* getPiece(char*, char*);
 
 int main () {
 
@@ -72,10 +72,9 @@ int main () {
     deplacementPiece(&piece3,"a7f7",grille);
     afficherGrille(grille);
 
-     
     return 0;
 }
-
+/*
 char* getPiece(char* coord,char *grille){
 
     int solveur = 0;
@@ -115,4 +114,4 @@ char* getPiece(char* coord,char *grille){
 
     if((grille[solveur] >= 'a' && grille[solveur] <= 'z') || (grille[solveur] >= 'A' && grille[solveur] >= 'Z'))
         return &grille[solveur];
-}
+}*/
