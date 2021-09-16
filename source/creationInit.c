@@ -57,11 +57,11 @@ int initialisationPiece(Piece *piece,char *grille){
     // si la pièce appartient au joueur blanc
     if(piece->couleur == 'b'){
         if((*piece).typep.dame.nom == 'D')
-            grille[24] = (piece->typep.dame.nom);
+            grille[23] = (piece->typep.dame.nom);
         else if(piece->typep.roi.nom == 'R')
             grille[41] = (*piece).typep.roi.nom;
         else if(piece->typep.tour.nom == 'T')
-            grille[21] = piece->typep.tour.nom;
+            grille[25] = piece->typep.tour.nom;
         return 2;
     }
     return 0;

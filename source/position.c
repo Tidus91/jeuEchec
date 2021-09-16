@@ -150,174 +150,42 @@ int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
         int calculQ = solveur/10;
         //Verif du déplacement horizontale
         printf("solveur = : %d \n",solveur);
-        printf("calcuR = : %d \ncalculQ = %d\n",calculR,calculQ);
+        printf("calcuR =  %d \ncalculQ = %d\n",calculR,calculQ);
         printf("solveur2 = : %d\n",solveur2);
         printf("solveur2 - solveur1 = : %d \n",solveur2-solveur);
         if(calculR == 1){
             if(solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4 || solveur2 == solveur+5 || solveur2 == solveur+6 || solveur2 == solveur+7){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                int i = 1;
-                // je parcours ma ligne JUSQUA ce que je tombe sur une lettre OU que j'arrive à ma destination 
-                for(i=1;grille[solveur+i] == '.' && i < (solveur2 - solveur);i++){
-    
-                }
-                printf(" mon compteur i : %d \n",i);
-                if(piece->couleur == 'b'){
-                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
-                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
-                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
-                            if(i < (solveur2 - solveur) ){
-                                printf("déplacement non autorisé, il y a une pièce qui vous bloque la vue ! \n");
-                                return 0;
-                            }
-                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
-                            else if(i > (solveur2 - solveur)){
-                                printf("déplacement non autorisé, truc bizarre la ! \n");
-                                return 0;
-                            }
-                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
-                            else if(i == (solveur2 - solveur)){
-                                printf("deplacement NON autorise une piece de même couleur est deja presente !!! \n ");
-                                return 0;
-                            }
-                        }
-                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
-                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
-                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
-                            return 0;
-                        }
-                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
-                        else if(grille[solveur+i] != '.'){
-                            // alors pas d'obstacle rencontrer
-                            printf("deplacement NON autorise, ya un truc bizarre la!");
-                            return 0;
-                        }
-                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
-                        else if(i == (solveur2-solveur)){
-                            printf("deplacement autorise, vous allez manger la piece ! bravo \n");
-                            return 1;
-                        }
-                }
-                else if(piece->couleur == 'n'){
-
-                    if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
-                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
-                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
-                            if(i < (solveur2 - solveur) ){
-                                printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
-                                return 0;
-                            }
-                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
-                            else if(i > (solveur2 - solveur)){
-                                printf("déplacement non autorisé, truc bizarre la ! \n");
-                                return 0;
-                            }
-                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
-                            else if(i == (solveur2 - solveur)){
-                                printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
-                                return 1;
-                            }
-                        }
-                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
-                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
-                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
-                            return 0;
-                        }
-                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
-                        else if(grille[solveur+i] != '.'){
-                            // alors pas d'obstacle rencontrer
-                            printf("deplacement NON autorise, ya un truc bizarre la!");
-                            return 0;
-                        }
-                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
-                        else if(i == (solveur2-solveur)){
-                            printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
-                            return 0;
-                        }
-                }
-
-            }
-            else{
-                calcul++;
+                return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
             }
         }
         else if(calculR == 2){
-            if(solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4 || solveur2 == solveur+5 || solveur2 == solveur+6){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                // si je dois partir vers la droite :
-                if(solveur2 - solveur > 0){
-                    int i = 1;
-                // je parcours ma ligne JUSQUA ce que je tombe sur une lettre OU que j'arrive à ma destination 
-                    for(i=1;grille[solveur+i] == '.' && i < (solveur2 - solveur);i++){
-        
-                    }
-                    printf(" mon compteur i : %d \n",i);
-                    if(piece->couleur == 'b'){
-                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
-                                // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
-                                printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
-                                if(i < (solveur2 - solveur) ){
-                                    printf("déplacement non autorisé, il y a une pièce qui vous bloque la vue ! \n");
-                                    return 0;
-                                }
-                                // Si je rencontre un obstacle APR
-                            }
-                    }
-                    
-                    else{
-                        calcul++;
-                    }
-                
-                }
+            printf("isPossibleRectigligneCalculR2\n");
+            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
         }
-    }
         else if(calculR == 3){
-            if(solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4 || solveur2 == solveur+5){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-            }
-            else{
-                calcul++;
-            }
+            printf("isPossibleisRectiligneCalculR3 \n");
+            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
         }
         else if(calculR == 4){
-            if(solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-            }
-            else{
-                calcul++;
-            }
+            printf("isPossibleRectiligneCalculR4 \n");
+            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
         }
         else if(calculR == 5){
-            if(solveur2 == solveur-4 || solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-            }
-            else{
-                calcul++;
-            }
+            printf("isPossibleRectiligneCalculR5");
+            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
         }
         else if(calculR == 6){
-            if(solveur2 == solveur-5 || solveur2 == solveur-4 || solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-            }
-            else{
-                calcul++;
-            }
+            printf("isPossibleRectiligneCalculR6 \n");
+            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
         }
         else if(calculR == 7){
-            if(solveur2 == solveur-6 || solveur2 == solveur-5 || solveur2 == solveur-4 || solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-            }
-            else{
-                calcul++;
-            }
+            printf("isPossibleRectiligneCalculR7 \n");
+            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
         }
         else if(calculR == 8){
-            if(solveur2 == solveur-7 || solveur2 == solveur-6 || solveur2 == solveur-5 || solveur2 == solveur-4 || solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-            }
-            else{
-                calcul++;
-            }
+            printf("isPossibleRectiligneCalculR8 \n");
+            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
         }
         if(calculQ == 1){
             if(solveur2 == solveur+10 || solveur2 == solveur+20 || solveur2 == solveur+30 || solveur2 == solveur+40 || solveur2 == solveur+50 || solveur2 == solveur+60 || solveur2 == solveur+70){
@@ -388,8 +256,6 @@ int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
             printf("déplacement non autorisé pour ce mouvement rectiligne ! \n");
             return 0;
         }
-    }
-
 
     else if(piece->typep.roi.deplacement == "rectiligneDiagonale"){
         printf("cette piece se déplace de maniere rectiligne et diagonale ! \n");
@@ -398,6 +264,7 @@ int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
         printf("Erreur !! \n");
         return 0;
     }
+}
 }
 
 int isEchec(Piece* piece,int solveur2,char *grille){
@@ -463,43 +330,42 @@ int solveurLigneDeVueRectiligne(Piece* piece, int solveur,int solveur2, char* gr
                 }
                 printf(" mon compteur i : %d \n",i);
                 if(piece->couleur == 'b'){
-                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
-                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
-                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
-                            if(i < (solveur2 - solveur) ){
-                                printf("déplacement non autorisé, il y a une pièce qui vous bloque la vue ! \n");
-                                return 0;
-                            }
-                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
-                            else if(i > (solveur2 - solveur)){
-                                printf("déplacement non autorisé, truc bizarre la ! \n");
-                                return 0;
-                            }
-                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
-                            else if(i == (solveur2 - solveur)){
-                                printf("deplacement NON autorise une piece de même couleur est deja presente !!! \n ");
-                                return 0;
-                            }
-                        }
-                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
-                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
-                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                    if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                        printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                        if(i < (solveur2 - solveur) ){
+                            printf("déplacement non autorisé, il y a une pièce qui vous bloque la vue ! \n");
                             return 0;
                         }
-                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
-                        else if(grille[solveur+i] != '.'){
-                            // alors pas d'obstacle rencontrer
-                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                        else if(i > (solveur2 - solveur)){
+                            printf("déplacement non autorisé, truc bizarre la ! \n");
                             return 0;
                         }
-                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
-                        else if(i == (solveur2-solveur)){
-                            printf("deplacement autorise, vous allez manger la piece ! bravo \n");
-                            return 1;
+                        // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                        else if(i == (solveur2 - solveur)){
+                            printf("deplacement NON autorise une piece de même couleur est deja presente !!! \n ");
+                            return 0;
                         }
+                    }
+                    // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                    else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                        printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                        return 0;
+                    }
+                    // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                    else if(grille[solveur+i] != '.'){
+                        // alors pas d'obstacle rencontrer
+                        printf("deplacement NON autorise, ya un truc bizarre la!");
+                        return 0;
+                    }
+                    // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                    else if(i == (solveur2-solveur)){
+                        printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                        return 1;
+                    }
                 }
                 else if(piece->couleur == 'n'){
-
                     if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
                         // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
                         printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
@@ -535,15 +401,15 @@ int solveurLigneDeVueRectiligne(Piece* piece, int solveur,int solveur2, char* gr
                         return 0;
                     }
                 }
-
-            }
-            else{
-                calcul++;
+                else{
+                    calcul++;
+                }
             }
         }
         else if(calculR == 2){
+            printf("je suis bien dans calculR=2 \n");
             if(solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4 || solveur2 == solveur+5 || solveur2 == solveur+6){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
+                printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR2)\n");
                 if(solveur2 - solveur > 0){
                     int i = 1;
                     for(i=1;grille[solveur+i] == '.' && i < (solveur2 - solveur);i++){
@@ -627,13 +493,13 @@ int solveurLigneDeVueRectiligne(Piece* piece, int solveur,int solveur2, char* gr
                 }
                     else if(solveur2 - solveur < 0){
                         int i=-1;
-                        for(i=-1;grille[solveur-i] == '.' && i > (solveur2 - solveur);i--){
+                        for(i=-1;grille[solveur+i] == '.' && i > (solveur2 - solveur);i--){
 
                         }
                         printf("mon compteur i : %d \n",i);
                         if(piece->couleur == 'b'){
-                            if(grille[solveur-i] >= 'A' && grille[solveur-i] <= 'Z'){
-                                printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur-i,i,grille[solveur-i]);
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,grille[solveur+i]);
                                 if(i > (solveur2 = solveur)){
                                     printf("deplacement non autorise, il y a une piece qui vous bloque la vue ! \n");
                                     return 0;
@@ -647,12 +513,12 @@ int solveurLigneDeVueRectiligne(Piece* piece, int solveur,int solveur2, char* gr
                                     return 0;
                                 }
                             }
-                            else if(grille[solveur-i] >= 'a' && grille[solveur-i] <= 'z'){
+                            else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
                                 printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
                                 return 0;
                             }
                             // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
-                            else if(grille[solveur-i] != '.'){
+                            else if(grille[solveur+i] != '.'){
                                 // alors pas d'obstacle rencontrer
                                 printf("deplacement NON autorise, ya un truc bizarre la!");
                                 return 0;
@@ -665,7 +531,7 @@ int solveurLigneDeVueRectiligne(Piece* piece, int solveur,int solveur2, char* gr
                         }
                         else if(piece->couleur == 'n'){
 
-                            if(grille[solveur-i] >= 'A' && grille[solveur-i] <= 'Z'){
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
                                 // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
                                 printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur-i]);
                                 if(i < (solveur2 - solveur) ){
@@ -684,12 +550,12 @@ int solveurLigneDeVueRectiligne(Piece* piece, int solveur,int solveur2, char* gr
                                 }
                             }
                             // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
-                            else if(grille[solveur-i] >= 'a' && grille[solveur-i] <= 'z'){
+                            else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
                                 printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
                                 return 0;
                             }
                             // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
-                            else if(grille[solveur-i] != '.'){
+                            else if(grille[solveur+i] != '.'){
                                 // alors pas d'obstacle rencontrer
                                 printf("deplacement NON autorise, ya un truc bizarre la!");
                                 return 0;
@@ -706,34 +572,1002 @@ int solveurLigneDeVueRectiligne(Piece* piece, int solveur,int solveur2, char* gr
                     }
                 
             }
+        }
         else if(calculR == 3){
             if(solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4 || solveur2 == solveur+5){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
+                printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR3)\n");
+                if(solveur2 - solveur > 0){
+                    int i = 1;
+                    for(i=1;grille[solveur+i] == '.' && i < (solveur2 - solveur);i++){
+    
+                    }
+                    printf(" mon compteur i : %d \n",i);
+                    if(piece->couleur == 'b'){
+                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                            if(i < (solveur2 - solveur) ){
+                                printf("déplacement non autorisé, il y a une pièce qui vous bloque la vue ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                            else if(i > (solveur2 - solveur)){
+                                printf("déplacement non autorisé, truc bizarre la ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            else if(i == (solveur2 - solveur)){
+                                printf("deplacement NON autorise une piece de même couleur est deja presente !!! \n ");
+                                return 0;
+                            }
+                        }
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                        else if(grille[solveur+i] != '.'){
+                            // alors pas d'obstacle rencontrer
+                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(i == (solveur2-solveur)){
+                            printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                            return 1;
+                        }
+                    }
+                    else if(piece->couleur == 'n'){
+
+                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                            if(i < (solveur2 - solveur) ){
+                                printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                            else if(i > (solveur2 - solveur)){
+                                printf("déplacement non autorisé, truc bizarre la ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            else if(i == (solveur2 - solveur)){
+                                printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
+                                return 1;
+                            }
+                        }
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                        else if(grille[solveur+i] != '.'){
+                            // alors pas d'obstacle rencontrer
+                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(i == (solveur2-solveur)){
+                            printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
+                            return 0;
+                        }
+
+                    }
+                }
+                    else if(solveur2 - solveur < 0){
+                        int i=-1;
+                        for(i=-1;grille[solveur+i] == '.' && i > (solveur2 - solveur);i--){
+
+                        }
+                        printf("mon compteur i : %d \n",i);
+                        if(piece->couleur == 'b'){
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,grille[solveur+i]);
+                                if(i > (solveur2 = solveur)){
+                                    printf("deplacement non autorise, il y a une piece qui vous bloque la vue ! \n");
+                                    return 0;
+                                }
+                                else if(i < (solveur2 - solveur)){
+                                    printf("deplacement non autorise, truc bizarre la ! \n");
+                                    return 0;
+                                }
+                                else if(i == (solveur2 - solveur)){
+                                    printf("deplacement NON autorise, une piece de meme couleur est deja presente ! \n");
+                                    return 0;
+                                }
+                            }
+                            else if(grille[solveur-i] >= 'a' && grille[solveur-i] <= 'z'){
+                                printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                            else if(grille[solveur+i] != '.'){
+                                // alors pas d'obstacle rencontrer
+                                printf("deplacement NON autorise, ya un truc bizarre la!");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(i == (solveur2-solveur)){
+                                printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                                return 1;
+                            }
+                        }
+                        else if(piece->couleur == 'n'){
+
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                                printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur-i]);
+                                if(i < (solveur2 - solveur) ){
+                                    printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
+                                    return 0;
+                                }
+                                // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                                else if(i > (solveur2 - solveur)){
+                                    printf("déplacement non autorisé, truc bizarre la ! \n");
+                                    return 0;
+                                }
+                                // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                                else if(i == (solveur2 - solveur)){
+                                    printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
+                                    return 1;
+                                }
+                            }
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                                printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                            else if(grille[solveur+i] != '.'){
+                                // alors pas d'obstacle rencontrer
+                                printf("deplacement NON autorise, ya un truc bizarre la!");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(i == (solveur2-solveur)){
+                                printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
+                                return 0;
+                            }
+                        }
+                    }
+                    else{
+                        calcul++;
+                    }
+                
             }
         }
         else if(calculR == 4){
             if(solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
+                printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR4)\n");
+                if(solveur2 - solveur > 0){
+                    int i = 1;
+                    for(i=1;grille[solveur+i] == '.' && i < (solveur2 - solveur);i++){
+    
+                    }
+                    printf(" mon compteur i : %d \n",i);
+                    if(piece->couleur == 'b'){
+                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                            if(i < (solveur2 - solveur) ){
+                                printf("déplacement non autorisé, il y a une pièce qui vous bloque la vue ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                            else if(i > (solveur2 - solveur)){
+                                printf("déplacement non autorisé, truc bizarre la ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            else if(i == (solveur2 - solveur)){
+                                printf("deplacement NON autorise une piece de même couleur est deja presente !!! \n ");
+                                return 0;
+                            }
+                        }
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                        else if(grille[solveur+i] != '.'){
+                            // alors pas d'obstacle rencontrer
+                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(i == (solveur2-solveur)){
+                            printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                            return 1;
+                        }
+                    }
+                    else if(piece->couleur == 'n'){
+
+                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                            if(i < (solveur2 - solveur) ){
+                                printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                            else if(i > (solveur2 - solveur)){
+                                printf("déplacement non autorisé, truc bizarre la ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            else if(i == (solveur2 - solveur)){
+                                printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
+                                return 1;
+                            }
+                        }
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                        else if(grille[solveur+i] != '.'){
+                            // alors pas d'obstacle rencontrer
+                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(i == (solveur2-solveur)){
+                            printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
+                            return 0;
+                        }
+
+                    }
+                }
+                    else if(solveur2 - solveur < 0){
+                        int i=-1;
+                        for(i=-1;grille[solveur+i] == '.' && i > (solveur2 - solveur);i--){
+
+                        }
+                        printf("mon compteur i : %d \n",i);
+                        if(piece->couleur == 'b'){
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,grille[solveur+i]);
+                                if(i > (solveur2 = solveur)){
+                                    printf("deplacement non autorise, il y a une piece qui vous bloque la vue ! \n");
+                                    return 0;
+                                }
+                                else if(i < (solveur2 - solveur)){
+                                    printf("deplacement non autorise, truc bizarre la ! \n");
+                                    return 0;
+                                }
+                                else if(i == (solveur2 - solveur)){
+                                    printf("deplacement NON autorise, une piece de meme couleur est deja presente ! \n");
+                                    return 0;
+                                }
+                            }
+                            else if(grille[solveur-i] >= 'a' && grille[solveur-i] <= 'z'){
+                                printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                            else if(grille[solveur+i] != '.'){
+                                // alors pas d'obstacle rencontrer
+                                printf("deplacement NON autorise, ya un truc bizarre la!");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(i == (solveur2-solveur)){
+                                printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                                return 1;
+                            }
+                        }
+                        else if(piece->couleur == 'n'){
+
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                                printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur-i]);
+                                if(i < (solveur2 - solveur) ){
+                                    printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
+                                    return 0;
+                                }
+                                // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                                else if(i > (solveur2 - solveur)){
+                                    printf("déplacement non autorisé, truc bizarre la ! \n");
+                                    return 0;
+                                }
+                                // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                                else if(i == (solveur2 - solveur)){
+                                    printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
+                                    return 1;
+                                }
+                            }
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                                printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                            else if(grille[solveur+i] != '.'){
+                                // alors pas d'obstacle rencontrer
+                                printf("deplacement NON autorise, ya un truc bizarre la!");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(i == (solveur2-solveur)){
+                                printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
+                                return 0;
+                            }
+                        }
+                    }
+                    else{
+                        calcul++;
+                    }
+                
             }
         }
         else if(calculR == 5){
             if(solveur2 == solveur-4 || solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
+                printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR5)\n");
+                if(solveur2 - solveur > 0){
+                    int i = 1;
+                    for(i=1;grille[solveur+i] == '.' && i < (solveur2 - solveur);i++){
+    
+                    }
+                    printf(" mon compteur i : %d \n",i);
+                    if(piece->couleur == 'b'){
+                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                            if(i < (solveur2 - solveur) ){
+                                printf("déplacement non autorisé, il y a une pièce qui vous bloque la vue ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                            else if(i > (solveur2 - solveur)){
+                                printf("déplacement non autorisé, truc bizarre la ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            else if(i == (solveur2 - solveur)){
+                                printf("deplacement NON autorise une piece de même couleur est deja presente !!! \n ");
+                                return 0;
+                            }
+                        }
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                        else if(grille[solveur+i] != '.'){
+                            // alors pas d'obstacle rencontrer
+                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(i == (solveur2-solveur)){
+                            printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                            return 1;
+                        }
+                    }
+                    else if(piece->couleur == 'n'){
+
+                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                            if(i < (solveur2 - solveur) ){
+                                printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                            else if(i > (solveur2 - solveur)){
+                                printf("déplacement non autorisé, truc bizarre la ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            else if(i == (solveur2 - solveur)){
+                                printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
+                                return 1;
+                            }
+                        }
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                        else if(grille[solveur+i] != '.'){
+                            // alors pas d'obstacle rencontrer
+                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(i == (solveur2-solveur)){
+                            printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
+                            return 0;
+                        }
+
+                    }
+                }
+                    else if(solveur2 - solveur < 0){
+                        int i=-1;
+                        for(i=-1;grille[solveur+i] == '.' && i > (solveur2 - solveur);i--){
+
+                        }
+                        printf("mon compteur i : %d \n",i);
+                        if(piece->couleur == 'b'){
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,grille[solveur+i]);
+                                if(i > (solveur2 = solveur)){
+                                    printf("deplacement non autorise, il y a une piece qui vous bloque la vue ! \n");
+                                    return 0;
+                                }
+                                else if(i < (solveur2 - solveur)){
+                                    printf("deplacement non autorise, truc bizarre la ! \n");
+                                    return 0;
+                                }
+                                else if(i == (solveur2 - solveur)){
+                                    printf("deplacement NON autorise, une piece de meme couleur est deja presente ! \n");
+                                    return 0;
+                                }
+                            }
+                            else if(grille[solveur-i] >= 'a' && grille[solveur-i] <= 'z'){
+                                printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                            else if(grille[solveur+i] != '.'){
+                                // alors pas d'obstacle rencontrer
+                                printf("deplacement NON autorise, ya un truc bizarre la!");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(i == (solveur2-solveur)){
+                                printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                                return 1;
+                            }
+                        }
+                        else if(piece->couleur == 'n'){
+
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                                printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur-i]);
+                                if(i < (solveur2 - solveur) ){
+                                    printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
+                                    return 0;
+                                }
+                                // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                                else if(i > (solveur2 - solveur)){
+                                    printf("déplacement non autorisé, truc bizarre la ! \n");
+                                    return 0;
+                                }
+                                // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                                else if(i == (solveur2 - solveur)){
+                                    printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
+                                    return 1;
+                                }
+                            }
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                                printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                            else if(grille[solveur+i] != '.'){
+                                // alors pas d'obstacle rencontrer
+                                printf("deplacement NON autorise, ya un truc bizarre la!");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(i == (solveur2-solveur)){
+                                printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
+                                return 0;
+                            }
+                        }
+                    }
+                    else{
+                        calcul++;
+                    }
+                
+
             }
         }
         else if(calculR == 6){
             if(solveur2 == solveur-5 || solveur2 == solveur-4 || solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
+                printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR6)\n");
+                if(solveur2 - solveur > 0){
+                    int i = 1;
+                    for(i=1;grille[solveur+i] == '.' && i < (solveur2 - solveur);i++){
+    
+                    }
+                    printf(" mon compteur i : %d \n",i);
+                    if(piece->couleur == 'b'){
+                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                            if(i < (solveur2 - solveur) ){
+                                printf("déplacement non autorisé, il y a une pièce qui vous bloque la vue ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                            else if(i > (solveur2 - solveur)){
+                                printf("déplacement non autorisé, truc bizarre la ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            else if(i == (solveur2 - solveur)){
+                                printf("deplacement NON autorise une piece de même couleur est deja presente !!! \n ");
+                                return 0;
+                            }
+                        }
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                        else if(grille[solveur+i] != '.'){
+                            // alors pas d'obstacle rencontrer
+                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(i == (solveur2-solveur)){
+                            printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                            return 1;
+                        }
+                    }
+                    else if(piece->couleur == 'n'){
+
+                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                            if(i < (solveur2 - solveur) ){
+                                printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                            else if(i > (solveur2 - solveur)){
+                                printf("déplacement non autorisé, truc bizarre la ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            else if(i == (solveur2 - solveur)){
+                                printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
+                                return 1;
+                            }
+                        }
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                        else if(grille[solveur+i] != '.'){
+                            // alors pas d'obstacle rencontrer
+                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(i == (solveur2-solveur)){
+                            printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
+                            return 0;
+                        }
+
+                    }
+                }
+                    else if(solveur2 - solveur < 0){
+                        int i=-1;
+                        for(i=-1;grille[solveur+i] == '.' && i > (solveur2 - solveur);i--){
+
+                        }
+                        printf("mon compteur i : %d \n",i);
+                        if(piece->couleur == 'b'){
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,grille[solveur+i]);
+                                if(i > (solveur2 = solveur)){
+                                    printf("deplacement non autorise, il y a une piece qui vous bloque la vue ! \n");
+                                    return 0;
+                                }
+                                else if(i < (solveur2 - solveur)){
+                                    printf("deplacement non autorise, truc bizarre la ! \n");
+                                    return 0;
+                                }
+                                else if(i == (solveur2 - solveur)){
+                                    printf("deplacement NON autorise, une piece de meme couleur est deja presente ! \n");
+                                    return 0;
+                                }
+                            }
+                            else if(grille[solveur-i] >= 'a' && grille[solveur-i] <= 'z'){
+                                printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                            else if(grille[solveur+i] != '.'){
+                                // alors pas d'obstacle rencontrer
+                                printf("deplacement NON autorise, ya un truc bizarre la!");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(i == (solveur2-solveur)){
+                                printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                                return 1;
+                            }
+                        }
+                        else if(piece->couleur == 'n'){
+
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                                printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur-i]);
+                                if(i < (solveur2 - solveur) ){
+                                    printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
+                                    return 0;
+                                }
+                                // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                                else if(i > (solveur2 - solveur)){
+                                    printf("déplacement non autorisé, truc bizarre la ! \n");
+                                    return 0;
+                                }
+                                // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                                else if(i == (solveur2 - solveur)){
+                                    printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
+                                    return 1;
+                                }
+                            }
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                                printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                            else if(grille[solveur+i] != '.'){
+                                // alors pas d'obstacle rencontrer
+                                printf("deplacement NON autorise, ya un truc bizarre la!");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(i == (solveur2-solveur)){
+                                printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
+                                return 0;
+                            }
+                        }
+                    }
+                    else{
+                        calcul++;
+                    }
+                
             }
         }
         else if(calculR == 7){
             if(solveur2 == solveur-6 || solveur2 == solveur-5 || solveur2 == solveur-4 || solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
+                printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR7)\n");
+                if(solveur2 - solveur > 0){
+                    int i = 1;
+                    for(i=1;grille[solveur+i] == '.' && i < (solveur2 - solveur);i++){
+    
+                    }
+                    printf(" mon compteur i : %d \n",i);
+                    if(piece->couleur == 'b'){
+                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                            if(i < (solveur2 - solveur) ){
+                                printf("déplacement non autorisé, il y a une pièce qui vous bloque la vue ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                            else if(i > (solveur2 - solveur)){
+                                printf("déplacement non autorisé, truc bizarre la ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            else if(i == (solveur2 - solveur)){
+                                printf("deplacement NON autorise une piece de même couleur est deja presente !!! \n ");
+                                return 0;
+                            }
+                        }
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                        else if(grille[solveur+i] != '.'){
+                            // alors pas d'obstacle rencontrer
+                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(i == (solveur2-solveur)){
+                            printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                            return 1;
+                        }
+                    }
+                    else if(piece->couleur == 'n'){
+
+                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                            if(i < (solveur2 - solveur) ){
+                                printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                            else if(i > (solveur2 - solveur)){
+                                printf("déplacement non autorisé, truc bizarre la ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            else if(i == (solveur2 - solveur)){
+                                printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
+                                return 1;
+                            }
+                        }
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                        else if(grille[solveur+i] != '.'){
+                            // alors pas d'obstacle rencontrer
+                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(i == (solveur2-solveur)){
+                            printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
+                            return 0;
+                        }
+
+                    }
+                }
+                    else if(solveur2 - solveur < 0){
+                        int i=-1;
+                        for(i=-1;grille[solveur+i] == '.' && i > (solveur2 - solveur);i--){
+
+                        }
+                        printf("mon compteur i : %d \n",i);
+                        if(piece->couleur == 'b'){
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,grille[solveur+i]);
+                                if(i > (solveur2 = solveur)){
+                                    printf("deplacement non autorise, il y a une piece qui vous bloque la vue ! \n");
+                                    return 0;
+                                }
+                                else if(i < (solveur2 - solveur)){
+                                    printf("deplacement non autorise, truc bizarre la ! \n");
+                                    return 0;
+                                }
+                                else if(i == (solveur2 - solveur)){
+                                    printf("deplacement NON autorise, une piece de meme couleur est deja presente ! \n");
+                                    return 0;
+                                }
+                            }
+                            else if(grille[solveur-i] >= 'a' && grille[solveur-i] <= 'z'){
+                                printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                            else if(grille[solveur+i] != '.'){
+                                // alors pas d'obstacle rencontrer
+                                printf("deplacement NON autorise, ya un truc bizarre la!");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(i == (solveur2-solveur)){
+                                printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                                return 1;
+                            }
+                        }
+                        else if(piece->couleur == 'n'){
+
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                                printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur-i]);
+                                if(i < (solveur2 - solveur) ){
+                                    printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
+                                    return 0;
+                                }
+                                // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                                else if(i > (solveur2 - solveur)){
+                                    printf("déplacement non autorisé, truc bizarre la ! \n");
+                                    return 0;
+                                }
+                                // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                                else if(i == (solveur2 - solveur)){
+                                    printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
+                                    return 1;
+                                }
+                            }
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                                printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                            else if(grille[solveur+i] != '.'){
+                                // alors pas d'obstacle rencontrer
+                                printf("deplacement NON autorise, ya un truc bizarre la!");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(i == (solveur2-solveur)){
+                                printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
+                                return 0;
+                            }
+                        }
+                    }
+                    else{
+                        calcul++;
+                    }
+                
             }
         }
         else if(calculR == 8){
             if(solveur2 == solveur-7 || solveur2 == solveur-6 || solveur2 == solveur-5 || solveur2 == solveur-4 || solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1){
-                printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
+                printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR8)\n");
+                if(solveur2 - solveur > 0){
+                    int i = 1;
+                    for(i=1;grille[solveur+i] == '.' && i < (solveur2 - solveur);i++){
+    
+                    }
+                    printf(" mon compteur i : %d \n",i);
+                    if(piece->couleur == 'b'){
+                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                            if(i < (solveur2 - solveur) ){
+                                printf("déplacement non autorisé, il y a une pièce qui vous bloque la vue ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                            else if(i > (solveur2 - solveur)){
+                                printf("déplacement non autorisé, truc bizarre la ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            else if(i == (solveur2 - solveur)){
+                                printf("deplacement NON autorise une piece de même couleur est deja presente !!! \n ");
+                                return 0;
+                            }
+                        }
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                        else if(grille[solveur+i] != '.'){
+                            // alors pas d'obstacle rencontrer
+                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(i == (solveur2-solveur)){
+                            printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                            return 1;
+                        }
+                    }
+                    else if(piece->couleur == 'n'){
+
+                        if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                            if(i < (solveur2 - solveur) ){
+                                printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                            else if(i > (solveur2 - solveur)){
+                                printf("déplacement non autorisé, truc bizarre la ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                            else if(i == (solveur2 - solveur)){
+                                printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
+                                return 1;
+                            }
+                        }
+                        // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                            printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                        else if(grille[solveur+i] != '.'){
+                            // alors pas d'obstacle rencontrer
+                            printf("deplacement NON autorise, ya un truc bizarre la!");
+                            return 0;
+                        }
+                        // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                        else if(i == (solveur2-solveur)){
+                            printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
+                            return 0;
+                        }
+
+                    }
+                }
+                    else if(solveur2 - solveur < 0){
+                        int i=-1;
+                        for(i=-1;grille[solveur+i] == '.' && i > (solveur2 - solveur);i--){
+
+                        }
+                        printf("mon compteur i : %d \n",i);
+                        if(piece->couleur == 'b'){
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,grille[solveur+i]);
+                                if(i > (solveur2 = solveur)){
+                                    printf("deplacement non autorise, il y a une piece qui vous bloque la vue ! \n");
+                                    return 0;
+                                }
+                                else if(i < (solveur2 - solveur)){
+                                    printf("deplacement non autorise, truc bizarre la ! \n");
+                                    return 0;
+                                }
+                                else if(i == (solveur2 - solveur)){
+                                    printf("deplacement NON autorise, une piece de meme couleur est deja presente ! \n");
+                                    return 0;
+                                }
+                            }
+                            else if(grille[solveur-i] >= 'a' && grille[solveur-i] <= 'z'){
+                                printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                            else if(grille[solveur+i] != '.'){
+                                // alors pas d'obstacle rencontrer
+                                printf("deplacement NON autorise, ya un truc bizarre la!");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(i == (solveur2-solveur)){
+                                printf("deplacement autorise, vous allez manger la piece ! bravo \n");
+                                return 1;
+                            }
+                        }
+                        else if(piece->couleur == 'n'){
+
+                            if(grille[solveur+i] >= 'A' && grille[solveur+i] <= 'Z'){
+                                // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                                printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur-i]);
+                                if(i < (solveur2 - solveur) ){
+                                    printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
+                                    return 0;
+                                }
+                                // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est blanche : probablement pas possible d'ailleurs
+                                else if(i > (solveur2 - solveur)){
+                                    printf("déplacement non autorisé, truc bizarre la ! \n");
+                                    return 0;
+                                }
+                                // Si je rencontre AUCUN obstacle a l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
+                                else if(i == (solveur2 - solveur)){
+                                    printf("deplacement autorise !!!  vous allez manger la piece ! Bravo !\n ");
+                                    return 1;
+                                }
+                            }
+                            // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(grille[solveur+i] >= 'a' && grille[solveur+i] <= 'z'){
+                                printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
+                            else if(grille[solveur+i] != '.'){
+                                // alors pas d'obstacle rencontrer
+                                printf("deplacement NON autorise, ya un truc bizarre la!");
+                                return 0;
+                            }
+                            // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire :
+                            else if(i == (solveur2-solveur)){
+                                printf("deplacement NON autorise, une piece de meme couleur est deja presente \n");
+                                return 0;
+                            }
+                        }
+                    }
+                    else{
+                        calcul++;
+                    }
+                
             }
         }
         // Verif du déplacement vertical
@@ -743,6 +1577,7 @@ int solveurLigneDeVueRectiligne(Piece* piece, int solveur,int solveur2, char* gr
             }
         }
         else if(calculQ == 2){
+            printf("ah ouais grave bizarre... je passe dans calculQ = 2 .....\n");
             if(solveur2 == solveur-10 || solveur2 == solveur+10 || solveur2 == solveur+20 || solveur2 == solveur+30 || solveur2 == solveur+40 || solveur2 == solveur+50 || solveur2 == solveur+60){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
             }
@@ -778,5 +1613,4 @@ int solveurLigneDeVueRectiligne(Piece* piece, int solveur,int solveur2, char* gr
             }
         }
     }
-}
 }
