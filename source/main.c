@@ -35,6 +35,7 @@ typedef struct Piece Piece;
 
 #include "../header/creationInit.h"
 #include "../header/position.h"
+#include "../header/ligneDeVue.h"
 
 //char* getPiece(char*, char*);
 
@@ -69,7 +70,7 @@ int main () {
     fgets(userCoord,5,stdin);
     */
     
-    deplacementPiece(&piece3,"e7h7",grille);
+    deplacementPiece(&piece3,"a8d8",grille);
     afficherGrille(grille);
 
     return 0;

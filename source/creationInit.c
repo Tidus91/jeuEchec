@@ -61,7 +61,7 @@ int initialisationPiece(Piece *piece,char *grille){
         else if(piece->typep.roi.nom == 'R')
             grille[41] = (*piece).typep.roi.nom;
         else if(piece->typep.tour.nom == 'T')
-            grille[25] = piece->typep.tour.nom;
+            grille[11] = piece->typep.tour.nom;
         return 2;
     }
     return 0;
