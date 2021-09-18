@@ -1,4 +1,5 @@
 int ligneDeVueRectiligne(Piece* piece, int solveur,int solveur2, char* grille){
+        printf("Rentrer dans function ligneDeVueRectiligne..... \n");
         if(solveur2-solveur > 0){
             int i = 1;
             for(i=1;grille[solveur+i] == '.' && i < (solveur2 - solveur);i++){

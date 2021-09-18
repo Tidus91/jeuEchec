@@ -70,7 +70,7 @@ int main () {
     fgets(userCoord,5,stdin);
     */
     
-    deplacementPiece(&piece3,"a8d8",grille);
+    deplacementPiece(&piece3,"c5c8",grille);
     afficherGrille(grille);
 
     return 0;
