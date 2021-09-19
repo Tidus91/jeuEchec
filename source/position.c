@@ -1,25 +1,29 @@
-void deplacementPiece(Piece *piece,char *coord, char *grille) {
+//void deplacementPiece(Piece *piece,char *coord, Piece *grille) {
+int deplacementPiece(Joueur *joueur,char *coord,Piece *grille){
 
     int solveur = 0;
     int solveur2 = 0;
     int solveur3 = 0;
-    solveur = testPositionInitial(piece,coord,grille);
+    solveur = testPositionInitial(joueur,coord,grille);
     if(solveur == 0){
-        return;
+        return 0;
     }
-    solveur2 = testPositionFinal(piece,coord,grille);
+    solveur2 = testPositionFinal(coord,grille);
     if(solveur == solveur2){
         printf("Vous ne pouvez pas vous faire du surplace....\n");
-        return;
+        return 0;
     }
-    solveur3 = isPossible(piece,solveur,solveur2,grille);
+    solveur3 = isPossible(solveur,solveur2,grille);
     if(solveur3 != 0){
-        grille[solveur2] = piece->typep.roi.nom;
-        grille[solveur] = '.';
+        //grille[solveur2] = piece->typep.roi.nom;
+        //grille[solveur] = '.';
+        grille[solveur2].typep.roi.nom = grille[solveur].typep.roi.nom ;
+        grille[solveur].typep.roi.nom = '.';
     }
 }
 
-int testPositionInitial(Piece* piece,char *coord, char* grille) {
+//int testPositionInitial(Piece* piece,char *coord, Piece *grille) {
+int testPositionInitial(Joueur *joueur,char *coord,Piece *grille){
 
     // j'utilise solveur pour calculer l'index total pour aller chercher la correspondance dans ma grille
     int solveur = 0;
@@ -61,19 +65,31 @@ int testPositionInitial(Piece* piece,char *coord, char* grille) {
     printf("\n vous etes la piece : %c \n",piece->typep.roi.nom);
     printf("\n grille solveur : %c \n",grille[solveur]);
 */
+/*
     if(grille[solveur] == piece->typep.roi.nom){
         printf("La pièce est bien en %c%c dans la grille \n",coord[0],coord[1]);
         return solveur;
     }
+*/
+    if(grille[solveur].typep.roi.nom >= 'a' && grille[solveur].typep.roi.nom <= 'z' && joueur->couleur == 'n'){
+        printf("Il y a bien une piece noir en %c%c dans la grille \n",coord[0],coord[1]);
+        return solveur;
+    }
+    else if(grille[solveur].typep.roi.nom >= 'A' && grille[solveur].typep.roi.nom <= 'Z' && joueur->couleur == 'b'){
+        printf("Il y a bien une piece de couleur blanche en %c%c dans la grille\n",coord[0],coord[1]);
+        return solveur;
+    }
     else
     {
-        printf("La piece %c n'est pas à la coordonnée que vous avez rentre ! \n",piece->typep.roi.nom);
+        printf("Il n'y a pas de piece a cette coordonnee OU vous n'êtes pas autorise à jouer une piece de cette couleur ! \n");
         return 0;
     }
+
     
 }
 
-int testPositionFinal(Piece* piece, char *coord, char* grille){
+//int testPositionFinal(Piece* piece, char *coord, char* grille){
+int testPositionFinal(char* coord, Piece* grille){
 
     int solveur = 0;
 
@@ -117,32 +133,38 @@ int testPositionFinal(Piece* piece, char *coord, char* grille){
     return solveur;
 }
 
-int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
+int isPossible(int solveur,int solveur2,Piece *grille){
     int testPos = 0;
-    if(piece->typep.roi.deplacement == "adjacent"){
-        printf("cette piece se déplace de maniere adjacente ! \n");
+    //if(piece->typep.roi.deplacement == "adjacent"){
+    if(grille[solveur].typep.roi.deplacement == "adjacent"){
+        printf("cette piece se déplace de maniere adjacente (isPossible)! \n");
         // je ne peux me déplacer dans mon index seulement de +-1 ou +-1+-10 ou +-10
-        if(solveur2 == solveur+1 || solveur2 == solveur-1 || solveur2 == solveur+10 || solveur2 == solveur-10 || solveur2 == solveur+11 || solveur2 == solveur-11){
+        if(solveur2 == solveur+1 || solveur2 == solveur-1 || solveur2 == solveur+10 || solveur2 == solveur-10 || solveur2 == solveur+11 || solveur2 == solveur-11 || solveur2 == solveur-9 || solveur2 == solveur+9){
             printf("Position pre-autoriser, recherche d'une eventuelle piece allie à cette position \n");
-            if(piece->couleur == 'b'){
+            //if(piece->couleur == 'b'){
+            if(grille[solveur].couleur == 'b'){
                 // si la lettre est minuscule alors la couleur est noire
-                if(!(grille[solveur2] >= 'A' && grille[solveur2] <= 'Z')){
+                if(!(grille[solveur2].typep.roi.nom >= 'A' && grille[solveur2].typep.roi.nom <= 'Z')){
                     printf("alors le déplacement est autorisé \n");
                     testPos = 1;
                     return testPos;
                 }
             }
-            else if(piece->couleur == 'n'){
+            else if(grille[solveur].couleur == 'n'){
                 // si la lettre est majuscule alors la couleur est blanche
-                if(!(grille[solveur2] >= 'a' && grille[solveur2] <= 'z')){
+                if(!(grille[solveur2].typep.roi.nom >= 'a' && grille[solveur2].typep.roi.nom <= 'z')){
                     printf("alors le déplacement est autorisé \n");
                     testPos = 1;
                     return testPos;
                 }
             }
         }
+        else{
+            printf("deplacement non autorise ! ");
+            return 0;
+        }
     }
-    else if(piece->typep.roi.deplacement == "rectiligne"){
+    else if(grille[solveur].typep.roi.deplacement == "rectiligne"){
         printf("cette piece se déplace de maniere rectiligne ! (isPossible function) \n");
         // je ne peux me déplacer dans mon index seulement si .....
         int calcul = 0 ;
@@ -156,41 +178,41 @@ int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
         if(calculR == 1){
             if(solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4 || solveur2 == solveur+5 || solveur2 == solveur+6 || solveur2 == solveur+7){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis (calcul R=1 , isPossible function\n");
-                return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
             }
         }
         else if(calculR == 2){
             printf("isPossibleRectigligneCalculR2\n");
-            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+            return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
         }
         else if(calculR == 3){
             printf("isPossibleisRectiligneCalculR3 \n");
-            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+            return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
         }
         else if(calculR == 4){
             printf("isPossibleRectiligneCalculR4 \n");
-            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+            return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
         }
         else if(calculR == 5){
             printf("isPossibleRectiligneCalculR5");
-            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+            return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
         }
         else if(calculR == 6){
             printf("isPossibleRectiligneCalculR6 \n");
-            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+            return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
         }
         else if(calculR == 7){
             printf("isPossibleRectiligneCalculR7 \n");
-            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+            return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
         }
         else if(calculR == 8){
             printf("isPossibleRectiligneCalculR8 \n");
-            return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+            return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
         }
         if(calculQ == 1){
             if(solveur2 == solveur+10 || solveur2 == solveur+20 || solveur2 == solveur+30 || solveur2 == solveur+40 || solveur2 == solveur+50 || solveur2 == solveur+60 || solveur2 == solveur+70){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
             }
             else{
                 calcul++;
@@ -199,7 +221,7 @@ int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
         else if(calculQ == 2){
             if(solveur2 == solveur-10 || solveur2 == solveur+10 || solveur2 == solveur+20 || solveur2 == solveur+30 || solveur2 == solveur+40 || solveur2 == solveur+50 || solveur2 == solveur+60){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
             }
             else{
                 calcul++;
@@ -208,7 +230,7 @@ int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
         else if(calculQ == 3){
             if(solveur2 == solveur-20 || solveur2 == solveur-10 || solveur2 == solveur+10 || solveur2 == solveur+20 || solveur2 == solveur+30 || solveur2 == solveur+40 || solveur2 == solveur+50){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
             }
             else{
                 calcul++;
@@ -217,7 +239,7 @@ int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
         else if(calculQ == 4){
             if(solveur2 == solveur-30 || solveur2 == solveur-20 || solveur2 == solveur-10 || solveur2 == solveur+10 || solveur2 == solveur+20 || solveur2 == solveur+30 || solveur2 == solveur+40){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
             }
             else{
                 calcul++;
@@ -226,7 +248,7 @@ int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
         else if(calculQ == 5){
             if(solveur2 == solveur-40 || solveur2 == solveur-30 || solveur2 == solveur-20 || solveur2 == solveur-10 || solveur2 == solveur+10 || solveur2 == solveur+20 || solveur2 == solveur+30){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
             }
             else{
                 calcul++;
@@ -235,7 +257,7 @@ int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
         else if(calculQ == 6){
             if(solveur2 == solveur-50 || solveur2 == solveur-40 || solveur2 == solveur-30 || solveur2 == solveur-20 || solveur2 == solveur-10 || solveur2 == solveur+10 || solveur2 == solveur+20){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
             }
             else{
                 calcul++;
@@ -244,7 +266,7 @@ int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
         else if(calculQ == 7){
             if(solveur2 == solveur-60 || solveur2 == solveur-50 || solveur2 == solveur-40 || solveur2 == solveur-30 || solveur2 == solveur-20 || solveur2 == solveur-10 || solveur2 == solveur+10){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
             }
             else{
                 calcul++;
@@ -253,7 +275,7 @@ int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
         else if(calculR == 8){
             if(solveur2 == solveur-70 || solveur2 == solveur-60 || solveur2 == solveur-50 || solveur2 == solveur-40 || solveur2 == solveur-30 || solveur2 == solveur-20 || solveur2 == solveur-10){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return solveurLigneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return solveurLigneDeVueRectiligne(solveur,solveur2,grille);
             }
             else{
                 calcul++;
@@ -265,7 +287,7 @@ int isPossible(Piece *piece ,int solveur,int solveur2,char *grille){
             return 0;
         }
 
-    else if(piece->typep.roi.deplacement == "rectiligneDiagonale"){
+    else if(grille[solveur].typep.roi.deplacement == "rectiligneDiagonale"){
         printf("cette piece se déplace de maniere rectiligne et diagonale ! \n");
     }
     else{
@@ -320,8 +342,8 @@ int isAdjacent(Piece* piece,int solveur,int solveur2,char* grille){
     }
 }
 
-int solveurLigneDeVueRectiligne(Piece* piece, int solveur,int solveur2, char* grille){
-    if(piece->typep.roi.deplacement == "rectiligne"){
+int solveurLigneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
+    if(grille[solveur].typep.roi.deplacement == "rectiligne"){
         printf("cette piece se déplace de maniere rectiligne ! (fonction solveurLDVR) \n");
         // je ne peux me déplacer dans mon index seulement si .....
         int calcul = 0 ;
@@ -331,100 +353,100 @@ int solveurLigneDeVueRectiligne(Piece* piece, int solveur,int solveur2, char* gr
         if(calculR == 1){
             if(solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4 || solveur2 == solveur+5 || solveur2 == solveur+6 || solveur2 == solveur+7){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis (CalculR = 1) \n");
-                return ligneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligne(solveur,solveur2,grille);
             }
         }
         else if(calculR == 2){
             printf("je suis bien dans calculR=2 \n");
             if(solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4 || solveur2 == solveur+5 || solveur2 == solveur+6){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR2)\n");
-                return ligneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligne(solveur,solveur2,grille);
             }
         }
         else if(calculR == 3){
             if(solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4 || solveur2 == solveur+5){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR3)\n");
-                return ligneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligne(solveur,solveur2,grille);
             }
         }
         else if(calculR == 4){
             if(solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR4)\n");
-                return ligneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligne(solveur,solveur2,grille);
             }
         }
         else if(calculR == 5){
             if(solveur2 == solveur-4 || solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR5)\n");
-                return ligneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligne(solveur,solveur2,grille);
             }
         }
         else if(calculR == 6){
             if(solveur2 == solveur-5 || solveur2 == solveur-4 || solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR6)\n");
-                return ligneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligne(solveur,solveur2,grille);
             }
         }
         else if(calculR == 7){
             if(solveur2 == solveur-6 || solveur2 == solveur-5 || solveur2 == solveur-4 || solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1 || solveur2 == solveur+1){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR7)\n");
-                return ligneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligne(solveur,solveur2,grille);
             }
         }
         else if(calculR == 8){
             if(solveur2 == solveur-7 || solveur2 == solveur-6 || solveur2 == solveur-5 || solveur2 == solveur-4 || solveur2 == solveur-3 || solveur2 == solveur-2 || solveur2 == solveur-1){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR8)\n");
-                return ligneDeVueRectiligne(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligne(solveur,solveur2,grille);
             }
         }
         // Verif du déplacement vertical
         if(calculQ == 1){
             if(solveur2 == solveur+10 || solveur2 == solveur+20 || solveur2 == solveur+30 || solveur2 == solveur+40 || solveur2 == solveur+50 || solveur2 == solveur+60 || solveur2 == solveur+70){
                 printf("deplacement pre-autorise, checking de la ligne de vue requis(fonction CalculQ1 \n");
-                return ligneDeVueRectiligneY(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligneY(solveur,solveur2,grille);
             }
         }
         else if(calculQ == 2){
             printf("ah ouais grave bizarre... je passe dans calculQ = 2 .....\n");
             if(solveur2 == solveur-10 || solveur2 == solveur+10 || solveur2 == solveur+20 || solveur2 == solveur+30 || solveur2 == solveur+40 || solveur2 == solveur+50 || solveur2 == solveur+60){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return ligneDeVueRectiligneY(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligneY(solveur,solveur2,grille);
             }
         }
         else if(calculQ == 3){
             if(solveur2 == solveur-20 || solveur2 == solveur-10 || solveur2 == solveur+10 || solveur2 == solveur+20 || solveur2 == solveur+30 || solveur2 == solveur+40 || solveur2 == solveur+50){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return ligneDeVueRectiligneY(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligneY(solveur,solveur2,grille);
             }
         }
         else if(calculQ == 4){
             if(solveur2 == solveur-30 || solveur2 == solveur-20 || solveur2 == solveur-10 || solveur2 == solveur+10 || solveur2 == solveur+20 || solveur2 == solveur+30 || solveur2 == solveur+40){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return ligneDeVueRectiligneY(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligneY(solveur,solveur2,grille);
             }
         }
         else if(calculQ == 5){
             if(solveur2 == solveur-40 || solveur2 == solveur-30 || solveur2 == solveur-20 || solveur2 == solveur-10 || solveur2 == solveur+10 || solveur2 == solveur+20 || solveur2 == solveur+30){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return ligneDeVueRectiligneY(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligneY(solveur,solveur2,grille);
             }
         }
         else if(calculQ == 6){
             if(solveur2 == solveur-50 || solveur2 == solveur-40 || solveur2 == solveur-30 || solveur2 == solveur-20 || solveur2 == solveur-10 || solveur2 == solveur+10 || solveur2 == solveur+20){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return ligneDeVueRectiligneY(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligneY(solveur,solveur2,grille);
             }
         }
         else if(calculQ == 7){
             if(solveur2 == solveur-60 || solveur2 == solveur-50 || solveur2 == solveur-40 || solveur2 == solveur-30 || solveur2 == solveur-20 || solveur2 == solveur-10 || solveur2 == solveur+10){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return ligneDeVueRectiligneY(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligneY(solveur,solveur2,grille);
             }
         }
         else if(calculR == 8){
             if(solveur2 == solveur-70 || solveur2 == solveur-60 || solveur2 == solveur-50 || solveur2 == solveur-40 || solveur2 == solveur-30 || solveur2 == solveur-20 || solveur2 == solveur-10){
                 printf("déplacement pre-autorise , checking de la ligne de vue requis \n");
-                return ligneDeVueRectiligneY(piece,solveur,solveur2,grille);
+                return ligneDeVueRectiligneY(solveur,solveur2,grille);
             }
         }
     }

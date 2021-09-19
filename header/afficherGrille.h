@@ -1,3 +1,3 @@
-void afficherGrille(char *);
+void afficherGrille(Piece *);
 
 #include "../source/afficherGrille.c"

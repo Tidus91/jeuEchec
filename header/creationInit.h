@@ -1,4 +1,4 @@
-int initialisationPiece(Piece*,char *);
+int initialisationPiece(Piece*,Piece *);
 
 Piece creationPiece(Piece*,char,char);
 

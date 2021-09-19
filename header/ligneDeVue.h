@@ -1,4 +1,4 @@
-int ligneDeVueRectiligne(Piece*, int,int, char*);
-int ligneDeVueRectiligneY(Piece*,int,int,char*);
+int ligneDeVueRectiligne(int,int, Piece*);
+int ligneDeVueRectiligneY(int,int,Piece*);
 
 #include "../source/ligneDeVue.c"

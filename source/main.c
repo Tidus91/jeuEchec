@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../header/afficherGrille.h"
 #include "../header/coord.h"
 
 struct Roi {
@@ -30,9 +29,19 @@ struct Piece{
         struct dame dame;
         struct Tour tour;
     } typep;
+    int etat;
 };
 typedef struct Piece Piece;
 
+struct Joueur{
+    char couleur;
+    int actif;
+    char *coupsJouer;
+    Piece pieceJoueur[3];
+};
+typedef struct Joueur Joueur;
+
+#include "../header/afficherGrille.h"
 #include "../header/creationInit.h"
 #include "../header/position.h"
 #include "../header/ligneDeVue.h"
@@ -41,37 +50,59 @@ typedef struct Piece Piece;
 
 int main () {
 
-    char grille[100];
+    Piece grille[100];
     // je remplie ma grille de 10 x 10 cases avec des '.'
     for(int i=0;i<100;i++)
-        grille[i] = '.';
-    printf("Bienvenue dans le jeu d'échec ! \n\n\n\n");
-    Piece piece1 = creationPiece(&piece1,'r','b');
-    Piece piece2 = creationPiece(&piece2,'r','n');
-    Piece piece3 = creationPiece(&piece3,'t','b');
-    Piece piece4 = creationPiece(&piece4,'d','b');
+        grille[i].typep.roi.nom = '.';
+    printf("Bienvenue dans ce modeste jeu d'échec ! \n\n\n\n");
+    // Creation des joueurs
 
-    printf("nom : %c, nom : %c, nom : %c",piece3.typep.tour.nom,piece3.typep.roi.nom,piece3.typep.dame.nom);
+    // Creation des pieces associés au joueurs
+    Joueur Joueur1;
+    Joueur Joueur2;
+    Joueur1.couleur = 'b';
+    Joueur1.actif = 1;
+    Joueur2.couleur = 'n';
+    Joueur2.actif = 0;
+    Piece roiBlanc = creationPiece(&roiBlanc,'r','b');
+    Joueur1.pieceJoueur[0] = roiBlanc;
+    Piece roiNoir = creationPiece(&roiNoir,'r','n');
+    Joueur2.pieceJoueur[0] = roiNoir;
+    Piece tourBlanc = creationPiece(&tourBlanc,'t','b');
+    Joueur1.pieceJoueur[1] = tourBlanc;
+    Piece dameBlanc = creationPiece(&dameBlanc,'d','b');
+    Joueur1.pieceJoueur[2] = dameBlanc;
+
+    //printf("nom : %c, nom : %c, nom : %c",tourBlanc.typep.tour.nom,tourBlanc.typep.roi.nom,tourBlanc.typep.dame.nom);
     
-    if(initialisationPiece(&piece1,grille) == 0)
+    if(initialisationPiece(&roiBlanc,grille) == 0)
         printf("Erreur !! mauvaise initialisation \n");
-    if(initialisationPiece(&piece2,grille) == 0)
+    if(initialisationPiece(&roiNoir,grille) == 0)
         printf("Erreur !! mauvaise initialisation \n");
-    if(initialisationPiece(&piece3,grille) == 0)
+    if(initialisationPiece(&tourBlanc,grille) == 0)
         printf("Erreur !! mauvaise initialisation \n");
-    if(initialisationPiece(&piece4,grille) == 0)
+    if(initialisationPiece(&dameBlanc,grille) == 0)
         printf("Erreur !! mauvaise initialisation \n");
     
     afficherGrille(grille);
+    if(Joueur1.actif == 1){
+        char userCoord[4];
+        printf("\n\nOu voulez vous jouer joueur Blanc ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3\n");
+        fgets(userCoord,5,stdin);
+        deplacementPiece(&Joueur1,userCoord,grille);
+        afficherGrille(grille);
+    }
+    else if(Joueur2.actif == 1){
+        char userCoord[4];
+        printf("\n\nOu voulez vous jouer joueur Noir ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3\n");
+        fgets(userCoord,5,stdin);
+        deplacementPiece(&Joueur2,userCoord,grille);
+        afficherGrille(grille);
+    }
     
-
-    /*char userCoord[4];
-    printf("\n\nOu voulez vous jouer ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3\n");
-    fgets(userCoord,5,stdin);
-    */
     
-    deplacementPiece(&piece3,"c5c8",grille);
-    afficherGrille(grille);
+    //deplacementPiece(&tourBlanc,userCoord,grille);
+    
 
     return 0;
 }

@@ -42,26 +42,32 @@ Piece creationPiece(Piece* piece,char type, char couleur){
     return (*piece);
 }
 
-int initialisationPiece(Piece *piece,char *grille){
+int initialisationPiece(Piece *piece,Piece *grille){
 
     // si la piece appartient au joueur noir
     if(piece->couleur == 'n'){
         if((*piece).typep.dame.nom == 'd')
-            grille[57] = (piece->typep.dame.nom);
+            //grille[57] = (piece->typep.dame.nom);
+            grille[57] = (*piece);
         else if(piece->typep.roi.nom == 'r')
-            grille[15] = (*piece).typep.roi.nom;
+            //grille[15] = (*piece).typep.roi.nom;
+            grille[15] = (*piece);
         else if(piece->typep.tour.nom == 't')
-            grille[82] = piece->typep.tour.nom;
+            //grille[82] = piece->typep.tour.nom;
+            grille[82] = (*piece);
         return 1;
     }
     // si la pièce appartient au joueur blanc
     if(piece->couleur == 'b'){
         if((*piece).typep.dame.nom == 'D')
-            grille[23] = (piece->typep.dame.nom);
+            //grille[23] = (piece->typep.dame.nom);
+            grille[23] = (*piece);
         else if(piece->typep.roi.nom == 'R')
-            grille[41] = (*piece).typep.roi.nom;
+            //grille[41] = (*piece).typep.roi.nom;
+            grille[41] = (*piece);
         else if(piece->typep.tour.nom == 'T')
-            grille[43] = piece->typep.tour.nom;
+            //grille[43] = piece->typep.tour.nom;
+            grille[43] = (*piece);
         return 2;
     }
     return 0;

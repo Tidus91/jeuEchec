@@ -1,4 +1,4 @@
-void afficherGrille(char *grille){
+void afficherGrille(Piece *grille){
 
     char ligne[10] = {' ','a','b','c','d','e','f','g','h',' '};
     char colonne[10] = {' ','8','7','6','5','4','3','2','1',' '};
@@ -7,7 +7,8 @@ void afficherGrille(char *grille){
         //toutes les 10 cases
         if(i%10 == 0){
             // ce bout de code fonctionne en parallèle avec le "else" afin d'afficher les lettres en bout de "ligne"
-            grille[i+9]=colonne[i/10];
+            //grille[i+9]=colonne[i/10];
+            grille[i+9].typep.roi.nom = colonne[i/10];
             // je fait un retour chariot et j'affiche mon chiffre
             printf("\n");
             printf("%c ",colonne[i/10]);
@@ -21,7 +22,7 @@ void afficherGrille(char *grille){
             printf("%c ",ligne[i%10]);
         }
         else {
-            printf("%c ",grille[i]);
+            printf("%c ",grille[i].typep.roi.nom);
         }
               
     }
