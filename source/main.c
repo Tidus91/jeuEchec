@@ -36,6 +36,7 @@ typedef struct Piece Piece;
 struct Joueur{
     char couleur;
     int actif;
+    int echec;
     char *coupsJouer;
     Piece pieceJoueur[3];
 };
@@ -45,8 +46,7 @@ typedef struct Joueur Joueur;
 #include "../header/creationInit.h"
 #include "../header/position.h"
 #include "../header/ligneDeVue.h"
-
-//char* getPiece(char*, char*);
+#include "../header/echec.h"
 
 int main () {
 
@@ -62,8 +62,10 @@ int main () {
     Joueur Joueur2;
     Joueur1.couleur = 'b';
     Joueur1.actif = 1;
+    Joueur1.echec = 0;
     Joueur2.couleur = 'n';
     Joueur2.actif = 0;
+    Joueur2.echec = 0;
     Piece roiBlanc = creationPiece(&roiBlanc,'r','b');
     Joueur1.pieceJoueur[0] = roiBlanc;
     Piece roiNoir = creationPiece(&roiNoir,'r','n');
@@ -73,7 +75,6 @@ int main () {
     Piece dameBlanc = creationPiece(&dameBlanc,'d','b');
     Joueur1.pieceJoueur[2] = dameBlanc;
 
-    //printf("nom : %c, nom : %c, nom : %c",tourBlanc.typep.tour.nom,tourBlanc.typep.roi.nom,tourBlanc.typep.dame.nom);
     
     if(initialisationPiece(&roiBlanc,grille) == 0)
         printf("Erreur !! mauvaise initialisation \n");
@@ -85,65 +86,42 @@ int main () {
         printf("Erreur !! mauvaise initialisation \n");
     
     afficherGrille(grille);
-    if(Joueur1.actif == 1){
-        char userCoord[4];
-        printf("\n\nOu voulez vous jouer joueur Blanc ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3\n");
-        fgets(userCoord,5,stdin);
-        deplacementPiece(&Joueur1,userCoord,grille);
-        afficherGrille(grille);
+    int finPartie = 0;
+    while(finPartie == 0){
+        if(Joueur1.actif == 1){
+            char userCoord[6];
+            printf("\n\nOu voulez vous jouer joueur Blanc ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3\n");
+            fgets(userCoord,6,stdin);
+            printf("chaine de carac : %s \n",userCoord);
+            printf("caractere de fin : %c \n",userCoord[5]);
+            if(deplacementPiece(&Joueur1,userCoord,grille) == 1){
+                int king = getBlackKing(grille);
+                int position = testPositionFinal(userCoord,grille);
+                printf("j'arrive bien au moment de isEchec....");
+                /*if(isEchec(position,king,grille) == 1)
+                    Joueur2.echec = 1;*/
+                Joueur1.actif = 0;
+                Joueur2.actif = 1;
+            }
+            afficherGrille(grille);
+        }
+        else if(Joueur2.actif == 1){
+            char userCoord[6];
+            printf("\n\nOu voulez vous jouer joueur Noir ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3\n");
+            fgets(userCoord,6,stdin);
+            printf("chaine de carac : %s \n",userCoord);
+            printf("caractere de fin : %c \n",userCoord[5]);
+            if(deplacementPiece(&Joueur2,userCoord,grille) == 1){
+                int king = getWhiteKing(grille);
+                int position = testPositionFinal(userCoord,grille);
+                /*if(isEchec(position,king,grille) == 1)
+                    Joueur1.echec = 1;*/
+                Joueur2.actif = 0;
+                Joueur1.actif = 1;
+            }
+            afficherGrille(grille);
+        }
     }
-    else if(Joueur2.actif == 1){
-        char userCoord[4];
-        printf("\n\nOu voulez vous jouer joueur Noir ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3\n");
-        fgets(userCoord,5,stdin);
-        deplacementPiece(&Joueur2,userCoord,grille);
-        afficherGrille(grille);
-    }
     
-    
-    //deplacementPiece(&tourBlanc,userCoord,grille);
-    
-
     return 0;
 }
-/*
-char* getPiece(char* coord,char *grille){
-
-    int solveur = 0;
- 
-    if(coord[0] == 'a')
-        solveur = solveur + 1;
-    else if(coord[0] == 'b')
-        solveur = solveur + 2;
-    else if(coord[0] == 'c')
-        solveur = solveur + 3;
-    else if(coord[0] == 'd')
-        solveur = solveur + 4;
-    else if(coord[0] == 'e')
-        solveur = solveur + 5;
-    else if(coord[0] == 'f')
-        solveur = solveur + 6;
-    else if(coord[0] == 'g')
-        solveur = solveur + 7;
-    else if(coord[0] == 'h')
-        solveur = solveur + 8;
-    if(coord[1] == '8')
-        solveur = solveur + 10;
-    else if(coord[1] == '7')
-        solveur = solveur + 20;
-    else if(coord[1] == '6')
-        solveur = solveur + 30;
-    else if(coord[1] == '5')
-        solveur = solveur + 40;
-    else if(coord[1] == '4')
-        solveur = solveur + 50;
-    else if(coord[1] == '3')
-        solveur = solveur + 60;
-    else if(coord[1] == '2')
-        solveur = solveur + 70;
-    else if(coord[1] == '1')
-        solveur = solveur + 80;
-
-    if((grille[solveur] >= 'a' && grille[solveur] <= 'z') || (grille[solveur] >= 'A' && grille[solveur] >= 'Z'))
-        return &grille[solveur];
-}*/
