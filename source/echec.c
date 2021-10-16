@@ -10,8 +10,8 @@ int getBlackKing(Piece *grille){
             return i;
     }
 }
-
-int isEchec(int solveur2,int king,Piece *grille){
+/*
+int isEchec(Joueur *joueurAdverse,int king,Piece *grille){
     if(grille[solveur2].typep.roi.deplacement == "adjacent"){
         if(grille[solveur2].couleur == 'n'){
             int king = getWhiteKing(grille);
@@ -89,4 +89,4 @@ int isEchec(int solveur2,int king,Piece *grille){
             }
         }
 }
-}
+}*/

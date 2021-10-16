@@ -24,6 +24,7 @@ typedef struct Tour Tour;
 
 struct Piece{
     char couleur;
+    int coord;
     union typeP {
         struct Roi roi;
         struct dame dame;
@@ -38,7 +39,7 @@ struct Joueur{
     int actif;
     int echec;
     char *coupsJouer;
-    Piece pieceJoueur[3];
+    Piece pieceJoueur[3]; // tableau des pieces du joueurs
 };
 typedef struct Joueur Joueur;
 
@@ -75,7 +76,7 @@ int main () {
     Piece dameBlanc = creationPiece(&dameBlanc,'d','b');
     Joueur1.pieceJoueur[2] = dameBlanc;
 
-    
+    // Placement des pièces sur l'échequier
     if(initialisationPiece(&roiBlanc,grille) == 0)
         printf("Erreur !! mauvaise initialisation \n");
     if(initialisationPiece(&roiNoir,grille) == 0)
@@ -113,9 +114,16 @@ int main () {
             printf("caractere de fin : %c \n",userCoord[5]);
             if(deplacementPiece(&Joueur2,userCoord,grille) == 1){
                 int king = getWhiteKing(grille);
+                /* pas comme ça qu'il faut faire, car un echec pourrait très bien avoir lieu après déblocage d'une ligne de vue
                 int position = testPositionFinal(userCoord,grille);
-                /*if(isEchec(position,king,grille) == 1)
+                if(isEchec(position,king,grille) == 1)
                     Joueur1.echec = 1;*/
+                // Pour toute les pièces actives du joueur adverse, je regarde si le roi est atteignable
+                // je dois envoyer ces pieces actives a la fonction (isEchec)
+                // avant ça je dois modifier ma fonction createINit ....
+                /*if(isEchec(&Joueur1,king,grille) == 1){
+
+                }*/
                 Joueur2.actif = 0;
                 Joueur1.actif = 1;
             }
