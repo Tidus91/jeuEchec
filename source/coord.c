@@ -19,6 +19,8 @@ int verifCoord(char *userCoord){
             erreurChiffre++;
     }
     erreur = erreurLettre+erreurChiffre;
+    if(userCoord[0] == 'g' && userCoord[1] == 'g' && userCoord[2] == 'w' && userCoord[3] == 'p')
+        return 2;
     if(erreur > 0)
     {
         printf("\nerreur lors de la saisie des coordonnees, Veuillez saisir dans ce type de format uniquement : ---> b3c7 \n\n");

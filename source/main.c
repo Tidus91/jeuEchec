@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../header/coord.h"
+#include <assert.h>
 
 struct Roi {
     char nom;
@@ -45,8 +46,9 @@ struct Joueur{
     char couleur;
     int actif;
     int echec;
+    int gagner;
     char *coupsJouer;
-    Piece pieceJoueur[3]; // tableau des pieces du joueurs
+    Piece pieceJoueur[16]; // tableau des pieces du joueurs
 };
 typedef struct Joueur Joueur;
 
@@ -63,49 +65,61 @@ int main () {
     for(int i=0;i<100;i++)
         grille[i].typep.roi.nom = '.';
     printf("Bienvenue dans ce modeste jeu d'échec ! \n\n\n\n");
-    // Creation des joueurs
-
-    // Creation des pieces associés au joueurs
-    Joueur Joueur1;
-    Joueur Joueur2;
-    Joueur1.couleur = 'b';
-    Joueur1.actif = 1;
-    Joueur1.echec = 0;
-    Joueur2.couleur = 'n';
-    Joueur2.actif = 0;
-    Joueur2.echec = 0;
-    Piece roiBlanc = creationPiece(&roiBlanc,'r','b');
-    Joueur1.pieceJoueur[0] = roiBlanc;
-    Piece roiNoir = creationPiece(&roiNoir,'r','n');
-    Joueur2.pieceJoueur[0] = roiNoir;
-    Piece tourBlanc = creationPiece(&tourBlanc,'t','b');
-    Joueur1.pieceJoueur[1] = tourBlanc;
-    Piece dameBlanc = creationPiece(&dameBlanc,'d','b');
-    Joueur1.pieceJoueur[2] = dameBlanc;
-    Piece fouNoir = creationPiece(&fouNoir,'f','n');
-
-    // Placement des pièces sur l'échequier
-    if(initialisationPiece(&roiBlanc,grille) == 0)
-        printf("Erreur !! mauvaise initialisation \n");
-    if(initialisationPiece(&roiNoir,grille) == 0)
-        printf("Erreur !! mauvaise initialisation \n");
-    if(initialisationPiece(&tourBlanc,grille) == 0)
-        printf("Erreur !! mauvaise initialisation \n");
-    if(initialisationPiece(&dameBlanc,grille) == 0)
-        printf("Erreur !! mauvaise initialisation \n");
-    if(initialisationPiece(&fouNoir,grille) == 0)
-        printf("Erreur !! mauvaise initialisation \n");
     
+    // Final ou jeu echec normal 
+    printf("Tapez 1 pour jouer une finale d'echec ou 2 pour une partie complète ! \n1.Finale\n2.Partie complete\n\n");
+    int typePartie = 0;
+    char choixPartie[3];
+    while(typePartie == 0){
+        fgets(choixPartie,3,stdin);
+        printf("Vous avez choisie : %s\n",choixPartie);
+        if(choixPartie[0] == '1'){
+            typePartie = 1;
+        }
+        else if(choixPartie[0] == '2'){
+            typePartie = 1;
+        }
+        else{
+            printf("Erreur, Veuillez taper 1 ou 2\n");
+        }
+    }
+    Joueur Joueur1 = creationJoueur('b');
+    Joueur Joueur2 = creationJoueur('n');
+    if(choixPartie[0] == '1'){
+        // Initialisation Finale d'echec
+        if(creationSetEchecFinale(&Joueur1,&Joueur2,grille) == 0){
+            printf("Erreur !! ");
+            return 0;
+        }
+        
+    }
+    else if(choixPartie[0] == '2'){
+        // Initialisation Jeu d'echec complet
+        if(creationSetEchecComplet(&Joueur1,&Joueur2,grille) == 0){
+            printf("Erreur !!   vv");
+            return 0;
+        }
+    }
+    else{
+        printf("c'est impossible.... mais juste au cas ou....\n");
+    }
+
     afficherGrille(grille);
     int finPartie = 0;
     while(finPartie == 0){
         if(Joueur1.actif == 1){
             char userCoord[6];
-            printf("\n\nOu voulez vous jouer joueur Blanc ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3\n");
+            printf("\n\nOu voulez vous jouer joueur Blanc ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3 \n Vous pouvez aussi abandonner en tapant 'ggwp'");
             fgets(userCoord,6,stdin);
             printf("chaine de carac : %s \n",userCoord);
-            printf("caractere de fin : %c \n",userCoord[5]);
-            verifCoord(userCoord);
+            //printf("caractere de fin : %c \n",userCoord[5]);
+            // Verification de la saisie
+            if(verifCoord(userCoord) == 2){
+                // abandon de la partie
+                finPartie = 1;
+                Joueur2.gagner = 1;
+                break;
+            }
             if(deplacementPiece(&Joueur1,userCoord,grille) == 1){
                 int king = getBlackKing(grille);
                 int position = testPositionFinal(userCoord,grille);
@@ -119,10 +133,17 @@ int main () {
         }
         else if(Joueur2.actif == 1){
             char userCoord[6];
-            printf("\n\nOu voulez vous jouer joueur Noir ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3\n");
+            printf("\n\nOu voulez vous jouer joueur Noir ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3\n Vous pouvez aussi abandonner en tapant 'ggwp'\n");
             fgets(userCoord,6,stdin);
             printf("chaine de carac : %s \n",userCoord);
-            printf("caractere de fin : %c \n",userCoord[5]);
+            //printf("caractere de fin : %c \n",userCoord[5]);
+            // Verification de la saisie
+            if(verifCoord(userCoord) == 2){
+                // abandon de la partie
+                finPartie = 1;
+                Joueur1.gagner = 1;
+                break;
+            }
             if(deplacementPiece(&Joueur2,userCoord,grille) == 1){
                 int king = getWhiteKing(grille);
                 /* pas comme ça qu'il faut faire, car un echec pourrait très bien avoir lieu après déblocage d'une ligne de vue
@@ -140,6 +161,12 @@ int main () {
             }
             afficherGrille(grille);
         }
+    }
+    if(Joueur2.gagner == 1){
+        printf("Bravo ! le joueur noire a gagner !\n");
+    }
+    else if(Joueur1.gagner == 1){
+        printf("Bravo !  le Joueur blanc a gagner ! \n");
     }
     
     return 0;
