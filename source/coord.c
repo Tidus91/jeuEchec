@@ -27,9 +27,9 @@ int verifCoord(char *userCoord){
         if(erreurChiffre > 0 && erreurLettre == 0 )
             printf("Vous avez fait %d erreurs de chiffre \n",erreurChiffre);
         printf("Veuillez saisir des coordonnees correcte : \n");
-        fgets(userCoord,5,stdin);
+        fgets(userCoord,6,stdin);
         erreur = 0;
-        erreur = verifCoord(userCoord);
+        verifCoord(userCoord);
     }
     return 1;
 }

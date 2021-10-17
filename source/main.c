@@ -105,6 +105,7 @@ int main () {
             fgets(userCoord,6,stdin);
             printf("chaine de carac : %s \n",userCoord);
             printf("caractere de fin : %c \n",userCoord[5]);
+            verifCoord(userCoord);
             if(deplacementPiece(&Joueur1,userCoord,grille) == 1){
                 int king = getBlackKing(grille);
                 int position = testPositionFinal(userCoord,grille);
