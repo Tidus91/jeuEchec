@@ -7,5 +7,6 @@ int testPositionFinal(char*, Piece*);
 int isPossible(int,int,Piece*);
 int isAdjacent(Piece*,int,int,char*);
 int solveurLigneDeVueRectiligne(int,int,Piece*);
+int solveurLigneDeVueDiagonale(int ,int ,Piece *);
 
 #include "../source/position.c"

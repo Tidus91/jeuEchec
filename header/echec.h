@@ -1,5 +1,5 @@
 int getWhiteKing(Piece *);
 int getBlackKing(Piece *);
-int isEchec(int,int,Piece *);
+int isEchec(Joueur *,int,Piece *);
 
 #include "../source/echec.c"
