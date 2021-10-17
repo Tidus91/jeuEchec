@@ -175,6 +175,13 @@ int isPossible(int solveur,int solveur2,Piece *grille){
         printf("solveurLDVR a retourner 0....\n");
         return 0;
     }
+    else if(grille[solveur].typep.roi.deplacement == "diagonale"){
+        printf("cette piece se déplace de maniere diagonale ! \n");
+        if(solveurLigneDeVueDiagonale(solveur,solveur2,grille) != 0)
+            return 1;
+        printf("solveurLDVD a retourner 0....");
+        return 0;
+    }
     else if(grille[solveur].typep.roi.deplacement == "rectiligneDiagonale"){
         printf("cette piece se déplace de maniere rectiligne et diagonale ! \n");
     }
@@ -230,6 +237,11 @@ int solveurLigneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
         printf("solveur2 = : %d\n",solveur2);
         printf("calculR = : %d\n",calculR);
         printf("calculQ = : %d\n",calculQ);
+
+        if(solveur2 <= 10 && solveur2 >= 90){
+        printf("Erreur ! cette piece ne peut pas se deplacer ici ! \n");
+        return 0;
+        }
         //Verif du déplacement horizontale
         if(calculR == 1){
             if(solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4 || solveur2 == solveur+5 || solveur2 == solveur+6 || solveur2 == solveur+7){
@@ -385,4 +397,33 @@ int solveurLigneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
         }
         printf("debug... fin de fonction \n");
     }
+}
+
+int solveurLigneDeVueDiagonale(int solveur,int solveur2,Piece *grille){
+    printf("cette piece se déplace de maniere diagonale ! (fonction solveurLDVD) \n");
+    int calcul = 0 ;
+    int calculR = solveur%10;
+    int calculQ = solveur/10;
+    int calculR2 = solveur2%10;
+    int calculQ2 = solveur2/10;
+    //debug
+    printf("solveur = : %d\n",solveur);
+    printf("solveur2 = : %d\n",solveur2);
+    printf("calculR = : %d\n",calculR);
+    printf("calculQ = : %d\n",calculQ);
+    if(solveur2 <= 10 && solveur2 >= 90){
+        printf("Erreur ! cette piece ne peut pas se deplacer ici ! \n");
+        return 0;
+    }
+    // j'aurais aussi pu utiliser calculQ2 afin de "rapticir" ces conditions
+    if(solveur2 == solveur+9 || solveur2 == solveur+11 || solveur2 == solveur+18 || solveur2 == solveur+22 || solveur2 == solveur+27 || solveur2 == solveur+33 || solveur2 == solveur+36 || solveur2 == solveur+44 || solveur2 == solveur+45 || solveur2 == solveur+55 || solveur2 == solveur+54 || solveur2 == solveur+66 || solveur2 == solveur+63 || solveur2 == solveur+77 || solveur2 == solveur+72 || solveur2 == solveur+88){
+        printf("deplacement vers l'avant \n");
+        return ligneDeVueDiagonalePositive(solveur,solveur2,grille);
+    }
+    else if(solveur2 == solveur-9 || solveur2 == solveur-11 || solveur2 == solveur-18 || solveur2 == solveur-22 || solveur2 == solveur-27 || solveur2 == solveur-33 || solveur2 == solveur-36 || solveur2 == solveur-44 || solveur2 == solveur-45 || solveur2 == solveur-55 || solveur2 == solveur-54 || solveur2 == solveur-66 || solveur2 == solveur-63 || solveur2 == solveur-77 || solveur2 == solveur-72 || solveur2 == solveur-88){
+        printf("deplacement vers l'arriere \n");
+        return ligneDeVueDiagonaleNegative(solveur,solveur2,grille);
+    }
+    printf("???? bizarre return 0 solveurLDVD");
+    return 0;
 }

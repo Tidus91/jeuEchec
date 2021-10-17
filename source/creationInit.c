@@ -1,6 +1,6 @@
 Piece creationPiece(Piece* piece,char type, char couleur){
 
-    if(!(type == 'r' || type == 'd' || type == 't'))
+    if(!(type == 'r' || type == 'd' || type == 't' || type == 'f'))
         printf("Erreur, ce type de piece n'existe pas ! \n\n");
     if(!(couleur == 'b' || couleur == 'n'))
         printf("Erreur mauvaise couleur saisie !");
@@ -22,6 +22,10 @@ Piece creationPiece(Piece* piece,char type, char couleur){
             piece->typep.tour.nom = 'T';
             piece->typep.roi.deplacement = "rectiligne";
         }
+        else if(type == 'f'){
+            piece->typep.tour.nom = 'F';
+            piece->typep.roi.deplacement = "diagonale";
+        }
     }
     if(couleur == 'n'){
         piece->couleur='n';
@@ -36,6 +40,10 @@ Piece creationPiece(Piece* piece,char type, char couleur){
         else if(type == 't'){
             piece->typep.tour.nom = 't';
             piece->typep.roi.deplacement = "rectiligne";
+        }
+        else if(type == 'f'){
+            piece->typep.tour.nom = 'f';
+            piece->typep.roi.deplacement = "diagonale";
         }
     }
 
@@ -55,6 +63,9 @@ int initialisationPiece(Piece *piece,Piece *grille){
         else if(piece->typep.tour.nom == 't')
             //grille[82] = piece->typep.tour.nom;
             grille[82] = (*piece);
+        else if(piece->typep.tour.nom == 'f')
+            //grille[82] = piece->typep.tour.nom;
+            grille[65] = (*piece);
         return 1;
     }
     // si la pièce appartient au joueur blanc
@@ -68,6 +79,9 @@ int initialisationPiece(Piece *piece,Piece *grille){
         else if(piece->typep.tour.nom == 'T')
             //grille[43] = piece->typep.tour.nom;
             grille[43] = (*piece);
+        else if(piece->typep.tour.nom == 'F')
+            //grille[82] = piece->typep.tour.nom;
+            grille[72] = (*piece);
         return 2;
     }
     return 0;

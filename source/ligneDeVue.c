@@ -339,3 +339,258 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille){
     }
 }
 }
+
+int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
+    printf("FOnction LDVD positive\n");
+    int calculR = solveur%10;
+    int calculQ = solveur/10;
+    int calculR2 = solveur2%10;
+    int calculQ2 = solveur2/10;
+    int i = 0;
+    // je regarde si ma destination est "côté droite" afin d'appliquer le calcul correspondant (+11)
+    if(calculR<calculR2){
+        for(i=11;grille[solveur+i].typep.roi.nom == '.' && i < (solveur2 - solveur);i = i+11){
+
+        }
+        if(grille[solveur].couleur == 'b'){
+            if(grille[solveur+i].typep.roi.nom >= 'A' && grille[solveur+i].typep.roi.nom <= 'Z'){
+                if(i < (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("Vous ne pouvez pas manger une piece qui vous appartient \n");
+                    return 0;
+                }
+            }
+            else if(grille[solveur+i].typep.roi.nom >= 'a' && grille[solveur+i].typep.roi.nom <= 'z'){
+                if(i < (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("OK, autorise, vous allez manger la piece noir \n");
+                    return 1;
+                }
+            }
+            else if(grille[solveur+i].typep.roi.nom == '.'){
+                printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
+                return 1;
+            }
+        }
+        else if(grille[solveur].couleur == 'n'){
+            if(grille[solveur+i].typep.roi.nom >= 'A' && grille[solveur+i].typep.roi.nom <= 'Z'){
+                if(i < (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("autorise, vous allez manger la piece blanche \n");
+                    return 1;
+                }
+            }
+            else if(grille[solveur+i].typep.roi.nom >= 'a' && grille[solveur+i].typep.roi.nom <= 'z'){
+                if(i < (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("non autorise, vous ne pouvez pas manger votre propre piece noire\n");
+                    return 0;
+                }
+            }
+        }
+        else if(grille[solveur+i].typep.roi.nom == '.'){
+                printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
+                return 1;
+            }
+    // côté gauche (+9)
+    else if(calculR>calculR2){
+        for(i=9;grille[solveur+i].typep.roi.nom == '.' && i < (solveur2 - solveur);i = i+9){
+
+        }
+        if(grille[solveur].couleur == 'b'){
+            if(grille[solveur+i].typep.roi.nom >= 'A' && grille[solveur+i].typep.roi.nom <= 'Z'){
+                if(i < (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("Vous ne pouvez pas manger une piece qui vous appartient \n");
+                    return 0;
+                }
+            }
+            else if(grille[solveur+i].typep.roi.nom >= 'a' && grille[solveur+i].typep.roi.nom <= 'z'){
+                if(i < (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("OK, autorise, vous allez manger la piece noir \n");
+                    return 1;
+                }
+            }
+            else if(grille[solveur+i].typep.roi.nom == '.'){
+                printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
+                return 1;
+            }
+        }
+        else if(grille[solveur].couleur == 'n'){
+            if(grille[solveur+i].typep.roi.nom >= 'A' && grille[solveur+i].typep.roi.nom <= 'Z'){
+                if(i < (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("autorise, vous allez manger la piece blanche \n");
+                    return 1;
+                }
+            }
+            else if(grille[solveur+i].typep.roi.nom >= 'a' && grille[solveur+i].typep.roi.nom <= 'z'){
+                if(i < (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("non autorise, vous ne pouvez pas manger votre propre piece noire\n");
+                    return 0;
+                }
+            }
+        }
+        else if(grille[solveur+i].typep.roi.nom == '.'){
+                printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
+                return 1;
+            }
+    }
+}
+}
+
+int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
+    printf("FOnction LDVD negative\n");
+    int calculR = solveur%10;
+    int calculQ = solveur/10;
+    int calculR2 = solveur2%10;
+    int calculQ2 = solveur2/10;
+    int i = 0;
+    // Debug
+    printf("calcul R2 = %d\n",solveur2%10);
+    // je regarde si ma destination est "côté droite" afin d'appliquer le calcul correspondant (+11)
+    if(calculR<calculR2){
+        for(i=-9;grille[solveur+i].typep.roi.nom == '.' && i > (solveur2 - solveur);i = i-9){
+
+        }
+        printf("i = %d\n",i);
+        if(grille[solveur].couleur == 'b'){
+            if(grille[solveur+i].typep.roi.nom >= 'A' && grille[solveur+i].typep.roi.nom <= 'Z'){
+                if(i > (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("Vous ne pouvez pas manger une piece qui vous appartient \n");
+                    return 0;
+                }
+            }
+            else if(grille[solveur+i].typep.roi.nom >= 'a' && grille[solveur+i].typep.roi.nom <= 'z'){
+                if(i > (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("OK, autorise, vous allez manger la piece noir \n");
+                    return 1;
+                }
+            }
+            else if(grille[solveur+i].typep.roi.nom == '.'){
+                printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
+                return 1;
+            }
+        }
+        else if(grille[solveur].couleur == 'n'){
+            if(grille[solveur+i].typep.roi.nom >= 'A' && grille[solveur+i].typep.roi.nom <= 'Z'){
+                if(i > (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("autorise, vous allez manger la piece blanche \n");
+                    return 1;
+                }
+            }
+            else if(grille[solveur+i].typep.roi.nom >= 'a' && grille[solveur+i].typep.roi.nom <= 'z'){
+                if(i > (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("non autorise, vous ne pouvez pas manger votre propre piece noire\n");
+                    return 0;
+                }
+            }
+        }
+        else if(grille[solveur+i].typep.roi.nom == '.'){
+                printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
+                return 1;
+            }
+    }
+    // côté gauche (+9)
+    else if(calculR>calculR2){
+        for(i=-11;grille[solveur+i].typep.roi.nom == '.' && i > (solveur2 - solveur);i = i-11){
+
+        }
+        printf("i = %d\n",i );
+        if(grille[solveur].couleur == 'b'){
+            if(grille[solveur+i].typep.roi.nom >= 'A' && grille[solveur+i].typep.roi.nom <= 'Z'){
+                if(i > (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("Vous ne pouvez pas manger une piece qui vous appartient \n");
+                    return 0;
+                }
+            }
+            else if(grille[solveur+i].typep.roi.nom >= 'a' && grille[solveur+i].typep.roi.nom <= 'z'){
+                if(i > (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("OK, autorise, vous allez manger la piece noir \n");
+                    return 1;
+                }
+            }
+            else if(grille[solveur+i].typep.roi.nom == '.'){
+                printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
+                return 1;
+            }
+        }
+        else if(grille[solveur].couleur == 'n'){
+            if(grille[solveur+i].typep.roi.nom >= 'A' && grille[solveur+i].typep.roi.nom <= 'Z'){
+                if(i > (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("autorise, vous allez manger la piece blanche \n");
+                    return 1;
+                }
+            }
+            else if(grille[solveur+i].typep.roi.nom >= 'a' && grille[solveur+i].typep.roi.nom <= 'z'){
+                if(i > (solveur2-solveur)){
+                    printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
+                    return 0;
+                }
+                else if(i == (solveur2-solveur)){
+                    printf("non autorise, vous ne pouvez pas manger votre propre piece noire\n");
+                    return 0;
+                }
+            }
+        }
+        else if(grille[solveur+i].typep.roi.nom == '.'){
+                printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
+                return 1;
+            }
+    }
+
+}

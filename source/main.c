@@ -20,6 +20,12 @@ struct Tour{
 };
 typedef struct Tour Tour;
 
+struct Fou{
+    char nom;
+    char *deplacement;
+};
+typedef struct Fou Fou;
+
 // je voulais créer une struct Piece pour mettre directement dans les paramètre de mes fonctions, plutôt que mettre des paramètres optionnelles mais bon...
 
 struct Piece{
@@ -29,6 +35,7 @@ struct Piece{
         struct Roi roi;
         struct dame dame;
         struct Tour tour;
+        struct Fou fou;
     } typep;
     int etat;
 };
@@ -75,6 +82,7 @@ int main () {
     Joueur1.pieceJoueur[1] = tourBlanc;
     Piece dameBlanc = creationPiece(&dameBlanc,'d','b');
     Joueur1.pieceJoueur[2] = dameBlanc;
+    Piece fouNoir = creationPiece(&fouNoir,'f','n');
 
     // Placement des pièces sur l'échequier
     if(initialisationPiece(&roiBlanc,grille) == 0)
@@ -84,6 +92,8 @@ int main () {
     if(initialisationPiece(&tourBlanc,grille) == 0)
         printf("Erreur !! mauvaise initialisation \n");
     if(initialisationPiece(&dameBlanc,grille) == 0)
+        printf("Erreur !! mauvaise initialisation \n");
+    if(initialisationPiece(&fouNoir,grille) == 0)
         printf("Erreur !! mauvaise initialisation \n");
     
     afficherGrille(grille);
