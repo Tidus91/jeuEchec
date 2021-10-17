@@ -11,18 +11,21 @@ void afficherGrille(Piece *grille){
             grille[i+9].typep.roi.nom = colonne[i/10];
             // je fait un retour chariot et j'affiche mon chiffre
             printf("\n");
+            // pour supprimer le "--- --- ---..." en trop du début
+            if(i>=10)
+                printf("   --- --- --- --- --- --- --- ---\n");
             printf("%c ",colonne[i/10]);
         }
         // pour ma première ligne j'affiche mes lettres
         else if(i < 10){
-            printf("%c ",ligne[i]);
+            printf("  %c ",ligne[i]);
         }
         // pour ma dernière ligne j'affiche mes lettres
         else if(i > 90){
-            printf("%c ",ligne[i%10]);
+            printf("  %c ",ligne[i%10]);
         }
         else {
-            printf("%c ",grille[i].typep.roi.nom);
+            printf("| %c ",grille[i].typep.roi.nom);
         }
               
     }
