@@ -132,6 +132,7 @@ Joueur creationJoueur(char couleurParam){
     joueurRandom.couleur = couleurParam;
     joueurRandom.echec = 0;
     joueurRandom.gagner = 0;
+    joueurRandom.nombreCoups = 0;
     if(couleurParam == 'b')
         joueurRandom.actif = 1;
     else if(couleurParam == 'n')

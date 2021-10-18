@@ -416,7 +416,6 @@ int solveurLigneDeVueDiagonale(int solveur,int solveur2,Piece *grille){
         printf("Erreur ! cette piece ne peut pas se deplacer ici ! \n");
         return 0;
     }
-    // j'aurais aussi pu utiliser calculQ2 afin de "rapticir" ces conditions
     if(solveur2 == solveur+9 || solveur2 == solveur+11 || solveur2 == solveur+18 || solveur2 == solveur+22 || solveur2 == solveur+27 || solveur2 == solveur+33 || solveur2 == solveur+36 || solveur2 == solveur+44 || solveur2 == solveur+45 || solveur2 == solveur+55 || solveur2 == solveur+54 || solveur2 == solveur+66 || solveur2 == solveur+63 || solveur2 == solveur+77 || solveur2 == solveur+72 || solveur2 == solveur+88){
         printf("deplacement vers l'avant \n");
         return ligneDeVueDiagonalePositive(solveur,solveur2,grille);

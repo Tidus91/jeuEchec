@@ -38,6 +38,7 @@ struct Piece{
         struct Tour tour;
         struct Fou fou;
     } typep;
+    int valeur;
     int etat;
 };
 typedef struct Piece Piece;
@@ -47,6 +48,7 @@ struct Joueur{
     int actif;
     int echec;
     int gagner;
+    int nombreCoups;
     char *coupsJouer;
     Piece pieceJoueur[16]; // tableau des pieces du joueurs
 };
@@ -62,8 +64,10 @@ int main () {
 
     Piece grille[100];
     // je remplie ma grille de 10 x 10 cases avec des '.'
-    for(int i=0;i<100;i++)
+    for(int i=0;i<100;i++){
         grille[i].typep.roi.nom = '.';
+    }
+
     printf("Bienvenue dans ce modeste jeu d'échec ! \n\n\n\n");
     
     // Final ou jeu echec normal 

@@ -400,11 +400,15 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-        }
-        else if(grille[solveur+i].typep.roi.nom == '.'){
+            else if(grille[solveur+i].typep.roi.nom == '.'){
                 printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
                 return 1;
             }
+        }
+        if(i > (solveur2-solveur)){
+            printf("deplacement non autorise, i > s2-s1...\n");
+            return 0;
+        }
     }
     // côté gauche (+9)
     else if(calculR>calculR2){
@@ -459,11 +463,15 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-        }
-        else if(grille[solveur+i].typep.roi.nom == '.'){
+            else if(grille[solveur+i].typep.roi.nom == '.'){
                 printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
                 return 1;
             }
+        }
+        if(i > (solveur2-solveur)){
+            printf("deplacement non autorise, i > s2-s1...\n");
+            return 0;
+        }
     }
 }
 
@@ -529,11 +537,16 @@ int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-        }
-        else if(grille[solveur+i].typep.roi.nom == '.'){
+            else if(grille[solveur+i].typep.roi.nom == '.'){
                 printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
                 return 1;
             }
+        }
+        if(i < (solveur2-solveur)){
+            printf("deplacement non autorise, i < s2-s1...\n");
+            return 0;
+        }
+        
     }
     // côté gauche (+9)
     else if(calculR>calculR2){
@@ -588,11 +601,15 @@ int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-        }
-        else if(grille[solveur+i].typep.roi.nom == '.'){
+            else if(grille[solveur+i].typep.roi.nom == '.'){
                 printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
                 return 1;
             }
+        }
+        if(i < (solveur2-solveur)){
+            printf("deplacement non autorise, i < s2-s1...\n");
+            return 0;
+        }
     }
 
 }
