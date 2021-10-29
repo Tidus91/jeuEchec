@@ -1,4 +1,4 @@
-void afficherGrille(Piece *grille){
+void afficherGrille(Piece *grille[]){
 
     char ligne[10] = {' ','a','b','c','d','e','f','g','h',' '};
     char colonne[10] = {' ','8','7','6','5','4','3','2','1',' '};
@@ -8,8 +8,8 @@ void afficherGrille(Piece *grille){
         if(i%10 == 0){
             // ce bout de code fonctionne en parallèle avec le "else" afin d'afficher les lettres en bout de "ligne"
             //grille[i+9]=colonne[i/10];
-            grille[i+9].typep.roi.nom = colonne[i/10];
-            grille[i].typep.roi.nom = colonne[i/10];
+            (*grille[i+9]).type = colonne[i/10];
+            (*grille[i]).type = colonne[i/10];
             // je fait un retour chariot et j'affiche mon chiffre
             printf("\n");
             // pour supprimer le "--- --- ---..." en trop du début
@@ -20,22 +20,22 @@ void afficherGrille(Piece *grille){
         // pour ma première ligne j'affiche mes lettres
         else if(i < 10){
             //j'initialise a Z les bordures (cela servira plus tard pour le checking des deplacements des pieces)
-            grille[i].typep.roi.nom = 'Z';
+            (*grille[i]).type = 'Z';
             printf("  %c ",ligne[i]);
         }
         // pour ma dernière ligne j'affiche mes lettres
         else if(i > 90){
-            grille[i].typep.roi.nom = 'Z';
+            (*grille[i]).type = 'Z';
             printf("  %c ",ligne[i%10]);
         }
         else {
-            printf("| %c ",grille[i].typep.roi.nom);
+            printf("| %c ",(*grille[i]).type);
         }   
     }
     printf("\n\n grille veritable : \n");
         for(int y =0;y<100;y++){
             if(y%10 == 0)
                 printf("\n");
-            printf("%c ",grille[y].typep.roi.nom);
+            printf("%c ",(*grille[y]).type);
         }
 }

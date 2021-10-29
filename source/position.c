@@ -15,11 +15,11 @@ int deplacementPiece(Joueur *joueur,char *coord,Piece *grille){
     }
     solveur3 = isPossible(solveur,solveur2,grille);
     if(solveur3 != 0){
-        //grille[solveur2] = piece->typep.roi.nom;
+        //grille[solveur2] = piece->type;
         //grille[solveur] = '.';
-        //grille[solveur2].typep.roi.nom = grille[solveur].typep.roi.nom ;
+        //grille[solveur2].type = grille[solveur].type ;
         grille[solveur2] = grille[solveur];
-        grille[solveur].typep.roi.nom = '.';
+        grille[solveur].type = '.';
         return 1;
     }
     printf("Quelque chose c'est mal passe, rentrer un coup legale svp \n");
@@ -66,20 +66,20 @@ int testPositionInitial(Joueur *joueur,char *coord,Piece *grille){
         solveur = solveur + 80;
 /*
     printf("\n si j'ai bien coder êtes actuellement en : %c%c qui correspont à : %d  \n",coord[0],coord[1],solveur);
-    printf("\n vous etes la piece : %c \n",piece->typep.roi.nom);
+    printf("\n vous etes la piece : %c \n",piece->type);
     printf("\n grille solveur : %c \n",grille[solveur]);
 */
 /*
-    if(grille[solveur] == piece->typep.roi.nom){
+    if(grille[solveur] == piece->type){
         printf("La pièce est bien en %c%c dans la grille \n",coord[0],coord[1]);
         return solveur;
     }
 */
-    if(grille[solveur].typep.roi.nom >= 'a' && grille[solveur].typep.roi.nom <= 'z' && joueur->couleur == 'n'){
+    if(grille[solveur].type >= 'a' && grille[solveur].type <= 'z' && joueur->couleur == 'n'){
         printf("Il y a bien une piece noir en %c%c dans la grille \n",coord[0],coord[1]);
         return solveur;
     }
-    else if(grille[solveur].typep.roi.nom >= 'A' && grille[solveur].typep.roi.nom <= 'Z' && joueur->couleur == 'b'){
+    else if(grille[solveur].type >= 'A' && grille[solveur].type <= 'Z' && joueur->couleur == 'b'){
         printf("Il y a bien une piece de couleur blanche en %c%c dans la grille\n",coord[0],coord[1]);
         return solveur;
     }
@@ -132,7 +132,7 @@ int testPositionFinal(char* coord, Piece* grille){
 
 /*
     printf("Je souhaite donc arriver à la case %d \n",solveur);
-    printf("je suis une piece : %c et mon deplacement est : %s \n",piece->typep.roi.nom,piece->typep.roi.deplacement);
+    printf("je suis une piece : %c et mon deplacement est : %s \n",piece->type,piece->deplacement);
 */
     return solveur;
 }
@@ -140,8 +140,8 @@ int testPositionFinal(char* coord, Piece* grille){
 int isPossible(int solveur,int solveur2,Piece *grille){
     printf("je passe bien dans isPossible ! \n");
     int testPos = 0;
-    //if(piece->typep.roi.deplacement == "adjacent"){
-    if(grille[solveur].typep.roi.deplacement == "adjacent"){
+    //if(piece->deplacement == "adjacent"){
+    if(grille[solveur].deplacement == "adjacent"){
         printf("cette piece se déplace de maniere adjacente (isPossible)! \n");
         // je ne peux me déplacer dans mon index seulement de +-1 ou +-1+-10 ou +-10
         if(solveur2 == solveur+1 || solveur2 == solveur-1 || solveur2 == solveur+10 || solveur2 == solveur-10 || solveur2 == solveur+11 || solveur2 == solveur-11 || solveur2 == solveur-9 || solveur2 == solveur+9){
@@ -149,7 +149,7 @@ int isPossible(int solveur,int solveur2,Piece *grille){
             //if(piece->couleur == 'b'){
             if(grille[solveur].couleur == 'b'){
                 // si la lettre est minuscule alors la couleur est noire ou vide
-                if(!(grille[solveur2].typep.roi.nom >= 'A' && grille[solveur2].typep.roi.nom <= 'Z')){
+                if(!(grille[solveur2].type >= 'A' && grille[solveur2].type <= 'Z')){
                     printf("alors le déplacement est autorisé \n");
                     testPos = 1;
                     return testPos;
@@ -157,7 +157,7 @@ int isPossible(int solveur,int solveur2,Piece *grille){
             }
             else if(grille[solveur].couleur == 'n'){
                 // si la lettre est majuscule alors la couleur est blanche
-                if(!(grille[solveur2].typep.roi.nom >= 'a' && grille[solveur2].typep.roi.nom <= 'z')){
+                if(!(grille[solveur2].type >= 'a' && grille[solveur2].type <= 'z')){
                     printf("alors le déplacement est autorisé \n");
                     testPos = 1;
                     return testPos;
@@ -169,20 +169,20 @@ int isPossible(int solveur,int solveur2,Piece *grille){
             return 0;
         }
     }
-    else if(grille[solveur].typep.roi.deplacement == "rectiligne"){
+    else if(grille[solveur].deplacement == "rectiligne"){
         if(solveurLigneDeVueRectiligne(solveur,solveur2,grille) != 0)
             return 1;
         printf("solveurLDVR a retourner 0....\n");
         return 0;
     }
-    else if(grille[solveur].typep.roi.deplacement == "diagonale"){
+    else if(grille[solveur].deplacement == "diagonale"){
         printf("cette piece se déplace de maniere diagonale ! \n");
         if(solveurLigneDeVueDiagonale(solveur,solveur2,grille) != 0)
             return 1;
         printf("solveurLDVD a retourner 0....");
         return 0;
     }
-    else if(grille[solveur].typep.roi.deplacement == "rectiligneDiagonale"){
+    else if(grille[solveur].deplacement == "rectiligneDiagonale"){
         printf("cette piece se déplace de maniere rectiligne et diagonale ! \n");
         if(solveurLigneDeVueRectiligneDiagonale(solveur,solveur2,grille) != 0)
             return 1;
@@ -198,7 +198,7 @@ int isPossible(int solveur,int solveur2,Piece *grille){
 
 int isAdjacent(Piece* piece,int solveur,int solveur2,char* grille){
     int testPos = 0;
-    if(piece->typep.roi.deplacement == "adjacent"){
+    if(piece->deplacement == "adjacent"){
         printf("cette piece se déplace de maniere adjacente ! \n");
         // Gestion des erreurs possible au niveau de la premiere et derniere ligne
         if(solveur2 <= 10 && solveur2 >= 90){
@@ -241,9 +241,10 @@ int solveurLigneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
     printf("calculR = : %d\n",calculR);
     printf("calculQ = : %d\n",calculQ);
 
+    // cas normalement impossible grâce a ma validation des coordonnées saisie par les users
     if(solveur2 <= 10 && solveur2 >= 90){
-    printf("Erreur ! cette piece ne peut pas se deplacer ici ! \n");
-    return 0;
+        printf("Erreur ! cette piece ne peut pas se deplacer ici ! \n");
+        return 0;
     }
     //Verif du déplacement horizontale
     if(calculR == 1){

@@ -1,12 +1,12 @@
 int getWhiteKing(Piece *grille){
     for(int i=0;i<100;i++){
-        if(grille[i].typep.roi.nom == 'r')
+        if(grille[i].type == 'r')
             return i;
     }
 }
 int getBlackKing(Piece *grille){
     for(int i=0;i<100;i++){
-        if(grille[i].typep.roi.nom == 'R')
+        if(grille[i].type == 'R')
             return i;
     }
 }
@@ -38,10 +38,10 @@ int isEchec(Joueur *joueurAdverse,int king,Piece *grille){
             int king = getWhiteKing(grille);
             if(solveur2 - king > 0){
                 int i = 1;
-                for(i=1;grille[solveur2+i].typep.roi.nom == '.';i++){
+                for(i=1;grille[solveur2+i].type == '.';i++){
 
                 }
-                if(grille[solveur2+i].typep.roi.nom == 'R'){
+                if(grille[solveur2+i].type == 'R'){
                     printf("!!! ATTENTION !!! Le roi Blanc est en echec !! \n\n");
                     return 1;
                 }
@@ -50,10 +50,10 @@ int isEchec(Joueur *joueurAdverse,int king,Piece *grille){
             }
             else if(solveur2 - king < 0){
                 int i = -1;
-                for(i=-1;grille[solveur2+i].typep.roi.nom == '.';i--){
+                for(i=-1;grille[solveur2+i].type == '.';i--){
                     
                 }
-                if(grille[solveur2+i].typep.roi.nom == 'R'){
+                if(grille[solveur2+i].type == 'R'){
                     printf("!!! ATTENTION !!! Le roi Blanc est en echec !! \n\n");
                     return 1;
                 }
@@ -65,10 +65,10 @@ int isEchec(Joueur *joueurAdverse,int king,Piece *grille){
             int king = getBlackKing(grille);
             if(solveur2 - king > 0){
                 int i = 1;
-                for(i=1;grille[solveur2+i].typep.roi.nom == '.';i++){
+                for(i=1;grille[solveur2+i].type == '.';i++){
 
                 }
-                if(grille[solveur2+i].typep.roi.nom == 'r'){
+                if(grille[solveur2+i].type == 'r'){
                     printf("!!! ATTENTION !!! Le roi Noir est en echec !! \n\n");
                     return 1;
                 }
@@ -77,10 +77,10 @@ int isEchec(Joueur *joueurAdverse,int king,Piece *grille){
             }
             else if(solveur2 - king < 0){
                 int i = -1;
-                for(i=-1;grille[solveur2+i].typep.roi.nom == '.';i--){
+                for(i=-1;grille[solveur2+i].type == '.';i--){
                     
                 }
-                if(grille[solveur2+i].typep.roi.nom == 'r'){
+                if(grille[solveur2+i].type == 'r'){
                     printf("!!! ATTENTION !!! Le roi Noir est en echec !! \n\n");
                     return 1;
                 }

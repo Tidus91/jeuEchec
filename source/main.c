@@ -2,46 +2,7 @@
 #include <stdlib.h>
 #include "../header/coord.h"
 #include <assert.h>
-
-struct Roi {
-    char nom;
-    char *deplacement;
-};
-typedef struct Roi Roi;
-
-struct dame{
-    char nom;
-    char *deplacement;
-};
-typedef struct dame dame;
-
-struct Tour{
-    char nom;
-    char *deplacement;
-};
-typedef struct Tour Tour;
-
-struct Fou{
-    char nom;
-    char *deplacement;
-};
-typedef struct Fou Fou;
-
-// je voulais créer une struct Piece pour mettre directement dans les paramètre de mes fonctions, plutôt que mettre des paramètres optionnelles mais bon...
-
-struct Piece{
-    char couleur;
-    int coord;
-    union typeP {
-        struct Roi roi;
-        struct dame dame;
-        struct Tour tour;
-        struct Fou fou;
-    } typep;
-    int valeur;
-    int etat;
-};
-typedef struct Piece Piece;
+#include "../header/Piece.h"
 
 struct Joueur{
     char couleur;
@@ -62,16 +23,17 @@ typedef struct Joueur Joueur;
 
 int main () {
 
-    Piece grille[100];
+    Piece *grille[100];
     // je remplie ma grille de 10 x 10 cases avec des '.'
     for(int i=0;i<100;i++){
-        grille[i].typep.roi.nom = '.';
+        grille[i] = creationPieceVide();
     }
 
     printf("Bienvenue dans ce modeste jeu d'échec ! \n\n\n\n");
     
     // Final ou jeu echec normal 
     printf("Tapez 1 pour jouer une finale d'echec ou 2 pour une partie complète ! \n1.Finale\n2.Partie complete\n\n");
+    /*
     int typePartie = 0;
     char choixPartie[3];
     while(typePartie == 0){
@@ -89,9 +51,10 @@ int main () {
     }
     Joueur Joueur1 = creationJoueur('b');
     Joueur Joueur2 = creationJoueur('n');
+    /*
     if(choixPartie[0] == '1'){
         // Initialisation Finale d'echec
-        if(creationSetEchecFinale(&Joueur1,&Joueur2,grille) == 0){
+        if(creationSetEchecFinale(&Joueur1,&Joueur2,&grille) == 0){
             printf("Erreur !! ");
             return 0;
         }
@@ -99,7 +62,7 @@ int main () {
     }
     else if(choixPartie[0] == '2'){
         // Initialisation Jeu d'echec complet
-        if(creationSetEchecComplet(&Joueur1,&Joueur2,grille) == 0){
+        if(creationSetEchecComplet(&Joueur1,&Joueur2,&grille) == 0){
             printf("Erreur !!   vv");
             return 0;
         }
@@ -107,8 +70,10 @@ int main () {
     else{
         printf("c'est impossible.... mais juste au cas ou....\n");
     }
-
+*/
     afficherGrille(grille);
+
+    /*
     int finPartie = 0;
     while(finPartie == 0){
         if(Joueur1.actif == 1){
@@ -128,8 +93,8 @@ int main () {
                 int king = getBlackKing(grille);
                 int position = testPositionFinal(userCoord,grille);
                 printf("j'arrive bien au moment de isEchec....");
-                /*if(isEchec(position,king,grille) == 1)
-                    Joueur2.echec = 1;*/
+                if(isEchec(position,king,grille) == 1)
+                    Joueur2.echec = 1;
                 Joueur1.actif = 0;
                 Joueur2.actif = 1;
             }
@@ -156,10 +121,11 @@ int main () {
                     Joueur1.echec = 1;*/
                 // Pour toute les pièces actives du joueur adverse, je regarde si le roi est atteignable
                 // je dois envoyer ces pieces actives a la fonction (isEchec)
-                // avant ça je dois modifier ma fonction createINit ....
-                /*if(isEchec(&Joueur1,king,grille) == 1){
+                // avant ça je dois modifier ma fonction createINit ....*/
+                /*
+                if(isEchec(&Joueur1,king,grille) == 1){
 
-                }*/
+                }
                 Joueur2.actif = 0;
                 Joueur1.actif = 1;
             }
@@ -172,6 +138,6 @@ int main () {
     else if(Joueur1.gagner == 1){
         printf("Bravo !  le Joueur blanc a gagner ! \n");
     }
-    
+    */
     return 0;
 }
