@@ -29,11 +29,12 @@ int main () {
         grille[i] = creationPieceVide();
     }
 
+
     printf("Bienvenue dans ce modeste jeu d'échec ! \n\n\n\n");
     
     // Final ou jeu echec normal 
     printf("Tapez 1 pour jouer une finale d'echec ou 2 pour une partie complète ! \n1.Finale\n2.Partie complete\n\n");
-    /*
+
     int typePartie = 0;
     char choixPartie[3];
     while(typePartie == 0){
@@ -51,10 +52,9 @@ int main () {
     }
     Joueur Joueur1 = creationJoueur('b');
     Joueur Joueur2 = creationJoueur('n');
-    /*
     if(choixPartie[0] == '1'){
         // Initialisation Finale d'echec
-        if(creationSetEchecFinale(&Joueur1,&Joueur2,&grille) == 0){
+        if(creationSetEchecFinale(&Joueur1,&Joueur2,grille) == 0){
             printf("Erreur !! ");
             return 0;
         }
@@ -62,7 +62,7 @@ int main () {
     }
     else if(choixPartie[0] == '2'){
         // Initialisation Jeu d'echec complet
-        if(creationSetEchecComplet(&Joueur1,&Joueur2,&grille) == 0){
+        if(creationSetEchecComplet(&Joueur1,&Joueur2,grille) == 0){
             printf("Erreur !!   vv");
             return 0;
         }
@@ -70,7 +70,7 @@ int main () {
     else{
         printf("c'est impossible.... mais juste au cas ou....\n");
     }
-*/
+
     afficherGrille(grille);
 
     /*

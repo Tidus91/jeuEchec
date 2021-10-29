@@ -58,7 +58,7 @@ Piece* creationPieceVide(){
     return pieceVide;
 }
 
-Piece creationPiece(char type, char couleur){
+Piece* creationPiece(char type, char couleur){
     assert(type == 'r' || type == 'd' || type == 't' || type == 'f');
     assert(couleur == 'b' || couleur == 'n');
     if(!(type == 'r' || type == 'd' || type == 't' || type == 'f'))
@@ -66,51 +66,51 @@ Piece creationPiece(char type, char couleur){
     if(!(couleur == 'b' || couleur == 'n'))
         printf("Erreur mauvaise couleur saisie !");
     
-    Piece pieceRandom;
+    Piece *pieceRandom = (Piece*)malloc(sizeof(Piece));
     if(couleur == 'b'){
-        pieceRandom.couleur='b';
+        (*pieceRandom).couleur='b';
         if(type=='r'){
-            pieceRandom.type = 'R';
-            pieceRandom.deplacement = "adjacent";
-            pieceRandom.valeur = 0;
+            pieceRandom->type = 'R';
+            pieceRandom->deplacement = "adjacent";
+            pieceRandom->valeur = 0;
         }
         else if(type == 'd'){
-            pieceRandom.type = 'D';
-            pieceRandom.deplacement = "rectiligneDiagonale";
-            pieceRandom.valeur = 9;
+            pieceRandom->type = 'D';
+            pieceRandom->deplacement = "rectiligneDiagonale";
+            pieceRandom->valeur = 9;
         }
         else if(type == 't'){
-            pieceRandom.type = 'T';
-            pieceRandom.deplacement = "rectiligne";
-            pieceRandom.valeur = 5;
+            pieceRandom->type = 'T';
+            pieceRandom->deplacement = "rectiligne";
+            pieceRandom->valeur = 5;
         }
         else if(type == 'f'){
-            pieceRandom.type = 'F';
-            pieceRandom.deplacement = "diagonale";
-            pieceRandom.valeur = 3;
+            pieceRandom->type = 'F';
+            pieceRandom->deplacement = "diagonale";
+            pieceRandom->valeur = 3;
         }
     }
     if(couleur == 'n'){
-        pieceRandom.couleur='n';
+        pieceRandom->couleur='n';
         if(type=='r'){
-            pieceRandom.type = 'r';
-            pieceRandom.deplacement = "adjacent";
-            pieceRandom.valeur = 0;
+            pieceRandom->type = 'r';
+            pieceRandom->deplacement = "adjacent";
+            pieceRandom->valeur = 0;
         }
         else if(type == 'd'){
-            pieceRandom.type = 'd';
-            pieceRandom.deplacement = "rectiligneDiagonale";
-            pieceRandom.valeur = 9;
+            pieceRandom->type = 'd';
+            pieceRandom->deplacement = "rectiligneDiagonale";
+            pieceRandom->valeur = 9;
         }
         else if(type == 't'){
-            pieceRandom.type = 't';
-            pieceRandom.deplacement = "rectiligne";
-            pieceRandom.valeur = 5;
+            pieceRandom->type = 't';
+            pieceRandom->deplacement = "rectiligne";
+            pieceRandom->valeur = 5;
         }
         else if(type == 'f'){
-            pieceRandom.type = 'f';
-            pieceRandom.deplacement = "diagonale";
-            pieceRandom.valeur = 3;
+            pieceRandom->type = 'f';
+            pieceRandom->deplacement = "diagonale";
+            pieceRandom->valeur = 3;
         }
     }
     return pieceRandom;

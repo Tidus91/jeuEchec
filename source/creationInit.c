@@ -1,62 +1,62 @@
-int initialisationPieceFinale(Piece *piece,Piece *grille){
+int initialisationPieceFinale(Piece *piece,Piece *grille[]){
 
     // si la piece appartient au joueur noir
     if(piece->couleur == 'n'){
         if((*piece).type== 'd')
-            grille[57] = (*piece);
+            grille[57] = piece;
         else if(piece->type == 'r')
-            grille[15] = (*piece);
+            grille[15] = piece;
         else if(piece->type == 't')
-            grille[82] = (*piece);
+            grille[82] = piece;
         else if(piece->type == 'f')
-            grille[65] = (*piece);
+            grille[65] = piece;
         return 1;
     }
     // si la pièce appartient au joueur blanc
     if(piece->couleur == 'b'){
         if((*piece).type == 'D')
-            grille[23] = (*piece);
+            grille[23] = piece;
         else if(piece->type == 'R')
-            grille[41] = (*piece);
+            grille[41] = piece;
         else if(piece->type == 'T')
-            grille[43] = (*piece);
+            grille[43] = piece;
         else if(piece->type == 'F')
-            grille[72] = (*piece);
+            grille[72] = piece;
         return 2;
     }
     return 0;
 }
 
-int initialisationPieceComplet(Piece *piece,Piece *grille){
+int initialisationPieceComplet(Piece *piece,Piece *grille[]){
     if(piece->couleur == 'n'){
         if((*piece).type == 'd')
             //grille[57] = (piece->typep.dame.nom);
-            grille[14] = (*piece);
+            grille[14] = piece;
         else if(piece->type == 'r')
             //grille[15] = (*piece).type;
-            grille[15] = (*piece);
+            grille[15] = piece;
         else if(piece->type == 't'){
-            grille[11] = (*piece);
+            grille[11] = piece;
         }
         else if(piece->type == 'f')
             //grille[82] = piece->typep.tour.nom;
-            grille[13] = (*piece);
+            grille[13] = piece;
         return 1;
     }
     // si la pièce appartient au joueur blanc
     if(piece->couleur == 'b'){
         if((*piece).type == 'D')
             //grille[23] = (piece->typep.dame.nom);
-            grille[84] = (*piece);
+            grille[84] = piece;
         else if(piece->type == 'R')
             //grille[41] = (*piece).type;
-            grille[85] = (*piece);
+            grille[85] = piece;
         else if(piece->type == 'T')
             //grille[43] = piece->typep.tour.nom;
-            grille[81] = (*piece);
+            grille[81] = piece;
         else if(piece->type== 'F')
             //grille[82] = piece->typep.tour.nom;
-            grille[83] = (*piece);
+            grille[83] = piece;
         return 2;
     }
     return 0;
@@ -79,38 +79,38 @@ Joueur creationJoueur(char couleurParam){
     return joueurRandom;
 }
 
-int creationSetEchecFinale(Joueur *Joueur1, Joueur *Joueur2,Piece *grille){
+int creationSetEchecFinale(Joueur *Joueur1, Joueur *Joueur2,Piece *grille[]){
 
     // Je commancee par créer mes pieces
-    Piece roiBlanc = creationPiece('r','b');
-    Joueur1->pieceJoueur[0] = roiBlanc;
-    Piece roiNoir = creationPiece('r','n');
-    Joueur2->pieceJoueur[0] = roiNoir;
-    Piece tourBlanc = creationPiece('t','b');
-    Joueur1->pieceJoueur[1] = tourBlanc;
-    Piece dameBlanc = creationPiece('d','b');
-    Joueur1->pieceJoueur[2] = dameBlanc;
-    Piece fouNoir = creationPiece('f','n');
-    Joueur2->pieceJoueur[1] = fouNoir;
+    Piece* roiBlanc = creationPiece('r','b');
+    //Joueur1->pieceJoueur[0] = roiBlanc;
+    Piece* roiNoir = creationPiece('r','n');
+    //Joueur2->pieceJoueur[0] = roiNoir;
+    Piece* tourBlanc = creationPiece('t','b');
+    //Joueur1->pieceJoueur[1] = tourBlanc;
+    Piece* dameBlanc = creationPiece('d','b');
+    //Joueur1->pieceJoueur[2] = dameBlanc;
+    Piece* fouNoir = creationPiece('f','n');
+    //Joueur2->pieceJoueur[1] = fouNoir;
 
     // Placement des pièces sur l'échequier
-    if(initialisationPieceFinale(&roiBlanc,grille) == 0){
+    if(initialisationPieceFinale(roiBlanc,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }
-    if(initialisationPieceFinale(&roiNoir,grille) == 0){
+    if(initialisationPieceFinale(roiNoir,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }
-    if(initialisationPieceFinale(&tourBlanc,grille) == 0){
+    if(initialisationPieceFinale(tourBlanc,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }
-    if(initialisationPieceFinale(&dameBlanc,grille) == 0){
+    if(initialisationPieceFinale(dameBlanc,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }
-    if(initialisationPieceFinale(&fouNoir,grille) == 0){
+    if(initialisationPieceFinale(fouNoir,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }
@@ -118,53 +118,53 @@ int creationSetEchecFinale(Joueur *Joueur1, Joueur *Joueur2,Piece *grille){
         
 }
 
-int creationSetEchecComplet(Joueur *Joueur1, Joueur *Joueur2,Piece *grille){
+int creationSetEchecComplet(Joueur *Joueur1, Joueur *Joueur2,Piece *grille[]){
     // Je commancee par créer mes pieces
-    Piece roiBlanc = creationPiece('r','b');
-    Joueur1->pieceJoueur[0] = roiBlanc;
-    Piece roiNoir = creationPiece('r','n');
-    Joueur2->pieceJoueur[0] = roiNoir;
-    Piece tourBlanc = creationPiece('t','b');
-    Joueur1->pieceJoueur[1] = tourBlanc;
-    Piece tourNoir = creationPiece('t','n');
-    Joueur2->pieceJoueur[1] = tourNoir;
-    Piece dameBlanc = creationPiece('d','b');
-    Joueur1->pieceJoueur[2] = dameBlanc;
-    Piece dameNoir = creationPiece('d','n');
-    Piece fouBlanc = creationPiece('f','b');
-    Piece fouNoir = creationPiece('f','n');
+    Piece* roiBlanc = creationPiece('r','b');
+    //Joueur1->pieceJoueur[0] = roiBlanc;
+    Piece* roiNoir = creationPiece('r','n');
+    //Joueur2->pieceJoueur[0] = roiNoir;
+    Piece* tourBlanc = creationPiece('t','b');
+    //Joueur1->pieceJoueur[1] = tourBlanc;
+    Piece* tourNoir = creationPiece('t','n');
+    //Joueur2->pieceJoueur[1] = tourNoir;
+    Piece* dameBlanc = creationPiece('d','b');
+    //Joueur1->pieceJoueur[2] = dameBlanc;
+    Piece* dameNoir = creationPiece('d','n');
+    Piece* fouBlanc = creationPiece('f','b');
+    Piece* fouNoir = creationPiece('f','n');
     
 
     // Placement des pièces sur l'échequier
-    if(initialisationPieceComplet(&roiBlanc,grille) == 0){
+    if(initialisationPieceComplet(roiBlanc,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }
-    if(initialisationPieceComplet(&roiNoir,grille) == 0){
+    if(initialisationPieceComplet(roiNoir,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }
-    if(initialisationPieceComplet(&tourBlanc,grille) == 0){
+    if(initialisationPieceComplet(tourBlanc,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }
-    if(initialisationPieceComplet(&tourNoir,grille) == 0){
+    if(initialisationPieceComplet(tourNoir,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }
-    if(initialisationPieceComplet(&dameBlanc,grille) == 0){
+    if(initialisationPieceComplet(dameBlanc,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }
-    if(initialisationPieceComplet(&dameNoir,grille) == 0){
+    if(initialisationPieceComplet(dameNoir,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }
-    if(initialisationPieceComplet(&fouBlanc,grille) == 0){
+    if(initialisationPieceComplet(fouBlanc,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }
-    if(initialisationPieceComplet(&fouNoir,grille) == 0){
+    if(initialisationPieceComplet(fouNoir,grille) == 0){
         printf("Erreur !! mauvaise initialisation \n");
         return 0;
     }

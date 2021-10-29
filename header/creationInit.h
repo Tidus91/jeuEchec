@@ -1,9 +1,9 @@
-int initialisationPieceFinale(Piece*,Piece *);
-int initialisationPieceComplet(Piece *,Piece *);
+int initialisationPieceFinale(Piece*,Piece *[]);
+int initialisationPieceComplet(Piece *,Piece *[]);
 
-Piece creationPiece(char,char);
+Piece* creationPiece(char,char);
 Joueur creationJoueur(char);
-int creationSetEchecFinale(Joueur *, Joueur *,Piece *);
-int creationSetEchecComplet(Joueur *, Joueur *,Piece *grille);
+int creationSetEchecFinale(Joueur *, Joueur *,Piece *[]);
+int creationSetEchecComplet(Joueur *, Joueur *,Piece *[]);
 
 #include "../source/creationInit.c"
