@@ -11,7 +11,7 @@ struct Joueur{
     int gagner;
     int nombreCoups;
     char *coupsJouer;
-    Piece pieceJoueur[16]; // tableau des pieces du joueurs
+    Piece *pieceJoueur[16]; // tableau des pieces du joueurs
 };
 typedef struct Joueur Joueur;
 
@@ -73,7 +73,6 @@ int main () {
 
     afficherGrille(grille);
 
-    /*
     int finPartie = 0;
     while(finPartie == 0){
         if(Joueur1.actif == 1){
@@ -90,11 +89,11 @@ int main () {
                 break;
             }
             if(deplacementPiece(&Joueur1,userCoord,grille) == 1){
-                int king = getBlackKing(grille);
+                //int king = getBlackKing(grille);
                 int position = testPositionFinal(userCoord,grille);
                 printf("j'arrive bien au moment de isEchec....");
-                if(isEchec(position,king,grille) == 1)
-                    Joueur2.echec = 1;
+                //if(isEchec(position,king,grille) == 1)
+                    //Joueur2.echec = 1;
                 Joueur1.actif = 0;
                 Joueur2.actif = 1;
             }
@@ -114,7 +113,7 @@ int main () {
                 break;
             }
             if(deplacementPiece(&Joueur2,userCoord,grille) == 1){
-                int king = getWhiteKing(grille);
+                //int king = getWhiteKing(grille);
                 /* pas comme ça qu'il faut faire, car un echec pourrait très bien avoir lieu après déblocage d'une ligne de vue
                 int position = testPositionFinal(userCoord,grille);
                 if(isEchec(position,king,grille) == 1)
@@ -125,7 +124,7 @@ int main () {
                 /*
                 if(isEchec(&Joueur1,king,grille) == 1){
 
-                }
+                }*/
                 Joueur2.actif = 0;
                 Joueur1.actif = 1;
             }
@@ -138,6 +137,5 @@ int main () {
     else if(Joueur1.gagner == 1){
         printf("Bravo !  le Joueur blanc a gagner ! \n");
     }
-    */
     return 0;
 }

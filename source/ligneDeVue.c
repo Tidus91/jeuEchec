@@ -1,15 +1,15 @@
-int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
+int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille[]){
     printf("Rentrer dans function ligneDeVueRectiligne..... \n");
     // Si je me deplace vers la "droite"
     if(solveur2-solveur > 0){
         int i = 1;
         // je recherche le premier obstacle ou alors jusqu'a ce que j'arrive a ma destination
-        for(i=1;grille[solveur+i].type == '.' && i < (solveur2 - solveur);i++){
+        for(i=1;getPieceType(grille[solveur+i]) == '.' && i < (solveur2 - solveur);i++){
 
         }
         printf(" mon compteur i : %d \n",i);
-        if(grille[solveur].couleur == 'b'){
-            if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+        if(getPieceColor(grille[solveur]) == 'b'){
+            if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Y'){
                 // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
                 if(i < (solveur2 - solveur) ){
                     printf("déplacement non autorisé, il y a une piece blanche qui vous appartient qui vous bloque la vue ! \n");
@@ -26,7 +26,7 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-            else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+            else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'y'){
 
                 if(i < (solveur2 - solveur)){
                     printf("deplacement NON autorise, une piece de couleur noir vous bloque l'accès ! \n");
@@ -37,13 +37,13 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
                 return 1;
                 }
             }
-            else if(grille[solveur+i].type == '.'){
+            else if(getPieceType(grille[solveur+i]) == '.'){
                 printf("aucune piece ne gene la ldv , deplacement autorise !");
                 return 1;
             }
                 /*
                 // Si je rencontre un obstacle APRES l'endroit ou je voulais me déplacer ET que cette pièce est noire : probablement pas possible d'ailleurs
-                else if(grille[solveur+i].type != '.'){
+                else if(getPieceType(grille[solveur+i]) != '.'){
                     // alors pas d'obstacle rencontrer
                     printf("deplacement NON autorise, ya un truc bizarre la!");
                     return 0;
@@ -54,9 +54,9 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
                     return 1;
                 }*/
         }
-        else if(grille[solveur].couleur == 'n'){
+        else if(getPieceColor(grille[solveur]) == 'n'){
 
-            if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+            if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Y'){
                 // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
                 if(i < (solveur2 - solveur) ){
                     printf("déplacement non autorisé, une piece vous bloque l'acces! \n");
@@ -74,7 +74,7 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
                 }
             }
             // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
-            else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+            else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'y'){
                 if(i < (solveur2 - solveur)){
                     printf("deplacement NON autorise, une piece vous bloque l'accès ! \n");
                     return 0;
@@ -84,7 +84,7 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }    
             }
-            else if(grille[solveur+i].type == '.'){
+            else if(getPieceType(grille[solveur+i]) == '.'){
                 printf("deplacement autorise, rien ne bloque la LDV \n");
                 return 1;
             }
@@ -93,14 +93,14 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
     // probleme d'indentation ligne d'après
     else if(solveur2-solveur < 0){
             int i = -1;
-            for(i=-1;grille[solveur+i].type == '.' && i > (solveur2 - solveur);i--){
+            for(i=-1;getPieceType(grille[solveur+i]) == '.' && i > (solveur2 - solveur);i--){
 
             }
             printf("mon compteur i : %d \n",i);
             printf("solveur2-solveur = : %d\n",solveur2-solveur);
-                if(grille[solveur].couleur == 'b'){
-                    if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
-                        printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,grille[solveur+i].type);
+                if(getPieceColor(grille[solveur]) == 'b'){
+                    if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Y'){
+                        printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,getPieceType(grille[solveur+i]));
                         if(i > (solveur2 - solveur)){
                             printf("deplacement non autorise, il y a une piece blanche qui vous bloque la vue ! \n");
                             return 0;
@@ -114,7 +114,7 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
                             return 0;
                         }
                     }
-                    else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+                    else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'y'){
                         if(i > (solveur2 - solveur)){
                             printf("deplacement non autorise, il y a une piece noir qui vous bloque la vue !\n");
                             return 0;
@@ -128,14 +128,14 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
                             return 1;
                         }
                     }
-                    else if(grille[solveur+i].type == '.'){
+                    else if(getPieceType(grille[solveur+i]) == '.'){
                         printf("Aucune piece ne bloque la ligne de vue, autorise !\n");
                         return 1;
                     }
                 }
-                else if(grille[solveur].couleur == 'n'){
+                else if(getPieceColor(grille[solveur]) == 'n'){
 
-                    if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+                    if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Y'){
                         //printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
                         if(i > (solveur2 - solveur) ){
                             printf("déplacement non autorisé, une piece de couleur Blanche vous bloque l'acces! \n");
@@ -152,7 +152,7 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
                             return 1;
                         }
                     }
-                    else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+                    else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'y'){
                         if(i > (solveur2-solveur)){
                             printf("deplacement non autorise, une piece noir vous bloque la LDV...\n");
                             return 0;
@@ -162,7 +162,7 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
                             return 0;
                         }
                     }
-                    else if(grille[solveur+i].type == '.'){
+                    else if(getPieceType(grille[solveur+i]) == '.'){
                         printf("deplacement autorise ! aucune piece de ne gêne et l'emplacement est libre");
                         return 1;
                     }
@@ -175,17 +175,17 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
 }
 
 
-int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille){
+int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille[]){
 
     printf("Rentrer dans function ligneDeVueRectiligne'YY'..... \n");
     if(solveur2 - solveur > 0){
         int i = 10;
-        for (i=10;grille[solveur+i].type == '.' && i < (solveur2 - solveur);i = i+10){
+        for (i=10;getPieceType(grille[solveur+i]) == '.' && i < (solveur2 - solveur);i = i+10){
 
         }
         printf("mon compteur i : %d \n",i);
-        if(grille[solveur].couleur == 'b'){
-            if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+        if(getPieceColor(grille[solveur]) == 'b'){
+            if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Z'){
                 printf(" j'arrive bien ici à l'indice %d, boucle numero : %d et caractere %c \n",solveur+i,i,grille[solveur+i]);
                 if(i < (solveur2 - solveur)){
                     printf("deplacement non autorise, il y a une piece blanche qui vous bloque la vue ! \n");
@@ -200,7 +200,7 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-            else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+            else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'z'){
                 if(i < (solveur2 - solveur)){
                     printf("deplacement non autorise, il y a une piece noire qui vous bloque la vue ! \n");
                     return 0;
@@ -214,13 +214,13 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille){
                     return 1;
                 }
             }
-            else if(grille[solveur+i].type == '.'){
+            else if(getPieceType(grille[solveur+i]) == '.'){
                 printf("deplacement autorise, case libre et aucun pb de LDV \n");
                 return 1;
             }
         }
-        else if(grille[solveur].couleur == 'n'){
-            if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+        else if(getPieceColor(grille[solveur]) == 'n'){
+            if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Z'){
                 printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
                 if(i < (solveur2 - solveur) ){
                     printf("déplacement non autorisé, une piece blanche vous bloque l'acces! \n");
@@ -235,7 +235,7 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille){
                     return 1;
                 }
             }
-            else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+            else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'z'){
                 if(i < (solveur2 - solveur)){
                     printf("deplacement non autorise, il y a une piece noire qui vous bloque la vue ! \n");
                     return 0;
@@ -249,7 +249,7 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-            else if(grille[solveur+i].type == '.'){
+            else if(getPieceType(grille[solveur+i]) == '.'){
                 // alors pas d'obstacle rencontrer
                 printf("deplacement autorise, case libre et aucun pb de LDV!");
                 return 1;
@@ -258,13 +258,13 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille){
     }
     else if(solveur2 - solveur < 0){
         int i = -10;
-        for(i=-10;grille[solveur+i].type == '.' && i > (solveur2 - solveur);i= i-10){
+        for(i=-10;getPieceType(grille[solveur+i]) == '.' && i > (solveur2 - solveur);i= i-10){
 
         }
         printf("mon compteur i : %d \n",i);
         // probleme d'indentation ici
-            if(grille[solveur].couleur == 'b'){
-                if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+            if(getPieceColor(grille[solveur]) == 'b'){
+                if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Z'){
                     printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,grille[solveur+i]);
                     if(i > (solveur2 - solveur)){
                         printf("deplacement non autorise, il y a une piece blanche qui vous bloque la vue ! \n");
@@ -279,7 +279,7 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille){
                         return 0;
                     }
                 }
-                else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+                else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'z'){
                     if(i > (solveur2 - solveur)){
                         printf("deplacement non autorise, il y a une piece noire qui vous bloque la vue ! \n");
                         return 0;
@@ -293,14 +293,14 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille){
                         return 1;
                     }
                 }
-                else if(grille[solveur+i].type == '.'){
+                else if(getPieceType(grille[solveur+i]) == '.'){
                     printf("deplacement autorise, case libre et aucune piece bloque");
                     return 1;
                 }
             }
-            else if(grille[solveur].couleur == 'n'){
+            else if(getPieceColor(grille[solveur]) == 'n'){
 
-                if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+                if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Z'){
                     printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur-i]);
                     if(i > (solveur2 - solveur) ){
                         printf("déplacement non autorisé, une piece blanche bloque l'acces! \n");
@@ -318,7 +318,7 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille){
                     }
                 }
                 // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est noire :
-                else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+                else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'z'){
                     if(i > (solveur2 - solveur)){
                         printf("deplacement non autorise, il y a une piece noire qui vous bloque la vue ! \n");
                         return 0;
@@ -332,7 +332,7 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille){
                         return 0;
                     }
                 }
-                else if(grille[solveur+i].type == '.'){
+                else if(getPieceType(grille[solveur+i]) == '.'){
                     printf("deplacement autorise, aucun pb de ldvv!");
                     return 1;
                 }
@@ -340,7 +340,7 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille){
 }
 }
 
-int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
+int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille[]){
     printf("FOnction LDVD positive\n");
     int calculR = solveur%10;
     int calculQ = solveur/10;
@@ -349,12 +349,12 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
     int i = 0;
     // je regarde si ma destination est "côté droite" afin d'appliquer le calcul correspondant (+11)
     if(calculR<calculR2){
-        for(i=11;grille[solveur+i].type == '.' && i < (solveur2 - solveur);i = i+11){
+        for(i=11;getPieceType(grille[solveur+i]) == '.' && i < (solveur2 - solveur);i = i+11){
 
         }
         printf("i = %d\n",i);
-        if(grille[solveur].couleur == 'b'){
-            if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+        if(getPieceColor(grille[solveur]) == 'b'){
+            if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Z'){
                 if(i < (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
                     return 0;
@@ -364,7 +364,7 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-            else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+            else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'z'){
                 if(i < (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
                     return 0;
@@ -374,13 +374,13 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
                     return 1;
                 }
             }
-            else if(grille[solveur+i].type == '.'){
+            else if(getPieceType(grille[solveur+i]) == '.'){
                 printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
                 return 1;
             }
         }
-        else if(grille[solveur].couleur == 'n'){
-            if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+        else if(getPieceColor(grille[solveur]) == 'n'){
+            if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Z'){
                 if(i < (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
                     return 0;
@@ -390,7 +390,7 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
                     return 1;
                 }
             }
-            else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+            else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'z'){
                 if(i < (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
                     return 0;
@@ -400,7 +400,7 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-            else if(grille[solveur+i].type == '.'){
+            else if(getPieceType(grille[solveur+i]) == '.'){
                 printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
                 return 1;
             }
@@ -412,12 +412,12 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
     }
     // côté gauche (+9)
     else if(calculR>calculR2){
-        for(i=9;grille[solveur+i].type == '.' && i < (solveur2 - solveur);i = i+9){
+        for(i=9;getPieceType(grille[solveur+i]) == '.' && i < (solveur2 - solveur);i = i+9){
 
         }
         printf("i = %d\n",i);
-        if(grille[solveur].couleur == 'b'){
-            if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+        if(getPieceColor(grille[solveur]) == 'b'){
+            if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Z'){
                 if(i < (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
                     return 0;
@@ -427,7 +427,7 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-            else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+            else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'z'){
                 if(i < (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
                     return 0;
@@ -437,13 +437,13 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
                     return 1;
                 }
             }
-            else if(grille[solveur+i].type == '.'){
+            else if(getPieceType(grille[solveur+i]) == '.'){
                 printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
                 return 1;
             }
         }
-        else if(grille[solveur].couleur == 'n'){
-            if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+        else if(getPieceColor(grille[solveur]) == 'n'){
+            if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Z'){
                 if(i < (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
                     return 0;
@@ -453,7 +453,7 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
                     return 1;
                 }
             }
-            else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+            else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'z'){
                 if(i < (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
                     return 0;
@@ -463,7 +463,7 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-            else if(grille[solveur+i].type == '.'){
+            else if(getPieceType(grille[solveur+i]) == '.'){
                 printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
                 return 1;
             }
@@ -475,7 +475,7 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille){
     }
 }
 
-int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
+int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille[]){
     printf("FOnction LDVD negative\n");
     int calculR = solveur%10;
     int calculQ = solveur/10;
@@ -486,12 +486,12 @@ int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
     printf("calcul R2 = %d\n",solveur2%10);
     // je regarde si ma destination est "côté droite" afin d'appliquer le calcul correspondant (+11)
     if(calculR<calculR2){
-        for(i=-9;grille[solveur+i].type == '.' && i > (solveur2 - solveur);i = i-9){
+        for(i=-9;getPieceType(grille[solveur+i]) == '.' && i > (solveur2 - solveur);i = i-9){
 
         }
         printf("i = %d\n",i);
-        if(grille[solveur].couleur == 'b'){
-            if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+        if(getPieceColor(grille[solveur]) == 'b'){
+            if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Z'){
                 if(i > (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
                     return 0;
@@ -501,7 +501,7 @@ int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-            else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+            else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'z'){
                 if(i > (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
                     return 0;
@@ -511,13 +511,13 @@ int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
                     return 1;
                 }
             }
-            else if(grille[solveur+i].type == '.'){
+            else if(getPieceType(grille[solveur+i]) == '.'){
                 printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
                 return 1;
             }
         }
-        else if(grille[solveur].couleur == 'n'){
-            if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+        else if(getPieceColor(grille[solveur]) == 'n'){
+            if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Z'){
                 if(i > (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
                     return 0;
@@ -527,7 +527,7 @@ int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
                     return 1;
                 }
             }
-            else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+            else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'z'){
                 if(i > (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
                     return 0;
@@ -537,7 +537,7 @@ int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-            else if(grille[solveur+i].type == '.'){
+            else if(getPieceType(grille[solveur+i]) == '.'){
                 printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
                 return 1;
             }
@@ -550,12 +550,12 @@ int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
     }
     // côté gauche (+9)
     else if(calculR>calculR2){
-        for(i=-11;grille[solveur+i].type == '.' && i > (solveur2 - solveur);i = i-11){
+        for(i=-11;getPieceType(grille[solveur+i]) == '.' && i > (solveur2 - solveur);i = i-11){
 
         }
         printf("i = %d\n",i );
-        if(grille[solveur].couleur == 'b'){
-            if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+        if(getPieceColor(grille[solveur]) == 'b'){
+            if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Z'){
                 if(i > (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
                     return 0;
@@ -565,7 +565,7 @@ int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-            else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+            else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'z'){
                 if(i > (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
                     return 0;
@@ -575,13 +575,13 @@ int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
                     return 1;
                 }
             }
-            else if(grille[solveur+i].type == '.'){
+            else if(getPieceType(grille[solveur+i]) == '.'){
                 printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
                 return 1;
             }
         }
-        else if(grille[solveur].couleur == 'n'){
-            if(grille[solveur+i].type >= 'A' && grille[solveur+i].type <= 'Z'){
+        else if(getPieceColor(grille[solveur]) == 'n'){
+            if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Z'){
                 if(i > (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece blanche vous bloque la LDV! \n");
                     return 0;
@@ -591,7 +591,7 @@ int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
                     return 1;
                 }
             }
-            else if(grille[solveur+i].type >= 'a' && grille[solveur+i].type <= 'z'){
+            else if(getPieceType(grille[solveur+i]) >= 'a' && getPieceType(grille[solveur+i]) <= 'z'){
                 if(i > (solveur2-solveur)){
                     printf("deplacement non autorisé LDVD, une piece noire vous bloque la LDV! \n");
                     return 0;
@@ -601,7 +601,7 @@ int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille){
                     return 0;
                 }
             }
-            else if(grille[solveur+i].type == '.'){
+            else if(getPieceType(grille[solveur+i]) == '.'){
                 printf("aucune piece ne vous bloque, la case est vide, deplacement aurotise\n");
                 return 1;
             }

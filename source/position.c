@@ -1,5 +1,5 @@
 //void deplacementPiece(Piece *piece,char *coord, Piece *grille) {
-int deplacementPiece(Joueur *joueur,char *coord,Piece *grille){
+int deplacementPiece(Joueur *joueur,char *coord,Piece *grille[]){
 
     int solveur = 0;
     int solveur2 = 0;
@@ -14,12 +14,25 @@ int deplacementPiece(Joueur *joueur,char *coord,Piece *grille){
         return 0;
     }
     solveur3 = isPossible(solveur,solveur2,grille);
+    printf("isPossible vient de renvoyer : %d",solveur3);
     if(solveur3 != 0){
         //grille[solveur2] = piece->type;
         //grille[solveur] = '.';
         //grille[solveur2].type = grille[solveur].type ;
-        grille[solveur2] = grille[solveur];
-        grille[solveur].type = '.';
+        printf("\navant l'echange grille[solveur] = %c\n",(*grille[solveur]).type);
+        printf("avant l'echange grille[solveur2] = %c\n",(*grille[solveur2]).type);
+        if(getPieceType(grille[solveur2]) == '.'){
+            Piece temporaire = (*grille[solveur2]);
+            (*grille[solveur2]) = (*grille[solveur]);
+            (*grille[solveur]) = temporaire;
+        }
+        else{
+            (*grille[solveur2]) = (*grille[solveur]);
+            grille[solveur] = creationPieceVide();
+        }
+        
+        printf("APRES l'echange grille[solveur] = %c\n",(*grille[solveur]).type);
+        printf("APRES l'echange grille[solveur2] = %c\n",(*grille[solveur2]).type);
         return 1;
     }
     printf("Quelque chose c'est mal passe, rentrer un coup legale svp \n");
@@ -27,7 +40,7 @@ int deplacementPiece(Joueur *joueur,char *coord,Piece *grille){
 }
 
 //int testPositionInitial(Piece* piece,char *coord, Piece *grille) {
-int testPositionInitial(Joueur *joueur,char *coord,Piece *grille){
+int testPositionInitial(Joueur *joueur,char *coord,Piece *grille[]){
 
     // j'utilise solveur pour calculer l'index total pour aller chercher la correspondance dans ma grille
     int solveur = 0;
@@ -75,11 +88,11 @@ int testPositionInitial(Joueur *joueur,char *coord,Piece *grille){
         return solveur;
     }
 */
-    if(grille[solveur].type >= 'a' && grille[solveur].type <= 'z' && joueur->couleur == 'n'){
+    if(getPieceType(grille[solveur]) >= 'a' && getPieceType(grille[solveur]) <= 'y' && joueur->couleur == 'n'){
         printf("Il y a bien une piece noir en %c%c dans la grille \n",coord[0],coord[1]);
         return solveur;
     }
-    else if(grille[solveur].type >= 'A' && grille[solveur].type <= 'Z' && joueur->couleur == 'b'){
+    else if(getPieceType(grille[solveur]) >= 'A' && getPieceType(grille[solveur]) <= 'Y' && joueur->couleur == 'b'){
         printf("Il y a bien une piece de couleur blanche en %c%c dans la grille\n",coord[0],coord[1]);
         return solveur;
     }
@@ -89,11 +102,10 @@ int testPositionInitial(Joueur *joueur,char *coord,Piece *grille){
         return 0;
     }
 
-    
 }
 
 //int testPositionFinal(Piece* piece, char *coord, char* grille){
-int testPositionFinal(char* coord, Piece* grille){
+int testPositionFinal(char* coord, Piece* grille[]){
 
     int solveur = 0;
 
@@ -137,27 +149,27 @@ int testPositionFinal(char* coord, Piece* grille){
     return solveur;
 }
 
-int isPossible(int solveur,int solveur2,Piece *grille){
+int isPossible(int solveur,int solveur2,Piece *grille[]){
     printf("je passe bien dans isPossible ! \n");
     int testPos = 0;
     //if(piece->deplacement == "adjacent"){
-    if(grille[solveur].deplacement == "adjacent"){
+    if(getPieceDeplacement(grille[solveur]) == "adjacent"){
         printf("cette piece se déplace de maniere adjacente (isPossible)! \n");
         // je ne peux me déplacer dans mon index seulement de +-1 ou +-1+-10 ou +-10
         if(solveur2 == solveur+1 || solveur2 == solveur-1 || solveur2 == solveur+10 || solveur2 == solveur-10 || solveur2 == solveur+11 || solveur2 == solveur-11 || solveur2 == solveur-9 || solveur2 == solveur+9){
             printf("Position pre-autoriser, recherche d'une eventuelle piece allie à cette position \n");
             //if(piece->couleur == 'b'){
-            if(grille[solveur].couleur == 'b'){
+            if(getPieceColor(grille[solveur]) == 'b'){
                 // si la lettre est minuscule alors la couleur est noire ou vide
-                if(!(grille[solveur2].type >= 'A' && grille[solveur2].type <= 'Z')){
+                if(!(getPieceType(grille[solveur2])  >= 'A' && getPieceType(grille[solveur2]) <= 'Y')){
                     printf("alors le déplacement est autorisé \n");
                     testPos = 1;
                     return testPos;
                 }
             }
-            else if(grille[solveur].couleur == 'n'){
+            else if(getPieceColor(grille[solveur]) == 'n'){
                 // si la lettre est majuscule alors la couleur est blanche
-                if(!(grille[solveur2].type >= 'a' && grille[solveur2].type <= 'z')){
+                if(!(getPieceType(grille[solveur2])  >= 'a' && getPieceType(grille[solveur2])  <= 'y')){
                     printf("alors le déplacement est autorisé \n");
                     testPos = 1;
                     return testPos;
@@ -169,20 +181,20 @@ int isPossible(int solveur,int solveur2,Piece *grille){
             return 0;
         }
     }
-    else if(grille[solveur].deplacement == "rectiligne"){
+    else if(getPieceDeplacement(grille[solveur]) == "rectiligne"){
         if(solveurLigneDeVueRectiligne(solveur,solveur2,grille) != 0)
             return 1;
         printf("solveurLDVR a retourner 0....\n");
         return 0;
     }
-    else if(grille[solveur].deplacement == "diagonale"){
+    else if(getPieceDeplacement(grille[solveur])  == "diagonale"){
         printf("cette piece se déplace de maniere diagonale ! \n");
         if(solveurLigneDeVueDiagonale(solveur,solveur2,grille) != 0)
             return 1;
         printf("solveurLDVD a retourner 0....");
         return 0;
     }
-    else if(grille[solveur].deplacement == "rectiligneDiagonale"){
+    else if(getPieceDeplacement(grille[solveur])  == "rectiligneDiagonale"){
         printf("cette piece se déplace de maniere rectiligne et diagonale ! \n");
         if(solveurLigneDeVueRectiligneDiagonale(solveur,solveur2,grille) != 0)
             return 1;
@@ -196,9 +208,9 @@ int isPossible(int solveur,int solveur2,Piece *grille){
 
 }
 
-int isAdjacent(Piece* piece,int solveur,int solveur2,char* grille){
+int isAdjacent(Piece* piece,int solveur,int solveur2,Piece* grille[]){
     int testPos = 0;
-    if(piece->deplacement == "adjacent"){
+    if(getPieceDeplacement(piece) == "adjacent"){
         printf("cette piece se déplace de maniere adjacente ! \n");
         // Gestion des erreurs possible au niveau de la premiere et derniere ligne
         if(solveur2 <= 10 && solveur2 >= 90){
@@ -208,17 +220,17 @@ int isAdjacent(Piece* piece,int solveur,int solveur2,char* grille){
         // je ne peux me déplacer dans mon index seulement de +-1 ou +-1+-10 ou +-10
         if(solveur2 == solveur+1 || solveur2 == solveur-1 || solveur2 == solveur+10 || solveur2 == solveur-10 || solveur2 == solveur+11 || solveur2 == solveur-11){
             printf("Position pre-autoriser, recherche d'une eventuelle piece allie à cette position \n");
-            if(piece->couleur == 'b'){
+            if(getPieceColor(piece)  == 'b'){
                 // si la lettre est minuscule alors la couleur est noire
-                if(!(grille[solveur2] >= 'A' && grille[solveur2] <= 'Z')){
+                if(!(getPieceType(grille[solveur2])  >= 'A' && getPieceType(grille[solveur2]) <= 'Y')){
                     printf("alors le déplacement est autorisé \n");
                     testPos = 1;
                     return testPos;
                 }
             }
-            else if(piece->couleur == 'n'){
+            else if(getPieceColor(piece) == 'n'){
                 // si la lettre est majuscule alors la couleur est blanche
-                if(!(grille[solveur2] >= 'a' && grille[solveur2] <= 'z')){
+                if(!(getPieceType(grille[solveur2]) >= 'a' && getPieceType(grille[solveur2]) <= 'y')){
                     printf("alors le déplacement est autorisé \n");
                     testPos = 1;
                     return testPos;
@@ -228,7 +240,7 @@ int isAdjacent(Piece* piece,int solveur,int solveur2,char* grille){
     }
 }
 
-int solveurLigneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
+int solveurLigneDeVueRectiligne(int solveur,int solveur2,Piece *grille[]){
     printf("cette piece se déplace de maniere rectiligne ! (fonction solveurLDVR) \n");
     // je ne peux me déplacer dans mon index seulement si .....
     int calcul = 0 ;
@@ -402,7 +414,7 @@ int solveurLigneDeVueRectiligne(int solveur,int solveur2,Piece *grille){
     printf("debug... fin de fonction \n");
 }
 
-int solveurLigneDeVueDiagonale(int solveur,int solveur2,Piece *grille){
+int solveurLigneDeVueDiagonale(int solveur,int solveur2,Piece *grille[]){
     printf("passage dans solveur LDV diagonale ! (fonction solveurLDVD) \n");
     int calculR = solveur%10;
     int calculQ = solveur/10;
@@ -429,7 +441,7 @@ int solveurLigneDeVueDiagonale(int solveur,int solveur2,Piece *grille){
     return 0;
 }
 
-int solveurLigneDeVueRectiligneDiagonale(int solveur, int solveur2, Piece *grille){
+int solveurLigneDeVueRectiligneDiagonale(int solveur, int solveur2, Piece *grille[]){
     printf("fonction solveur LDV rectiligne diagonale\n");
     int calcul = 0 ;
     int calculR = solveur%10;
