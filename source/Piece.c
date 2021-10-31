@@ -26,16 +26,19 @@ int setPieceType(Piece *piece,char typeSet){
         if(typeSet== 't'){
             piece->valeur = 5;
             piece->deplacement = "rectiligne";
+            piece->etat = 1;
             return 1;
         }
         else if(typeSet== 'd'){
             piece->valeur = 9;
             piece->deplacement = "rectiligneDiagonale";
+            piece->etat = 1;
             return 1;
         }
         else if(typeSet== 'f'){
             piece->valeur = 3;
             piece->deplacement = "diagonale";
+            piece->etat = 1;
             return 1;
         }
     }
@@ -55,6 +58,7 @@ Piece* creationPieceVide(){
     Piece *pieceVide = (Piece*)malloc(sizeof(Piece));
     pieceVide->type = '.';
     pieceVide->valeur = 0;
+    pieceVide->etat = 0;
     return pieceVide;
 }
 
@@ -73,21 +77,25 @@ Piece* creationPiece(char type, char couleur){
             pieceRandom->type = 'R';
             pieceRandom->deplacement = "adjacent";
             pieceRandom->valeur = 0;
+            pieceRandom->etat = 1;
         }
         else if(type == 'd'){
             pieceRandom->type = 'D';
             pieceRandom->deplacement = "rectiligneDiagonale";
             pieceRandom->valeur = 9;
+            pieceRandom->etat = 1;
         }
         else if(type == 't'){
             pieceRandom->type = 'T';
             pieceRandom->deplacement = "rectiligne";
             pieceRandom->valeur = 5;
+            pieceRandom->etat = 1;
         }
         else if(type == 'f'){
             pieceRandom->type = 'F';
             pieceRandom->deplacement = "diagonale";
             pieceRandom->valeur = 3;
+            pieceRandom->etat = 1;
         }
     }
     if(couleur == 'n'){
@@ -96,21 +104,25 @@ Piece* creationPiece(char type, char couleur){
             pieceRandom->type = 'r';
             pieceRandom->deplacement = "adjacent";
             pieceRandom->valeur = 0;
+            pieceRandom->etat = 1;
         }
         else if(type == 'd'){
             pieceRandom->type = 'd';
             pieceRandom->deplacement = "rectiligneDiagonale";
             pieceRandom->valeur = 9;
+            pieceRandom->etat = 1;
         }
         else if(type == 't'){
             pieceRandom->type = 't';
             pieceRandom->deplacement = "rectiligne";
             pieceRandom->valeur = 5;
+            pieceRandom->etat = 1;
         }
         else if(type == 'f'){
             pieceRandom->type = 'f';
             pieceRandom->deplacement = "diagonale";
             pieceRandom->valeur = 3;
+            pieceRandom->etat = 1;
         }
     }
     return pieceRandom;

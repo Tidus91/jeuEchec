@@ -3,17 +3,7 @@
 #include "../header/coord.h"
 #include <assert.h>
 #include "../header/Piece.h"
-
-struct Joueur{
-    char couleur;
-    int actif;
-    int echec;
-    int gagner;
-    int nombreCoups;
-    char *coupsJouer;
-    Piece *pieceJoueur[16]; // tableau des pieces du joueurs
-};
-typedef struct Joueur Joueur;
+#include "../header/Joueur.h"
 
 #include "../header/afficherGrille.h"
 #include "../header/creationInit.h"
@@ -75,17 +65,20 @@ int main () {
 
     int finPartie = 0;
     while(finPartie == 0){
-        if(Joueur1.actif == 1){
+        if(isJoueurActif(&Joueur1) == 1){
             char userCoord[6];
             printf("\n\nOu voulez vous jouer joueur Blanc ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3 \n Vous pouvez aussi abandonner en tapant 'ggwp'");
             fgets(userCoord,6,stdin);
             printf("chaine de carac : %s \n",userCoord);
+
+            printf("\n\n test, voila ma PIECE 1 2 ET 3 ######### : %c / %c / %c \n\n ########",Joueur1.pieceJoueur[0]->type,Joueur1.pieceJoueur[1]->type,Joueur1.pieceJoueur[2]->type);
             //printf("caractere de fin : %c \n",userCoord[5]);
             // Verification de la saisie
             if(verifCoord(userCoord) == 2){
                 // abandon de la partie
                 finPartie = 1;
-                Joueur2.gagner = 1;
+                //Joueur2.gagner = 1;
+                setJoueurGagner(&Joueur2);
                 break;
             }
             if(deplacementPiece(&Joueur1,userCoord,grille) == 1){
@@ -94,12 +87,14 @@ int main () {
                 printf("j'arrive bien au moment de isEchec....");
                 //if(isEchec(position,king,grille) == 1)
                     //Joueur2.echec = 1;
+                /*
                 Joueur1.actif = 0;
-                Joueur2.actif = 1;
+                Joueur2.actif = 1;*/
+                setJoueurActif(&Joueur1,&Joueur2);
             }
             afficherGrille(grille);
         }
-        else if(Joueur2.actif == 1){
+        else if(isJoueurActif(&Joueur2) == 1){
             char userCoord[6];
             printf("\n\nOu voulez vous jouer joueur Noir ?\nRentrez les coordonnées de la pièce que vous souhaitez bouger, puis les coordonnées ou vous souhaitez vous déplacer (4 caractères maximum) !\n exemple de format valide -->  b2c3\n Vous pouvez aussi abandonner en tapant 'ggwp'\n");
             fgets(userCoord,6,stdin);
@@ -109,7 +104,7 @@ int main () {
             if(verifCoord(userCoord) == 2){
                 // abandon de la partie
                 finPartie = 1;
-                Joueur1.gagner = 1;
+                setJoueurGagner(&Joueur1);
                 break;
             }
             if(deplacementPiece(&Joueur2,userCoord,grille) == 1){
@@ -125,17 +120,18 @@ int main () {
                 if(isEchec(&Joueur1,king,grille) == 1){
 
                 }*/
-                Joueur2.actif = 0;
-                Joueur1.actif = 1;
+                setJoueurActif(&Joueur2,&Joueur1);
             }
             afficherGrille(grille);
         }
     }
-    if(Joueur2.gagner == 1){
+    if(getJoueurGagner(&Joueur2) == 1){
         printf("Bravo ! le joueur noire a gagner !\n");
+        printf("vous avez gagne en %d coups ! ",getJoueurNbCoups(&Joueur2));
     }
-    else if(Joueur1.gagner == 1){
+    else if(getJoueurGagner(&Joueur1) == 1){
         printf("Bravo !  le Joueur blanc a gagner ! \n");
+        printf("vous avez gagne en %d coups ! ",getJoueurNbCoups(&Joueur1));
     }
     return 0;
 }

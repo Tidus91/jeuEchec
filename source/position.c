@@ -30,7 +30,7 @@ int deplacementPiece(Joueur *joueur,char *coord,Piece *grille[]){
             (*grille[solveur2]) = (*grille[solveur]);
             grille[solveur] = creationPieceVide();
         }
-        
+        addJoueurNbCoups(joueur);
         printf("APRES l'echange grille[solveur] = %c\n",(*grille[solveur]).type);
         printf("APRES l'echange grille[solveur2] = %c\n",(*grille[solveur2]).type);
         return 1;

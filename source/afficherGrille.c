@@ -28,8 +28,16 @@ void afficherGrille(Piece *grille[]){
             (*grille[i]).type = 'Z';
             printf("  %c ",ligne[i%10]);
         }
+        //printf("| %c ",(*grille[i]).type);
+        // je n'affiche que mes pieces existante (au lieu des '.')
         else {
-            printf("| %c ",(*grille[i]).type);
+            printf("| ",(*grille[i]).type);
+            //2eme condition pour afficher mes numeros qui n'ont pas l'état à 1
+            if(grille[i]->etat == 1 || (grille[i]->type >= '1' && grille[i]->type <= '8'))
+                printf("%c",(*grille[i]).type);
+            else
+                printf(" ");
+            printf(" ",(*grille[i]).type);
         }   
     }
     printf("\n\n grille veritable : \n");

@@ -62,23 +62,6 @@ int initialisationPieceComplet(Piece *piece,Piece *grille[]){
     return 0;
 }
 
-Joueur creationJoueur(char couleurParam){
-    assert(couleurParam == 'b' || couleurParam == 'n');
-    if(couleurParam != 'b' && couleurParam != 'n'){
-        printf("Erreur, vous devez choisir la couleur 'b' ou 'n' pour un joueur !\n");
-    }
-    Joueur joueurRandom;
-    joueurRandom.couleur = couleurParam;
-    joueurRandom.echec = 0;
-    joueurRandom.gagner = 0;
-    joueurRandom.nombreCoups = 0;
-    if(couleurParam == 'b')
-        joueurRandom.actif = 1;
-    else if(couleurParam == 'n')
-        joueurRandom.actif = 0;
-    return joueurRandom;
-}
-
 int creationSetEchecFinale(Joueur *Joueur1, Joueur *Joueur2,Piece *grille[]){
 
     // Je commancee par créer mes pieces
