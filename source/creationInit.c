@@ -1,26 +1,26 @@
 int initialisationPieceFinale(Piece *piece,Piece *grille[]){
 
     // si la piece appartient au joueur noir
-    if(piece->couleur == 'n'){
-        if((*piece).type== 'd')
+    if(getPieceColor(piece) == 'n'){
+        if(getPieceType(piece) == 'd')
             grille[57] = piece;
-        else if(piece->type == 'r')
+        else if(getPieceType(piece) == 'r')
             grille[15] = piece;
-        else if(piece->type == 't')
+        else if(getPieceType(piece) == 't')
             grille[82] = piece;
-        else if(piece->type == 'f')
+        else if(getPieceType(piece) == 'f')
             grille[65] = piece;
         return 1;
     }
     // si la pièce appartient au joueur blanc
-    if(piece->couleur == 'b'){
-        if((*piece).type == 'D')
+    if(getPieceColor(piece) == 'b'){
+        if(getPieceType(piece) == 'D')
             grille[23] = piece;
-        else if(piece->type == 'R')
+        else if(getPieceType(piece) == 'R')
             grille[41] = piece;
-        else if(piece->type == 'T')
+        else if(getPieceType(piece) == 'T')
             grille[43] = piece;
-        else if(piece->type == 'F')
+        else if(getPieceType(piece) == 'F')
             grille[72] = piece;
         return 2;
     }
@@ -28,34 +28,26 @@ int initialisationPieceFinale(Piece *piece,Piece *grille[]){
 }
 
 int initialisationPieceComplet(Piece *piece,Piece *grille[]){
-    if(piece->couleur == 'n'){
-        if((*piece).type == 'd')
-            //grille[57] = (piece->typep.dame.nom);
+    if(getPieceColor(piece) == 'n'){
+        if(getPieceType(piece) == 'd')
             grille[14] = piece;
-        else if(piece->type == 'r')
-            //grille[15] = (*piece).type;
+        else if(getPieceType(piece)== 'r')
             grille[15] = piece;
-        else if(piece->type == 't'){
+        else if(getPieceType(piece)== 't')
             grille[11] = piece;
-        }
-        else if(piece->type == 'f')
-            //grille[82] = piece->typep.tour.nom;
+        else if(getPieceType(piece) == 'f')
             grille[13] = piece;
         return 1;
     }
     // si la pièce appartient au joueur blanc
-    if(piece->couleur == 'b'){
+    if(getPieceColor(piece) == 'b'){
         if((*piece).type == 'D')
-            //grille[23] = (piece->typep.dame.nom);
             grille[84] = piece;
-        else if(piece->type == 'R')
-            //grille[41] = (*piece).type;
+        else if(getPieceType(piece) == 'R')
             grille[85] = piece;
-        else if(piece->type == 'T')
-            //grille[43] = piece->typep.tour.nom;
+        else if(getPieceType(piece) == 'T')
             grille[81] = piece;
-        else if(piece->type== 'F')
-            //grille[82] = piece->typep.tour.nom;
+        else if(getPieceType(piece)== 'F')
             grille[83] = piece;
         return 2;
     }

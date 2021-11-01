@@ -5,7 +5,7 @@ int testPositionInitial(Joueur *,char*,Piece*[]);
 //int testPositionFinal(Piece*, char*, char*);
 int testPositionFinal(char*, Piece*[]);
 int isPossible(int,int,Piece*[]);
-int isAdjacent(Piece*,int,int,Piece*[]);
+int solveurAdjacent(int,int,Piece*[]);
 int solveurLigneDeVueRectiligne(int,int,Piece*[]);
 int solveurLigneDeVueDiagonale(int ,int ,Piece *[]);
 int solveurLigneDeVueRectiligneDiagonale(int,int,Piece *[]);

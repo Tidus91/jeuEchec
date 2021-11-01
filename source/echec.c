@@ -38,7 +38,7 @@ int isEchec(Joueur *joueurActif,Joueur *joueurAdverse,Piece *grille[]){
 }
 
 // Fonction qui verifie si je met le joueur adverse en echec apres mon deplacement
-int isPutEchec(Joueur *joueurActif,int solveur2, Piece *grille[]){
+int isPutEchec(Joueur *joueurActif, Piece *grille[]){
     int king;
     if(joueurActif->couleur == 'b')
         king = getBlackKing(grille);
@@ -62,6 +62,12 @@ int isEchecMat(Joueur *joueurActif,Piece *grille[]){
     // si je reste quand même en echec alors c'est perdu !
     int Fin = 1; // Si je trouve aucune possibilité alors FIn reste a 1
     int nbPa = 0;
+
+    Piece grilleCopie[100]; // Utile par la suite, vous allez comprendre
+    for(int i = 0;i<100;i++){
+        grilleCopie[i] = (*grille[i]);
+    }
+
     Piece **PiecesAMoi = getJoueurPieces(joueurActif,&nbPa);
 
     for(int i =0;i<nbPa;i++){ // Je parcours mes pieces
@@ -70,10 +76,13 @@ int isEchecMat(Joueur *joueurActif,Piece *grille[]){
         // si un coup me permet de sortir de l'echec
         for(int y = 10;y < 90;y++){
             if(isPossible(PiecePos,y,grille) == 1){ // si le déplacement est possible alors regarder si l'echec disparait
-                //Piece *grilleCopie[] = grille; // j'aimerais faire une copie de ma grille originel, afin de bouger 
+                // j'aimerais faire une copie de ma grille originel, afin de bouger 
                 // afin de bouger ma pieces MAIS pas dans la vrai grille, pour ensuite tester l'echec.
+                Piece temp = grilleCopie[PiecePos];
+                grilleCopie[y] = grilleCopie[PiecePos];
+                grilleCopie[PiecePos] = temp;
                 /*
-                if(isEchec(......)){ // Je dois verifier à cet endroit si je suis toujours en echec
+                if(isEchec()){ // Je dois verifier à cet endroit si je suis toujours en echec
                     Fin = 0;
                 }*/
             }

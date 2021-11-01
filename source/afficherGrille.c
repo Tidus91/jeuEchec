@@ -4,10 +4,9 @@ void afficherGrille(Piece *grille[]){
     char colonne[10] = {' ','8','7','6','5','4','3','2','1',' '};
     // j'affiche ma grille :
     for(int i=0;i<100;i++){
-        //toutes les 10 cases
+        //toutes les 10 cases j'affiche la colonne
         if(i%10 == 0){
             // ce bout de code fonctionne en parallèle avec le "else" afin d'afficher les lettres en bout de "ligne"
-            //grille[i+9]=colonne[i/10];
             (*grille[i+9]).type = colonne[i/10];
             (*grille[i]).type = colonne[i/10];
             // je fait un retour chariot et j'affiche mon chiffre
@@ -40,10 +39,14 @@ void afficherGrille(Piece *grille[]){
             printf(" ",(*grille[i]).type);
         }   
     }
+
+    //DEBUG
+    /*
     printf("\n\n grille veritable : \n");
         for(int y =0;y<100;y++){
             if(y%10 == 0)
                 printf("\n");
             printf("%c ",(*grille[y]).type);
         }
+    */
 }
