@@ -22,7 +22,7 @@ int isEchec(Joueur *joueurActif,Joueur *joueurAdverse,Piece *grille[]){
     // Je recupère tout les pointeur de Pieces du joueur adverse
     int nbPa = 0;
     Piece** PiecesAdverse = getJoueurPieces(joueurAdverse,&nbPa);
-
+    //printf("\n\n ## je suis dans isEchec et voila les pieces adverses : %s\n",JoueurPiecesToString(joueurAdverse));
     // Pour chaque pointeur de pieces du joueur adverse je : 
     // 1- trouve leur position
     // 2- regarde si il ne met pas mon roi en echec

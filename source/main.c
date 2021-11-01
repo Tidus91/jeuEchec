@@ -116,7 +116,7 @@ int main () {
                 setJoueurGagner(&Joueur1);
                 break;
             }
-            if(deplacementPiece(&Joueur2,&Joueur2,userCoord,grille) == 1){
+            if(deplacementPiece(&Joueur2,&Joueur1,userCoord,grille) == 1){
                 
                 if(isPutEchec(&Joueur2,grille) == 1)
                     Joueur1.echec = 1;

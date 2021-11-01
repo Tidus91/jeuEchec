@@ -16,9 +16,27 @@ int deplacementPiece(Joueur *joueurActif,Joueur *joueur2,char *coord,Piece *gril
     if(isPossible(solveur,solveur2,grille)!= 0){
         // Je dois verifier l'echec içi avant de modifier quoi que ce soit.
         // Je dois verifier si mon mouvement ne me met pas de moi même en echec
-        if(isEchec(joueurActif,joueur2,grille) == 1){
 
+        // Soluce 1 : Je crée une copie de ma grille et je Test
+        // Soluce 2: j'applique le deplacement, je test et je reverse dans le mauvais cas
+
+        //S1 : Je copie donc ma grille, et j'applique le deplacement pour tester sans compromettre ma vrai Grille !
+
+        /*Piece *grilleCopie = malloc(sizeof(Piece) * 100);
+        for(int i=0;i<100;i++){
+            grilleCopie[i] = (*grille[i]);
         }
+        Piece temp = grilleCopie[solveur2];
+        grilleCopie[solveur2] = grilleCopie[solveur];
+        grilleCopie[solveur] = temp;
+
+        if(isEchec(joueurActif,joueur2,grilleCopie) == 1){
+            printf("\n### Vous ne pouvez pas jouer cette piece ici... cela vous mettrez vous même en Echec ! ###\n");
+            return 0;
+        }
+        free(grilleCopie);*/
+
+
         if(getPieceType(grille[solveur2]) == '.'){
             /*
             Piece temporaire = (*grille[solveur2]);
@@ -28,6 +46,16 @@ int deplacementPiece(Joueur *joueurActif,Joueur *joueur2,char *coord,Piece *gril
             Piece *temporaire = grille[solveur2];
             grille[solveur2] = grille[solveur];
             grille[solveur] = temporaire;
+
+            // Soluce 2 : (reverse)
+            if(isEchec(joueurActif,joueur2,grille) == 1){
+                
+                printf("##################\n je peux pas je suis en echec si je joue ici !!");
+                temporaire = grille[solveur2];
+                grille[solveur2] = grille[solveur];
+                grille[solveur] = temporaire;
+                return 0;
+            }
         }
         else{
             //setPieceEtat(grille[solveur2],0);
@@ -50,6 +78,17 @@ int deplacementPiece(Joueur *joueurActif,Joueur *joueur2,char *coord,Piece *gril
             grille[solveur] = temporaire;
             grille[solveur]->type = '.';
             grille[solveur]->etat = 0;
+
+            // Solution 2 (reverse)
+            if(isEchec(joueurActif,joueur2,grille) == 1){
+
+                temporaire = grille[solveur2];
+                grille[solveur2] = grille[solveur];
+                grille[solveur] = temporaire;
+                grille[solveur]->type = '.';
+                grille[solveur]->etat = 0;
+                return 0;
+            }
 
         }
         addJoueurNbCoups(joueurActif);
@@ -160,7 +199,7 @@ int isPossible(int solveur,int solveur2,Piece *grille[]){
         if(solveurAdjacent(solveur,solveur2,grille) != 0){
             return 1;
         }
-        printf("isAdjacent a retourner 0...\n");
+        printf("solveurAdjacent a retourner 0...\n");
         return 0;
     }
 
@@ -200,8 +239,9 @@ int solveurAdjacent(int solveur,int solveur2,Piece* grille[]){
         printf("Erreur ! cette piece ne peut pas se deplacer ici ! \n");
         return 0;
     }
+    printf("solveur : %d\nsolveur2 : %d\n\n",solveur,solveur2);
     // je ne peux me déplacer dans mon index seulement de +-1 ou +-1+-10 ou +-10
-    if(solveur2 == solveur+1 || solveur2 == solveur-1 || solveur2 == solveur+10 || solveur2 == solveur-10 || solveur2 == solveur+11 || solveur2 == solveur-11){
+    if(solveur2 == solveur+1 || solveur2 == solveur-1 || solveur2 == solveur+10 || solveur2 == solveur-10 || solveur2 == solveur+11 || solveur2 == solveur-11 || solveur2 == solveur-9 || solveur2 == solveur+9){
         printf("Position pre-autoriser, recherche d'une eventuelle piece allie à cette position \n");
         if(getPieceColor(grille[solveur])  == 'b'){
             // si la lettre est minuscule alors la couleur est noire
@@ -219,7 +259,7 @@ int solveurAdjacent(int solveur,int solveur2,Piece* grille[]){
         }
     }
 
-    printf("cette piece ne se deplace pas de maniere adjacente....\n");
+    printf("solveurAdjacent retourne 0 \n");
     return 0;
 }
 
