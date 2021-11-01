@@ -66,15 +66,15 @@ int creationSetEchecFinale(Joueur *Joueur1, Joueur *Joueur2,Piece *grille[]){
 
     // Je commancee par créer mes pieces
     Piece* roiBlanc = creationPiece('r','b');
-    Joueur1->pieceJoueur[0] = roiBlanc;
+    addPieceJoueur(Joueur1,roiBlanc);
     Piece* roiNoir = creationPiece('r','n');
-    Joueur2->pieceJoueur[0] = roiNoir;
+    addPieceJoueur(Joueur2,roiNoir);
     Piece* tourBlanc = creationPiece('t','b');
-    Joueur1->pieceJoueur[1] = tourBlanc;
+    addPieceJoueur(Joueur1,tourBlanc);
     Piece* dameBlanc = creationPiece('d','b');
-    Joueur1->pieceJoueur[2] = dameBlanc;
+    addPieceJoueur(Joueur1,dameBlanc);
     Piece* fouNoir = creationPiece('f','n');
-    Joueur2->pieceJoueur[1] = fouNoir;
+    addPieceJoueur(Joueur2,fouNoir);
 
     // Placement des pièces sur l'échequier
     if(initialisationPieceFinale(roiBlanc,grille) == 0){

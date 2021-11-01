@@ -127,3 +127,11 @@ Piece* creationPiece(char type, char couleur){
     }
     return pieceRandom;
 }
+
+int mangerPiece(Piece *piece1, Piece *piece2){
+    printf("\n\nvoila l'adresse de ma p1 : %p\n voila l'adresse de ma p2 : %p",piece1,piece2);
+    *piece2 = *piece1;
+    printf("\n\nvoila l'adresse de ma p1 : %p\n voila l'adresse de ma p2 : %p",piece1,piece2);
+
+    return 0;
+}

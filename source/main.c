@@ -63,6 +63,11 @@ int main () {
 
     afficherGrille(grille);
 
+    char *chaineTest = getJoueurPieces(&Joueur1);
+    printf("joueur 1 : %s\n",chaineTest);
+    chaineTest = getJoueurPieces(&Joueur2);
+    printf("joueur 2 : %s\n\n",chaineTest);
+
     int finPartie = 0;
     while(finPartie == 0){
         if(isJoueurActif(&Joueur1) == 1){
@@ -71,7 +76,6 @@ int main () {
             fgets(userCoord,6,stdin);
             printf("chaine de carac : %s \n",userCoord);
 
-            printf("\n\n test, voila ma PIECE 1 2 ET 3 ######### : %c / %c / %c \n\n ########",Joueur1.pieceJoueur[0]->type,Joueur1.pieceJoueur[1]->type,Joueur1.pieceJoueur[2]->type);
             //printf("caractere de fin : %c \n",userCoord[5]);
             // Verification de la saisie
             if(verifCoord(userCoord) == 2){
@@ -93,6 +97,10 @@ int main () {
                 setJoueurActif(&Joueur1,&Joueur2);
             }
             afficherGrille(grille);
+            chaineTest = getJoueurPieces(&Joueur1);
+            printf("joueur 1 : %s\n",chaineTest);
+            chaineTest = getJoueurPieces(&Joueur2);
+            printf("joueur 2 : %s\n\n",chaineTest);
         }
         else if(isJoueurActif(&Joueur2) == 1){
             char userCoord[6];

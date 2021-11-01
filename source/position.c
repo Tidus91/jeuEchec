@@ -22,13 +22,32 @@ int deplacementPiece(Joueur *joueur,char *coord,Piece *grille[]){
         printf("\navant l'echange grille[solveur] = %c\n",(*grille[solveur]).type);
         printf("avant l'echange grille[solveur2] = %c\n",(*grille[solveur2]).type);
         if(getPieceType(grille[solveur2]) == '.'){
+            /*
             Piece temporaire = (*grille[solveur2]);
             (*grille[solveur2]) = (*grille[solveur]);
             (*grille[solveur]) = temporaire;
+            */
+            Piece *temporaire = grille[solveur2];
+            grille[solveur2] = grille[solveur];
+            grille[solveur] = temporaire;
         }
         else{
-            (*grille[solveur2]) = (*grille[solveur]);
-            grille[solveur] = creationPieceVide();
+            //(*grille[solveur2]) = (*grille[solveur]);
+            //setPieceEtat(grille[solveur2],0);
+            //(*grille[solveur2]) = (*grille[solveur]);
+            //deletePieceJoueur(joueur,grille[solveur]);
+            //grille[solveur] = creationPieceVide();
+            //setPieceEtat(grille[solveur2],0);
+            /*
+            (*grille[solveur2]).type = (*grille[solveur]).type;
+            grille[solveur]->type = '.';
+            printf("etat de la piece : %d\n",grille[solveur2]->etat);*/
+            Piece *temporaire = grille[solveur2];
+            grille[solveur2] = grille[solveur];
+            grille[solveur] = temporaire;
+            grille[solveur]->type = '.';
+            grille[solveur]->etat = 0;
+
         }
         addJoueurNbCoups(joueur);
         printf("APRES l'echange grille[solveur] = %c\n",(*grille[solveur]).type);
