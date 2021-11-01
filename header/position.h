@@ -1,5 +1,5 @@
 //void deplacementPiece(Piece*,char*, char*);
-int deplacementPiece(Joueur *,char*,Piece*[]);
+int deplacementPiece(Joueur *,Joueur*,char*,Piece*[]);
 //int testPositionInitial(Piece*, char*, Piece*);
 int testPositionInitial(Joueur *,char*,Piece*[]);
 //int testPositionFinal(Piece*, char*, char*);

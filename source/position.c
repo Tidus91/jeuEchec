@@ -1,10 +1,10 @@
 //void deplacementPiece(Piece *piece,char *coord, Piece *grille) {
-int deplacementPiece(Joueur *joueur,char *coord,Piece *grille[]){
+int deplacementPiece(Joueur *joueurActif,Joueur *joueur2,char *coord,Piece *grille[]){
 
     int solveur = 0;
     int solveur2 = 0;
     int solveur3 = 0;
-    solveur = testPositionInitial(joueur,coord,grille);
+    solveur = testPositionInitial(joueurActif,coord,grille);
     if(solveur == 0){
         return 0;
     }
@@ -16,6 +16,11 @@ int deplacementPiece(Joueur *joueur,char *coord,Piece *grille[]){
     solveur3 = isPossible(solveur,solveur2,grille);
     printf("isPossible vient de renvoyer : %d",solveur3);
     if(solveur3 != 0){
+        // Je dois verifier l'echec içi avant de modifier quoi que ce soit.
+        // Je dois verifier si mon mouvement ne me met pas de moi même en echec
+        if(isEchec(joueurActif,joueur2,solveur2,grille) == 1){
+
+        }
         //grille[solveur2] = piece->type;
         //grille[solveur] = '.';
         //grille[solveur2].type = grille[solveur].type ;
@@ -49,7 +54,7 @@ int deplacementPiece(Joueur *joueur,char *coord,Piece *grille[]){
             grille[solveur]->etat = 0;
 
         }
-        addJoueurNbCoups(joueur);
+        addJoueurNbCoups(joueurActif);
         printf("APRES l'echange grille[solveur] = %c\n",(*grille[solveur]).type);
         printf("APRES l'echange grille[solveur2] = %c\n",(*grille[solveur2]).type);
         return 1;

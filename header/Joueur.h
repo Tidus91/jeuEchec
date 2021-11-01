@@ -27,7 +27,8 @@ void addJoueurNbCoups(Joueur*);
 
 int addPieceJoueur(Joueur*,Piece*);
 int deletePieceJoueur(Joueur*,Piece*);
-char* getJoueurPieces(Joueur*);
+Piece ** getJoueurPieces(Joueur*,int*);
+char* JoueurPiecesToString(Joueur*);
 
 
 #include "../source/Joueur.c"

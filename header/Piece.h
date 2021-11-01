@@ -8,4 +8,19 @@ struct Piece{
 };
 typedef struct Piece Piece;
 
+
+Piece* creationPieceVide();
+Piece* creationPiece(char, char);
+
+char getPieceColor(Piece *);
+char getPieceType(Piece *);
+int getPieceValeur(Piece *);
+int getPieceEtat(Piece *);
+char *getPieceDeplacement(Piece *);
+
+int setPieceType(Piece *,char );
+int setPieceEtat(Piece *,int );
+
+int getPiecePosition(Piece *,Piece *[]);
+
 #include "../source/Piece.c"

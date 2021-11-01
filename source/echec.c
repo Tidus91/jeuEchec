@@ -1,92 +1,83 @@
-int getWhiteKing(Piece *grille){
+int getWhiteKing(Piece *grille[]){
     for(int i=0;i<100;i++){
-        if(grille[i].type == 'r')
+        if(getPieceType(grille[i]) == 'R')
             return i;
     }
 }
-int getBlackKing(Piece *grille){
+int getBlackKing(Piece *grille[]){
     for(int i=0;i<100;i++){
-        if(grille[i].type == 'R')
+        if(getPieceType(grille[i]) == 'r')
             return i;
     }
 }
-/*
-int isEchec(Joueur *joueurAdverse,int king,Piece *grille){
-    if(grille[solveur2].typep.roi.deplacement == "adjacent"){
-        if(grille[solveur2].couleur == 'n'){
-            int king = getWhiteKing(grille);
-            if(solveur2 == king+1 || solveur2 == king-1 || solveur2 == king+10 || solveur2 == king-10 || solveur2 == king+11 || solveur2 == king-11 || solveur2 == king+9 || solveur2 == king-9){
-                printf(" !!! ATTENTION !!!   Le roi Blanc est en echec ! \n\n");
-                return 1;
-            }
-            else
-                return 0;
-        }
-        else if(grille[solveur2].couleur == 'b'){
-            int king = getBlackKing(grille);
-            if(solveur2 == king+1 || solveur2 == king-1 || solveur2 == king+10 || solveur2 == king-10 || solveur2 == king+11 || solveur2 == king-11 || solveur2 == king+9 || solveur2 == king-9){
-                printf(" !!! ATTENTION !!!   Le roi Noir est en echec ! \n\n");
-                return 1;
-            }
-            else
-                return 0;
+// Fonction qui verifie que je ne suis pas de moi même en echec en bougant ma propre pièce
+int isEchec(Joueur *joueurActif,Joueur *joueurAdverse,Piece *grille[]){
+    
+    int king;
+    if(joueurActif->couleur == 'b')
+        king = getWhiteKing(grille);
+    else if(joueurActif->couleur == 'n')
+        king = getBlackKing(grille);
+    
+    // Je recupère tout les pointeur de Pieces du joueur adverse
+    int nbPa = 0;
+    Piece** PiecesAdverse = getJoueurPieces(joueurAdverse,&nbPa);
+
+    // Pour chaque pointeur de pieces du joueur adverse je : 
+    // 1- trouve leur position
+    // 2- regarde si il ne met pas mon roi en echec
+    for(int i = 0; i < nbPa ; i++){
+        int piecePos = getPiecePosition(PiecesAdverse[i],grille);
+        if(isPossible(piecePos,king,grille) == 1){
+            return 1;
         }
     }
-    if(grille[solveur2].typep.roi.deplacement == "rectiligne"){
-        printf("COUCOU JE SUIS DANS ISECHEC RECTILIGNE !! \n");
-        if(grille[solveur2].couleur == 'n'){
-            int king = getWhiteKing(grille);
-            if(solveur2 - king > 0){
-                int i = 1;
-                for(i=1;grille[solveur2+i].type == '.';i++){
+    // Je retourne 0 si je ne suis pas en echec !
+    return 0;
 
-                }
-                if(grille[solveur2+i].type == 'R'){
-                    printf("!!! ATTENTION !!! Le roi Blanc est en echec !! \n\n");
-                    return 1;
-                }
-                else
-                    return 0;
-            }
-            else if(solveur2 - king < 0){
-                int i = -1;
-                for(i=-1;grille[solveur2+i].type == '.';i--){
-                    
-                }
-                if(grille[solveur2+i].type == 'R'){
-                    printf("!!! ATTENTION !!! Le roi Blanc est en echec !! \n\n");
-                    return 1;
-                }
-                else
-                    return 0;
-            }
-        }
-        else if(grille[solveur2].couleur == 'b'){
-            int king = getBlackKing(grille);
-            if(solveur2 - king > 0){
-                int i = 1;
-                for(i=1;grille[solveur2+i].type == '.';i++){
-
-                }
-                if(grille[solveur2+i].type == 'r'){
-                    printf("!!! ATTENTION !!! Le roi Noir est en echec !! \n\n");
-                    return 1;
-                }
-                else 
-                    return 0;
-            }
-            else if(solveur2 - king < 0){
-                int i = -1;
-                for(i=-1;grille[solveur2+i].type == '.';i--){
-                    
-                }
-                if(grille[solveur2+i].type == 'r'){
-                    printf("!!! ATTENTION !!! Le roi Noir est en echec !! \n\n");
-                    return 1;
-                }
-                else 
-                    return 0;
-            }
-        }
 }
-}*/
+
+// Fonction qui verifie si je met le joueur adverse en echec apres mon deplacement
+int isPutEchec(Joueur *joueurActif,int solveur2, Piece *grille[]){
+    int king;
+    if(joueurActif->couleur == 'b')
+        king = getBlackKing(grille);
+    else if(joueurActif->couleur == 'n')
+        king = getWhiteKing(grille);
+    
+    int nbPa = 0;
+    Piece **PiecesAMoi = getJoueurPieces(joueurActif,&nbPa);
+
+    for(int i =0; i<nbPa;i++){
+        int piecePos = getPiecePosition(PiecesAMoi[i],grille);
+        if(isPossible(piecePos,king,grille) == 1){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int isEchecMat(Joueur *joueurActif,Piece *grille[]){
+    // Je prend toutes les pieces de mon joueur, je les bouge partout
+    // si je reste quand même en echec alors c'est perdu !
+    int Fin = 1; // Si je trouve aucune possibilité alors FIn reste a 1
+    int nbPa = 0;
+    Piece **PiecesAMoi = getJoueurPieces(joueurActif,&nbPa);
+
+    for(int i =0;i<nbPa;i++){ // Je parcours mes pieces
+        int PiecePos = getPiecePosition(PiecesAMoi[i],grille);
+        // je vais bouger ma pieces dans toutes les positions possibles et voir
+        // si un coup me permet de sortir de l'echec
+        for(int y = 10;y < 90;y++){
+            if(isPossible(PiecePos,y,grille) == 1){ // si le déplacement est possible alors regarder si l'echec disparait
+                //Piece *grilleCopie[] = grille; // j'aimerais faire une copie de ma grille originel, afin de bouger 
+                // afin de bouger ma pieces MAIS pas dans la vrai grille, pour ensuite tester l'echec.
+                /*
+                if(isEchec(......)){ // Je dois verifier à cet endroit si je suis toujours en echec
+                    Fin = 0;
+                }*/
+            }
+        }
+    }
+    return Fin;
+}

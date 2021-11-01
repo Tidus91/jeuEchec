@@ -63,9 +63,9 @@ int main () {
 
     afficherGrille(grille);
 
-    char *chaineTest = getJoueurPieces(&Joueur1);
+    char *chaineTest = JoueurPiecesToString(&Joueur1);
     printf("joueur 1 : %s\n",chaineTest);
-    chaineTest = getJoueurPieces(&Joueur2);
+    chaineTest = JoueurPiecesToString(&Joueur2);
     printf("joueur 2 : %s\n\n",chaineTest);
 
     int finPartie = 0;
@@ -85,7 +85,7 @@ int main () {
                 setJoueurGagner(&Joueur2);
                 break;
             }
-            if(deplacementPiece(&Joueur1,userCoord,grille) == 1){
+            if(deplacementPiece(&Joueur1,&Joueur2,userCoord,grille) == 1){
                 //int king = getBlackKing(grille);
                 int position = testPositionFinal(userCoord,grille);
                 printf("j'arrive bien au moment de isEchec....");
@@ -97,10 +97,17 @@ int main () {
                 setJoueurActif(&Joueur1,&Joueur2);
             }
             afficherGrille(grille);
-            chaineTest = getJoueurPieces(&Joueur1);
+            chaineTest = JoueurPiecesToString(&Joueur1);
             printf("joueur 1 : %s\n",chaineTest);
-            chaineTest = getJoueurPieces(&Joueur2);
+            chaineTest = JoueurPiecesToString(&Joueur2);
             printf("joueur 2 : %s\n\n",chaineTest);
+
+            int nbTT = 0;
+            Piece **tableauTest = getJoueurPieces(&Joueur1,&nbTT);
+            for (int i = 0; i < nbTT ;i++){
+                printf(" %c",tableauTest[i]->type);
+            }
+            
         }
         else if(isJoueurActif(&Joueur2) == 1){
             char userCoord[6];
@@ -115,7 +122,7 @@ int main () {
                 setJoueurGagner(&Joueur1);
                 break;
             }
-            if(deplacementPiece(&Joueur2,userCoord,grille) == 1){
+            if(deplacementPiece(&Joueur2,&Joueur2,userCoord,grille) == 1){
                 //int king = getWhiteKing(grille);
                 /* pas comme ça qu'il faut faire, car un echec pourrait très bien avoir lieu après déblocage d'une ligne de vue
                 int position = testPositionFinal(userCoord,grille);

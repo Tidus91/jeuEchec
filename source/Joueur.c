@@ -83,7 +83,28 @@ int deletePieceJoueur(Joueur* joueur,Piece* piece){
     return 0;
 }
 
-char* getJoueurPieces(Joueur* joueur){
+Piece ** getJoueurPieces(Joueur* joueur,int *nb){
+    int compteur = 0;
+    for(int i = 0;i<16;i++){
+        if(joueur->pieceJoueur[i]->etat == 1){
+            compteur++;
+        }
+    }
+    Piece **tabPiece = malloc(sizeof(Piece) * compteur);
+
+    int y = 0;
+    for(int i = 0;i<16;i++){
+        if(joueur->pieceJoueur[i]->etat == 1){
+            tabPiece[y] = joueur->pieceJoueur[i];
+            y++;
+        }
+    }
+    //param in/out
+    *nb = compteur;
+    return tabPiece;
+}
+
+char* JoueurPiecesToString(Joueur* joueur){
     int compteur = 0;
     char *chaine = (char*)malloc(1000);
     chaine[0] = '\0';
