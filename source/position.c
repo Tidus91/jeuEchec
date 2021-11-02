@@ -1,4 +1,3 @@
-//void deplacementPiece(Piece *piece,char *coord, Piece *grille) {
 int deplacementPiece(Joueur *joueurActif,Joueur *joueur2,char *coord,Piece *grille[]){
 
     int solveur = 0;

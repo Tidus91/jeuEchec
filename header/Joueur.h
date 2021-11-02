@@ -17,10 +17,10 @@ int isJoueurActif(Joueur*);
 int setJoueurActif(Joueur*,Joueur*);
 
 int getJoueurGagner(Joueur*);
-int setJoueurGagner(Joueur*);
+void setJoueurGagner(Joueur*);
 
 int isJoueurEchec(Joueur*);
-int setJoueurEchec(Joueur*);
+void setJoueurEchec(Joueur*);
 
 int getJoueurNbCoups(Joueur*);
 void addJoueurNbCoups(Joueur*);
@@ -29,6 +29,3 @@ int addPieceJoueur(Joueur*,Piece*);
 int deletePieceJoueur(Joueur*,Piece*);
 Piece ** getJoueurPieces(Joueur*,int*);
 char* JoueurPiecesToString(Joueur*);
-
-
-#include "../source/Joueur.c"

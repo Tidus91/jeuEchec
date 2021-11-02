@@ -10,4 +10,3 @@ int solveurLigneDeVueRectiligne(int,int,Piece*[]);
 int solveurLigneDeVueDiagonale(int ,int ,Piece *[]);
 int solveurLigneDeVueRectiligneDiagonale(int,int,Piece *[]);
 
-#include "../source/position.c"

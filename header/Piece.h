@@ -22,5 +22,3 @@ int setPieceType(Piece *,char );
 int setPieceEtat(Piece *,int );
 
 int getPiecePosition(Piece *,Piece *[]);
-
-#include "../source/Piece.c"

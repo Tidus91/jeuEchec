@@ -3,5 +3,3 @@ int getBlackKing(Piece *[]);
 int isEchec(Joueur *,Joueur *,Piece *[]);
 int isPutEchec(Joueur*,Piece *[]);
 int isEchecMat(Joueur*,Piece*[]);
-
-#include "../source/echec.c"

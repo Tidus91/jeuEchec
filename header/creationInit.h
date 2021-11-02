@@ -5,5 +5,3 @@ Piece* creationPiece(char,char);
 Joueur creationJoueur(char);
 int creationSetEchecFinale(Joueur *, Joueur *,Piece *[]);
 int creationSetEchecComplet(Joueur *, Joueur *,Piece *[]);
-
-#include "../source/creationInit.c"

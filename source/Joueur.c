@@ -42,14 +42,14 @@ int setJoueurActif(Joueur* joueurA, Joueur* joueurB){
 int getJoueurGagner(Joueur* joueur){
     return joueur->gagner;
 }
-int setJoueurGagner(Joueur* joueur){
+void setJoueurGagner(Joueur* joueur){
     joueur->gagner = 1;
 }
 
 int isJoueurEchec(Joueur* joueur){
     return joueur->echec;
 }
-int setJoueurEchec(Joueur* joueur){
+void setJoueurEchec(Joueur* joueur){
     joueur->echec = 1;
 }
 
@@ -90,7 +90,7 @@ Piece ** getJoueurPieces(Joueur* joueur,int *nb){
             compteur++;
         }
     }
-    Piece **tabPiece = malloc(sizeof(Piece) * compteur);
+    Piece **tabPiece = (Piece**)malloc(sizeof(Piece) * compteur);
 
     int y = 0;
     for(int i = 0;i<16;i++){

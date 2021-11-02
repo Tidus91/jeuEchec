@@ -1,15 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../header/coord.h"
 #include <assert.h>
+
+#include "../header/coord.h"
 #include "../header/Piece.h"
 #include "../header/Joueur.h"
-
 #include "../header/afficherGrille.h"
 #include "../header/creationInit.h"
 #include "../header/position.h"
-#include "../header/ligneDeVue.h"
 #include "../header/echec.h"
+#include "../header/ligneDeVue.h"
+
+#include "../source/coord.c"
+#include "../source/Piece.c"
+#include "../source/Joueur.c"
+#include "../source/afficherGrille.c"
+#include "../source/creationInit.c"
+#include "../source/position.c"
+#include "../source/echec.c"
+#include "../source/ligneDeVue.c"
+
 
 int main () {
 
