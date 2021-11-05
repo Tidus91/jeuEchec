@@ -63,6 +63,7 @@ int isPutEchec(Joueur *joueurActif, Piece *grille[]){
 
 int isEchecMat(Joueur *joueurEnEchec,Joueur *autreJoueur,Piece *grille[]){
     printf("\n\n########## Je RENTRE DANS ISECHECMAT !!! ###########\n\n");
+
     // Je prend toutes les pieces de mon joueur, je les bouge partout
     // si je reste quand même en echec alors c'est perdu !
     int Fin = 1; // Si je trouve aucune possibilité alors FIn reste a 1
@@ -79,6 +80,8 @@ int isEchecMat(Joueur *joueurEnEchec,Joueur *autreJoueur,Piece *grille[]){
     for(int i = 0;i<100;i++){
         (*grilleCopie[i]) = (*grille[i]);
     }
+
+    afficherGrille(grilleCopie);
 
     printf(" \ntest grille copie : %c\n",grilleCopie[41]->type);
 
@@ -103,7 +106,7 @@ int isEchecMat(Joueur *joueurEnEchec,Joueur *autreJoueur,Piece *grille[]){
             coord[2] = getReverseCoord(y,nbCoord2);
             coord[3] = *nbCoord2;
             printf("\n\n coord[2,3] = %c%c  \n",coord[2],coord[3]);
-            if(deplacementPiece(joueurEnEchec,autreJoueur,coord,grille) == 1){
+            if(deplacementPiece(joueurEnEchec,autreJoueur,coord,grilleCopie) == 1){
                 Fin = 0;
                 break;
             }
