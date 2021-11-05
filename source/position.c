@@ -8,7 +8,7 @@ int deplacementPiece(Joueur *joueurActif,Joueur *joueur2,char *coord,Piece *gril
         return 0;
     }
     solveur2 = testPositionFinal(coord,grille);
-    if(solveur == solveur2){
+    if(solveur == solveur2 || solveur2 == 0){
         printf("Vous ne pouvez pas vous faire du surplace....\n");
         return 0;
     }
@@ -55,6 +55,7 @@ int deplacementPiece(Joueur *joueurActif,Joueur *joueur2,char *coord,Piece *gril
                 grille[solveur] = temporaire;
                 return 0;
             }
+            printf("\n##### isEchec a retourner 0 apparemment... ###\n");
         }
         else{
             //setPieceEtat(grille[solveur2],0);
@@ -90,7 +91,6 @@ int deplacementPiece(Joueur *joueurActif,Joueur *joueur2,char *coord,Piece *gril
             }
 
         }
-        addJoueurNbCoups(joueurActif);
         return 1;
     }
     printf("Quelque chose c'est mal passe, rentrer un coup legale svp \n");
@@ -171,6 +171,8 @@ int testPositionFinal(char* coord, Piece* grille[]){
         solveur = solveur + 7;
     else if(coord[2] == 'h')
         solveur = solveur + 8;
+    else
+        return 0;
     if(coord[3] == '8')
         solveur = solveur + 10;
     else if(coord[3] == '7')
@@ -187,12 +189,19 @@ int testPositionFinal(char* coord, Piece* grille[]){
         solveur = solveur + 70;
     else if(coord[3] == '1')
         solveur = solveur + 80;
+    else
+        return 0;
 
     return solveur;
 }
 
 int isPossible(int solveur,int solveur2,Piece *grille[]){
     printf("je passe bien dans isPossible ! \n");
+    printf("solveur = : %d\n",solveur);
+    printf("solveur2 = : %d\n",solveur2);
+    printf("grille[solveur].type : %c\n",getPieceType(grille[solveur]));
+    printf("grille[solveur2].type : %c\n",getPieceType(grille[solveur2]));
+    printf("\n le type de ma piece en s1 %s , type s2 : %s\n",getPieceDeplacement(grille[solveur]),getPieceDeplacement(grille[solveur2]));
 
     if(getPieceDeplacement(grille[solveur]) == "adjacent"){
         if(solveurAdjacent(solveur,solveur2,grille) != 0){
@@ -292,7 +301,7 @@ int solveurLigneDeVueRectiligne(int solveur,int solveur2,Piece *grille[]){
         }
     }
     else if(calculR == 2){
-        printf("je suis bien dans calculR=2 \n");
+        //printf("je suis bien dans calculR=2 \n");
         if(solveur2 == solveur-1 || solveur2 == solveur+1 || solveur2 == solveur+2 || solveur2 == solveur+3 || solveur2 == solveur+4 || solveur2 == solveur+5 || solveur2 == solveur+6){
             //printf("déplacement pre-autorise , checking de la ligne de vue requis (fonction calculR2)\n");
             return ligneDeVueRectiligne(solveur,solveur2,grille);
@@ -498,4 +507,49 @@ int solveurLigneDeVueRectiligneDiagonale(int solveur, int solveur2, Piece *grill
     }
     printf("Erreur solveur LDV rectiligne diagonale... return 0...\n");
     return 0;
+}
+
+char getReverseCoord(int solveur ,char *nb){
+
+    char carac = 'j';
+
+    if(solveur % 10 == 0 )
+        carac = 'j';
+    else if(solveur % 10 == 1)
+        carac = 'a';
+    else if(solveur % 10 == 2)
+        carac = 'b';
+    else if(solveur % 10 == 3)
+        carac = 'c';
+    else if(solveur % 10 == 4)
+        carac = 'd';
+    else if(solveur % 10 == 5)
+        carac = 'e';
+    else if(solveur % 10 == 6)
+        carac = 'f';
+    else if(solveur % 10 == 7)
+        carac = 'g';
+    else if(solveur % 10 == 8)
+        carac = 'h';
+    
+    if(solveur / 10 == 0)
+        *nb = '0';
+    else if(solveur / 10 == 1)
+        *nb = '8';
+    else if(solveur / 10 == 2)
+        *nb = '7';
+    else if(solveur / 10 == 3)
+        *nb = '6';
+    else if(solveur / 10 == 4)
+        *nb = '5';
+    else if(solveur / 10 == 5)
+        *nb = '4';
+    else if(solveur / 10 == 6)
+        *nb = '3';
+    else if(solveur / 10 == 7)
+        *nb = '2';
+    else if(solveur / 10 == 8)
+        *nb = '1';
+
+    return carac;
 }

@@ -9,4 +9,4 @@ int solveurAdjacent(int,int,Piece*[]);
 int solveurLigneDeVueRectiligne(int,int,Piece*[]);
 int solveurLigneDeVueDiagonale(int ,int ,Piece *[]);
 int solveurLigneDeVueRectiligneDiagonale(int,int,Piece *[]);
-
+char getReverseCoord(int,char*);

@@ -90,9 +90,18 @@ int main () {
                 break;
             }
             if(deplacementPiece(&Joueur1,&Joueur2,userCoord,grille) == 1){
-                printf("j'arrive bien au moment de isEchec....");
-                if(isPutEchec(&Joueur1,grille) == 1)
+                printf("j'arrive bien au moment de isPutEchec....");
+                if(isPutEchec(&Joueur1,grille) == 1){
                     Joueur2.echec = 1;
+                    /*if(isEchecMat(&Joueur2,&Joueur1,grille) == 1){
+                        Joueur1.gagner = 1;
+                        break;
+                    }*/
+                }
+                else{
+                    Joueur2.echec = 0;
+                }
+                addJoueurNbCoups(&Joueur1);
                 setJoueurActif(&Joueur1,&Joueur2);
             }
             afficherGrille(grille);
@@ -127,9 +136,17 @@ int main () {
                 break;
             }
             if(deplacementPiece(&Joueur2,&Joueur1,userCoord,grille) == 1){
-                
-                if(isPutEchec(&Joueur2,grille) == 1)
+                if(isPutEchec(&Joueur2,grille) == 1){
                     Joueur1.echec = 1;
+                    /*if(isEchecMat(&Joueur2,&Joueur1,grille) == 1){
+                        Joueur2.gagner = 1;
+                        break;
+                    }*/
+                }
+                else{
+                    Joueur1.echec = 0;
+                }
+                addJoueurNbCoups(&Joueur2);
                 setJoueurActif(&Joueur2,&Joueur1);
             }
             afficherGrille(grille);
