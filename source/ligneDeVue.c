@@ -1,5 +1,5 @@
 int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille[]){
-    printf("Rentrer dans function ligneDeVueRectiligne..... \n");
+    //printf("Rentrer dans function ligneDeVueRectiligne..... \n");
     // Si je me deplace vers la "droite"
     if(solveur2-solveur > 0){
         int i = 1;
@@ -7,7 +7,7 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille[]){
         for(i=1;getPieceType(grille[solveur+i]) == '.' && i < (solveur2 - solveur);i++){
 
         }
-        printf(" mon compteur i : %d \n",i);
+        //printf(" mon compteur i : %d \n",i);
         if(getPieceColor(grille[solveur]) == 'b'){
             if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Y'){
                 // Si je rencontre un obstacle AVANT l'endroit ou je voulais me déplacer ET que cette pièce est blanche :
@@ -96,11 +96,13 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille[]){
             for(i=-1;getPieceType(grille[solveur+i]) == '.' && i > (solveur2 - solveur);i--){
 
             }
+            /*
             printf("mon compteur i : %d \n",i);
             printf("solveur2-solveur = : %d\n",solveur2-solveur);
+            */
                 if(getPieceColor(grille[solveur]) == 'b'){
                     if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Y'){
-                        printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,getPieceType(grille[solveur+i]));
+                        //printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,getPieceType(grille[solveur+i]));
                         if(i > (solveur2 - solveur)){
                             printf("deplacement non autorise, il y a une piece blanche qui vous bloque la vue ! \n");
                             return 0;
@@ -170,23 +172,23 @@ int ligneDeVueRectiligne(int solveur,int solveur2,Piece *grille[]){
         }
         // au cas ou.... même si j'ai une fonction qui existe deja en prevention (test position initiale et test finale)
         else{
-            printf(" solveur 2 - solveur = 0 ? bizarre.... \n");
+            //printf(" solveur 2 - solveur = 0 ? bizarre.... \n");
         }
 }
 
 
 int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille[]){
 
-    printf("Rentrer dans function ligneDeVueRectiligne'YY'..... \n");
+    //printf("Rentrer dans function ligneDeVueRectiligne'YY'..... \n");
     if(solveur2 - solveur > 0){
         int i = 10;
         for (i=10;getPieceType(grille[solveur+i]) == '.' && i < (solveur2 - solveur);i = i+10){
 
         }
-        printf("mon compteur i : %d \n",i);
+        //printf("mon compteur i : %d \n",i);
         if(getPieceColor(grille[solveur]) == 'b'){
             if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Y'){
-                printf(" j'arrive bien ici à l'indice %d, boucle numero : %d et caractere %c \n",solveur+i,i,grille[solveur+i]);
+                //printf(" j'arrive bien ici à l'indice %d, boucle numero : %d et caractere %c \n",solveur+i,i,grille[solveur+i]);
                 if(i < (solveur2 - solveur)){
                     printf("deplacement non autorise, il y a une piece blanche qui vous bloque la vue ! \n");
                     return 0;
@@ -221,7 +223,7 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille[]){
         }
         else if(getPieceColor(grille[solveur]) == 'n'){
             if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Y'){
-                printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
+                //printf("j'arrive bien içi a l'indice ! %d boucle numero : %d \t et j'ai bien le caractere : %c\n",solveur+i,i,grille[solveur+i]);
                 if(i < (solveur2 - solveur) ){
                     printf("déplacement non autorisé, une piece blanche vous bloque l'acces! \n");
                     return 0;
@@ -261,11 +263,11 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille[]){
         for(i=-10;getPieceType(grille[solveur+i]) == '.' && i > (solveur2 - solveur);i= i-10){
 
         }
-        printf("mon compteur i : %d \n",i);
+        //printf("mon compteur i : %d \n",i);
         // probleme d'indentation ici
             if(getPieceColor(grille[solveur]) == 'b'){
                 if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Y'){
-                    printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,grille[solveur+i]);
+                    //printf("j'arrive bien a l'indice %d boucle numero %d \t et j'ai bien le caractere %c \n",solveur+i,i,grille[solveur+i]);
                     if(i > (solveur2 - solveur)){
                         printf("deplacement non autorise, il y a une piece blanche qui vous bloque la vue ! \n");
                         return 0;
@@ -341,7 +343,7 @@ int ligneDeVueRectiligneY(int solveur,int solveur2,Piece *grille[]){
 }
 
 int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille[]){
-    printf("FOnction LDVD positive\n");
+    //printf("FOnction LDVD positive\n");
     int calculR = solveur%10;
     int calculQ = solveur/10;
     int calculR2 = solveur2%10;
@@ -352,7 +354,7 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille[]){
         for(i=11;getPieceType(grille[solveur+i]) == '.' && i < (solveur2 - solveur);i = i+11){
 
         }
-        printf("i = %d\n",i);
+        //printf("i = %d\n",i);
         if(getPieceColor(grille[solveur]) == 'b'){
             if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Y'){
                 if(i < (solveur2-solveur)){
@@ -415,7 +417,7 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille[]){
         for(i=9;getPieceType(grille[solveur+i]) == '.' && i < (solveur2 - solveur);i = i+9){
 
         }
-        printf("i = %d\n",i);
+        //printf("i = %d\n",i);
         if(getPieceColor(grille[solveur]) == 'b'){
             if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Y'){
                 if(i < (solveur2-solveur)){
@@ -476,20 +478,20 @@ int ligneDeVueDiagonalePositive(int solveur,int solveur2,Piece *grille[]){
 }
 
 int ligneDeVueDiagonaleNegative(int solveur,int solveur2,Piece *grille[]){
-    printf("FOnction LDVD negative\n");
+    //printf("FOnction LDVD negative\n");
     int calculR = solveur%10;
     int calculQ = solveur/10;
     int calculR2 = solveur2%10;
     int calculQ2 = solveur2/10;
     int i = 0;
     // Debug
-    printf("calcul R2 = %d\n",solveur2%10);
+    //printf("calcul R2 = %d\n",solveur2%10);
     // je regarde si ma destination est "côté droite" afin d'appliquer le calcul correspondant (+11)
     if(calculR<calculR2){
         for(i=-9;getPieceType(grille[solveur+i]) == '.' && i > (solveur2 - solveur);i = i-9){
 
         }
-        printf("i = %d\n",i);
+        //printf("i = %d\n",i);
         if(getPieceColor(grille[solveur]) == 'b'){
             if(getPieceType(grille[solveur+i]) >= 'A' && getPieceType(grille[solveur+i]) <= 'Y'){
                 if(i > (solveur2-solveur)){

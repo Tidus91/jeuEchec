@@ -90,13 +90,14 @@ int main () {
                 break;
             }
             if(deplacementPiece(&Joueur1,&Joueur2,userCoord,grille) == 1){
-                printf("j'arrive bien au moment de isPutEchec....");
                 if(isPutEchec(&Joueur1,grille) == 1){
                     Joueur2.echec = 1;
+                    /*
                     if(isEchecMat(&Joueur2,&Joueur1,grille) == 1){
                         Joueur1.gagner = 1;
                         break;
                     }
+                    */
                 }
                 else{
                     Joueur2.echec = 0;
@@ -111,13 +112,6 @@ int main () {
             chaineTest = JoueurPiecesToString(&Joueur2);
             printf("joueur 2 : %s\n\n",chaineTest);
 
-            // Test PiecesJoueur
-            int nbTT = 0;
-            Piece **tableauTest = getJoueurPieces(&Joueur1,&nbTT);
-            for (int i = 0; i < nbTT ;i++){
-                printf(" %c",tableauTest[i]->type);
-            }
-            
         }
         else if(isJoueurActif(&Joueur2) == 1){
             char userCoord[6];
@@ -138,10 +132,12 @@ int main () {
             if(deplacementPiece(&Joueur2,&Joueur1,userCoord,grille) == 1){
                 if(isPutEchec(&Joueur2,grille) == 1){
                     Joueur1.echec = 1;
+                    /*
                     if(isEchecMat(&Joueur2,&Joueur1,grille) == 1){
                         Joueur2.gagner = 1;
                         break;
                     }
+                    */
                 }
                 else{
                     Joueur1.echec = 0;

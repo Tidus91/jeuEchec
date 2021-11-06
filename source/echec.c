@@ -13,7 +13,7 @@ int getBlackKing(Piece *grille[]){
 // Fonction qui verifie que je ne suis pas de moi même en echec en bougant ma propre pièce
 int isEchec(Joueur *joueurActif,Joueur *joueurAdverse,Piece *grille[]){
     
-    printf("\n\n########### Je rentre dans IsEchec #############\n\n");
+    //printf("\n\n########### Je rentre dans IsEchec #############\n\n");
     int king;
     if(joueurActif->couleur == 'b')
         king = getWhiteKing(grille);
@@ -28,14 +28,14 @@ int isEchec(Joueur *joueurActif,Joueur *joueurAdverse,Piece *grille[]){
     // 1- trouve leur position
     // 2- regarde si il ne met pas mon roi en echec
     for(int i = 0; i < nbPa ; i++){
-        printf("\n(isEchec) piecesAdverses[i].type : %c",getPieceType(PiecesAdverse[i]));
+        //printf("\n(isEchec) piecesAdverses[i].type : %c",getPieceType(PiecesAdverse[i]));
         int piecePos = getPiecePosition(PiecesAdverse[i],grille);
         if(isPossible(piecePos,king,grille) == 1){
             return 1;
         }
     }
     // Je retourne 0 si je ne suis pas en echec !
-    printf("\n\n########### Je SORS de IsEchec #############\n\n");
+    //printf("\n\n########### Je SORS de IsEchec #############\n\n");
     return 0;
 
 }
@@ -52,7 +52,7 @@ int isPutEchec(Joueur *joueurActif, Piece *grille[]){
     Piece **PiecesAMoi = getJoueurPieces(joueurActif,&nbPa);
 
     for(int i =0; i<nbPa;i++){
-        printf("\n(isPUTEchec) piecesAMoi[i].type : %c",getPieceType(PiecesAMoi[i]));
+        //printf("\n(isPUTEchec) piecesAMoi[i].type : %c",getPieceType(PiecesAMoi[i]));
         int piecePos = getPiecePosition(PiecesAMoi[i],grille);
         if(isPossible(piecePos,king,grille) == 1){
             return 1;
@@ -62,7 +62,7 @@ int isPutEchec(Joueur *joueurActif, Piece *grille[]){
 }
 
 int isEchecMat(Joueur *joueurEnEchec,Joueur *autreJoueur,Piece *grille[]){
-    printf("\n\n########## Je RENTRE DANS ISECHECMAT !!! ###########\n\n");
+    //printf("\n\n########## Je RENTRE DANS ISECHECMAT !!! ###########\n\n");
 
     // Je prend toutes les pieces de mon joueur, je les bouge partout
     // si je reste quand même en echec alors c'est perdu !
@@ -81,9 +81,9 @@ int isEchecMat(Joueur *joueurEnEchec,Joueur *autreJoueur,Piece *grille[]){
         (*grilleCopie[i]) = (*grille[i]);
     }
 
-    afficherGrille(grilleCopie);
+    //afficherGrille(grilleCopie);
 
-    printf(" \ntest grille copie : %c\n",grilleCopie[41]->type);
+    //printf(" \ntest grille copie : %c\n",grilleCopie[41]->type);
 
     Piece **PiecesAMoi = getJoueurPieces(joueurEnEchec,&nbPa);
     char coord1 = 0;
@@ -98,14 +98,14 @@ int isEchecMat(Joueur *joueurEnEchec,Joueur *autreJoueur,Piece *grille[]){
         int PiecePos = getPiecePosition(PiecesAMoi[i],grille);
         coord[0] = getReverseCoord(PiecePos,nbCoord);
         coord[1] = *nbCoord;
-        printf("\n\n ###coord de %c est : %c%c### \n\n",PiecesAMoi[i]->type,coord[0],coord[1]);
+        //printf("\n\n ###coord de %c est : %c%c### \n\n",PiecesAMoi[i]->type,coord[0],coord[1]);
         
         // je vais bouger ma pieces dans toutes les positions possibles et voir
         // si un coup me permet de sortir de l'echec
         for(int y = 10;y < 90;y++){
             coord[2] = getReverseCoord(y,nbCoord2);
             coord[3] = *nbCoord2;
-            printf("\n\n coord[2,3] = %c%c  \n",coord[2],coord[3]);
+            //printf("\n\n coord[2,3] = %c%c  \n",coord[2],coord[3]);
             if(deplacementPiece(joueurEnEchec,autreJoueur,coord,grilleCopie) == 1){
                 Fin = 0;
                 break;
@@ -117,6 +117,6 @@ int isEchecMat(Joueur *joueurEnEchec,Joueur *autreJoueur,Piece *grille[]){
     free(coord);
     free(grilleCopie);
 
-    printf("### Fin = %d ####",Fin);
+    //printf("### Fin = %d ####",Fin);
     return Fin;
 }
